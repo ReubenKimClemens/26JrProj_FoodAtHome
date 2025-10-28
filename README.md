@@ -5,7 +5,7 @@ The goal of our app is to help young adults, especially students, become more mi
 With this, we can take a step towards strengthening inventory awareness, increasing meal longevity, and building better financial habits.
 
 ## Installation & Access
-You can access the website [here](https://cronch.framer.website/) 
+You can access the website [here](https://cronch.framer.website/).
 Alternatively, explore the project files directly in this GitHub repository.
 
 ## Features
