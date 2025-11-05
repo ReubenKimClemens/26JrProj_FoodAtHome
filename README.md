@@ -25,8 +25,8 @@ Alternatively, explore the project files directly in this GitHub repository.
 - Reuben Clemens, Developer, IX Architect
 
 ## Credits
-Yi Huan Yang
-Project Manager
+Yi Huan Yang<br>
+Project Manager<br>
 [Email Yi Huan](mailto:yy559@drexel.edu)
 
 ## Note for Our Developers
