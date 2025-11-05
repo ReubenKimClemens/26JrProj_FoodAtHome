@@ -4,7 +4,7 @@
 The Food At Home app helps young adults, especially students, become more mindful of their grocery spending through small easy steps.
 
 ## Installation & Access
-You can access our website for status posts [here](https://cronch.framer.website/).
+You can access our website for status posts <a href="https://cronch.framer.website/" target="_blank">here</a>.
 Alternatively, explore the project files directly in this GitHub repository.
 
 ## Features
@@ -28,18 +28,6 @@ Alternatively, explore the project files directly in this GitHub repository.
 Yi Huan Yang<br>
 Project Manager<br>
 [Email Yi Huan](mailto:yy559@drexel.edu)
-
-## Note for Our Developers
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-To create a production version of your app:
 
 ```sh
 npm run build
