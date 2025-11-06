@@ -68,7 +68,7 @@
 
 <div class="groceries-search-page">
     <header>
-        <h1>Food at Home</h1>
+        <h1>Food at Home [TEST]</h1>
         <p class="app-description">The Food At Home app helps young adults, especially students, become more mindful of their grocery spending through small easy steps.</p>
     </header>
 
@@ -95,7 +95,7 @@
     <hr />
 
     {#if error}
-        <p class="status-message error-message">**Oops!** {error}</p>
+        <p class="status-message error-message">Oops! {error}</p>
     {:else if loading}
         <p class="status-message loading-message">Looking up prices for "{searchQuery}"...</p>
     {/if}
@@ -104,7 +104,7 @@
         <section class="results-container">
             <div class="summary-bar">
                 <h3>Found {products.length} Items</h3>
-                <p class="total-cost">Estimated Total: **${totalCost.toFixed(2)}**</p>
+                <p class="total-cost">Estimated Total: ${totalCost.toFixed(2)}</p>
             </div>
 
             <ul class="product-list">
@@ -114,7 +114,7 @@
                         <div class="product-info">
                             <h4>{product.title}</h4>
                         </div>
-                        <p class="item-price">**${product.price.toFixed(2)}**</p>
+                        <p class="item-price">${product.price.toFixed(2)}</p>
                     </li>
                 {/each}
             </ul>
