@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+:root {
+    /* Brand - Red */
+    --brand-red-50: #FFE5E5;
+    --brand-red-100: #FFCCCC;
+    --brand-red-200: #FFBFBF;
+    --brand-red-300: #FF8080;
+    --brand-red-400: #FF4040;
+    --brand-red-500: #FF0000;
+    --brand-red-600: #BF0000;
+    --brand-red-700: #800000;
+    --brand-red-800: #400000;
+
+    /* Brand - Green */
+    --brand-green-50: #E6F6E5;
+    --brand-green-100: #CFEDCC;
+    --brand-green-200: #C3E9BF;
+    --brand-green-300: #86D280;
+    --brand-green-400: #4ABC40;
+    --brand-green-500: #0DA500;
+    --brand-green-600: #109204;
+    --brand-green-700: #0C6304;
+    --brand-green-800: #074302;
+
+    /* Brand - Orange */
+    --brand-orange-50: #FFF0E5;
+    --brand-orange-100: #FFE1CC;
+    --brand-orange-200: #FFDABF;
+    --brand-orange-300: #FFB580;
+    --brand-orange-400: #FF9040;
+    --brand-orange-500: #FF6B00;
+    --brand-orange-600: #BF5000;
+    --brand-orange-700: #803600;
+    --brand-orange-800: #401B00;
+
+    /* Brand - Blue */
+    --brand-blue-50: #E5E6FF;
+    --brand-blue-100: #CCCEFF;
+    --brand-blue-200: #BFC2FF;
+    --brand-blue-300: #BFC2FF;
+    --brand-blue-400: #4047FF;
+    --brand-blue-500: #000AFF;
+    --brand-blue-600: #0008BF;
+    --brand-blue-700: #000580;
+    --brand-blue-800: #000340;
+
+    /* Brand - Grey */
+    --brand-grey-50: #ECECEE;
+    --brand-grey-100: #DADBDD;
+    --brand-grey-200: #D0D1D4;
+    --brand-grey-300: #A1A4AA;
+    --brand-grey-400: #737780;
+    --brand-grey-500: #444955;
+    --brand-grey-600: #333740;
+    --brand-grey-700: #22252B;
+    --brand-grey-800: #111215;
+
+    /* Brand - Foundation */
+    --brand-foundation-white: #FFFFFF;
+    --brand-foundation-black: #000000;
+
+    /* Brand - Font Family */
+    --brand-headings-font: 'Quicksand', sans-serif;
+    --brand-body-font: 'Nunito', sans-serif;
+
+    /* Brand - Font Weight */
+    --brand-weight-regular: 400;
+    --brand-weight-medium: 500;
+    --brand-weight-semibold: 600;
+    --brand-weight-bold: 700;
+    --brand-weight-extrabold: 600;
+
+    /* Brand - Scale */
+    --brand-scale-0: 0;
+    --brand-scale-25: 1px;
+    --brand-scale-50: 2px;
+    --brand-scale-100: 4px;
+    --brand-scale-200: 8px;
+    --brand-scale-300: 12px;
+    --brand-scale-400: 16px;
+    --brand-scale-500: 20px;
+    --brand-scale-600: 24px;
+    --brand-scale-700: 28px;
+    --brand-scale-800: 32px;
+    --brand-scale-900: 36px;
+}
