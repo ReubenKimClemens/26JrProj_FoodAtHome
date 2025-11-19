@@ -1,0 +1,33 @@
+:root {
+    /* Root - Text */
+    --root-text-heading: #111215;
+    --root-text-body: #22252B;
+    --root-text-action: #0DA500;
+    --root-text-error: #FF0000;
+    --root-text-warning: #FF6B00;
+    --root-rext-onaction: #FFFFFF;
+
+    /* Root - Icons */
+    --root-icon-default: #22252B;
+    --root-icon-action: #0DA500;
+    --root-icon-error: #FF0000;
+    --root-icon-warning: #FF6B00;
+    --root-icon-onaction: #FFFFFF;
+
+    /* Root - Surface */
+    --root-surface-page: #FFFFFF;
+    --root-surface-default: #FFFFFF;
+    --root-surface-action: #0DA500;
+    --root-surface-action-hover: #109204;
+    --root-surface-warning: #FFF0E5;
+    --root-surface-error: #FFE5E5;
+    --root-surface-disabled: #DADBDD;
+
+    /* Root - Border */
+    --root-border-default: #ECECEE;
+    --root-border-warning: #FFF0E5;
+    --root-border-error: #FFBFBF;
+    --root-border-action: #0DA500;
+    --root-border-action-hover: #109204;
+    --root-border-disabled: #A1A4AA;
+}
