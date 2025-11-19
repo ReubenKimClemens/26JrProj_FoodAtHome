@@ -1,0 +1,59 @@
+:root {
+    /* Primary */
+    --green-50: #E6F6E5;
+    --green-100: #CFEDCC;
+    --green-200: #C3E9BF;
+    --green-300: #86D280;
+    --green-400: #4ABC40;
+    --green-500: #0DA500;
+    --green-600: #109204;
+    --green-700: #0C6304;
+    --green-800: #074302;
+
+    /* Error */
+    --red-50: #FFE5E5;
+    --red-100: #FFCCCC;
+    --red-200: #FFBFBF;
+    --red-300: #FF8080;
+    --red-400: #FF4040;
+    --red-500: #FF0000;
+    --red-600: #BF0000;
+    --red-700: #800000;
+    --red-800: #400000;
+
+    /* Neutral */
+    --grey-50: #ECECEE;
+    --grey-100: #DADBDD;
+    --grey-200: #D0D1D4;
+    --grey-300: #A1A4AA;
+    --grey-400: #737780;
+    --grey-500: #444955;
+    --grey-600: #333740;
+    --grey-700: #22252B;
+    --grey-800: #111215;
+    --white-foundation: #FFFFFF;
+    --black-foundation: #000000;
+
+    /* Warning */
+    --orange-50: #FFF0E5;
+    --orange-100: #FFE1CC;
+    --orange-200: #FFDABF;
+    --orange-300: #FFB580;
+    --orange-400: #FF9040;
+    --orange-500: #FF6B00;
+    --orange-600: #BF5000;
+    --orange-700: #803600;
+    --orange-800: #401B00;
+
+    /* Border Width */
+    --border-none: 0;
+    --border-sm: 1px;
+    --border-md: 2px;
+    --border-lg: 4px;
+
+    /* Border Radius */
+    --radius-none: 0;
+    --radius-sm: 2px;
+    --radius-md: 4px;
+    --radius-lg: 8px;
+}
