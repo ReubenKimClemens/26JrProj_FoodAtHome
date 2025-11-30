@@ -1,0 +1,30 @@
+:root {
+    /* Icons - Default */
+    --icons-brand-primary: #0FA376;
+    --icons-brand-secondary: #A30F3C;
+    --icons-default: #111215;
+    --icons-secondary: #737780;
+    --icons-tertiary: #FFFFFF;
+    --icons-accent-1: #FF6B00;
+    --icons-accent-2: #00C8B3;
+    --icons-accent-3: #00C8B3;
+    --icons-accent-4: #00C0E8;
+    --icons-accent-5: #6155F5;
+    --icons-accent-6: #FFCC00;
+    --icons-accent-7: #CB30E0;
+    --icons-accent-8: #FF0000;
+
+    /* Icons - Inverted */
+    --icons-inverted-brand-primary: #E7F6F1;
+    --icons-inverted-brand-secondary: #F6E7EC;
+    --icons-inverted-primary: #F7F7F7;
+    --icons-inverted-secondary: #FFFFFF;
+    --icons-inverted-accent-1: #FFF0E5;
+    --icons-inverted-accent-2: #E6FAF7;
+    --icons-inverted-accent-3: #E6F3FF;
+    --icons-inverted-accent-4: #E6F9FD;
+    --icons-inverted-accent-5: #EFEEFE;
+    --icons-inverted-accent-6: #FFFAE6;
+    --icons-inverted-accent-7: #FAEAFC;
+    --icons-inverted-accent-8: #FFE5E5;
+}

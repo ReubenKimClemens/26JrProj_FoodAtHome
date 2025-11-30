@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+:root {
+    /* Font - Family */
+    --font-headings: 'Quicksand', sans-serif;
+    --font-body: 'Nunito', sans-serif;
+
+    /* Color - Red */
+    --color-red-50: #FFE5E5;
+    --color-red-100: #FFCCCC;
+    --color-red-200: #FFBFBF;
+    --color-red-300: #FF8080;
+    --color-red-400: #FF4040;
+    --color-red-500: #FF0000;
+    --color-red-600: #BF0000;
+    --color-red-700: #800000;
+    --color-red-800: #400000;
+
+    /* Color - Berry */
+    --color-berry-50: #F6E7EC;
+    --color-berry-100: #E2B5C3;
+    --color-berry-200: #D591A5;
+    --color-berry-300: #C15E7C;
+    --color-berry-400: #B53F63;
+    --color-berry-500: #A30F3C;
+    --color-berry-600: #940E37;
+    --color-berry-700: #740B2B;
+    --color-berry-800: #5A0821;
+    --color-berry-900: #440619;
+
+    /* Color - Green */
+    --color-green-50: #E7F6F1;
+    --color-green-100: #B5E2D5;
+    --color-green-200: #91D5C0;
+    --color-green-300: #5EC1A3;
+    --color-green-400: #3FB591;
+    --color-green-500: #0FA376;
+    --color-green-600: #0E946B;
+    --color-green-700: #0B7454;
+    --color-green-800: #085A41;
+    --color-green-900: #064432;
+
+    /* Color - Orange */
+    --color-orange-50: #FFF0E5;
+    --color-orange-100: #FFE1CC;
+    --color-orange-200: #FFDABF;
+    --color-orange-300: #FFB580;
+    --color-orange-400: #FF9040;
+    --color-orange-500: #FF6B00;
+    --color-orange-600: #BF5000;
+    --color-orange-700: #803600;
+    --color-orange-800: #401B00;
+    
+    /* Color - Mint */
+    --color-mint-50: #E6FAF7;
+    --color-mint-100: #B0EEE7;
+    --color-mint-200: #8AE6DC;
+    --color-mint-300: #54DACC;
+    --color-mint-400: #33D3C2;
+    --color-mint-500: #00C8B3;
+    --color-mint-600: #00B6A3;
+    --color-mint-700: #008E7F;
+    --color-mint-800: #006E62;
+    --color-mint-900: #00544B;
+
+    /* Color - Light Blue */
+    --color-light-blue-50: #E6F3FF;
+    --color-light-blue-100: #B0DAFF;
+    --color-light-blue-200: #8AC8FF;
+    --color-light-blue-300: #54AFFF;
+    --color-light-blue-400: #33A0FF;
+    --color-light-blue-500: #0088FF;
+    --color-light-blue-600: #007CE8;
+    --color-light-blue-700: #0061B5;
+    --color-light-blue-800: #004B8C;
+    --color-light-blue-900: #00396B;
+
+    /* Color - Cyan */
+    --color-cyan-50: #E6F9FD;
+    --color-cyan-100: #B0EBF8;
+    --color-cyan-200: #8AE2F4;
+    --color-cyan-300: #54D5F0;
+    --color-cyan-400: #33CDED;
+    --color-cyan-500: #00C0E8;
+    --color-cyan-600: #00AFD3;
+    --color-cyan-700: #0088A5;
+    --color-cyan-800: #006A80;
+    --color-cyan-900: #005161;
+
+    /* Color - Purple */
+    --color-purple-50: #EFEEFE;
+    --color-purple-100: #CECAFC;
+    --color-purple-200: #B6B1FA;
+    --color-purple-300: #958DF8;
+    --color-purple-400: #8177F7;
+    --color-purple-500: #6155F5;
+    --color-purple-600: #584DDF;
+    --color-purple-700: #453CAE;
+    --color-purple-800: #352F87;
+    --color-purple-900: #292467;
+
+    /* Color - Yellow */
+    --color-yellow-50: #FFFAE6;
+    --color-yellow-100: #FFEFB0;
+    --color-yellow-200: #FFE88A;
+    --color-yellow-300: #FFDD54;
+    --color-yellow-400: #FFD633;
+    --color-yellow-500: #FFCC00;
+    --color-yellow-600: #E8BA00;
+    --color-yellow-700: #B59100;
+    --color-yellow-800: #8C7000;
+    --color-yellow-900: #6B5600;
+
+    /* Color - Pink */
+    --color-pink-50: #FAEAFC;
+    --color-pink-100: #EFBFF5;
+    --color-pink-200: #E7A0F1;
+    --color-pink-300: #DC74EA;
+    --color-pink-400: #D559E6;
+    --color-pink-500: #CB30E0;
+    --color-pink-600: #B92CCC;
+    --color-pink-700: #90229F;
+    --color-pink-800: #701A7B;
+    --color-pink-900: #55145E;
+
+    /* Color - Grey */
+    --color-grey-50: #F7F7F7;
+    --color-grey-100: #DADBDD;
+    --color-grey-200: #D0D1D4;
+    --color-grey-300: #A1A4AA;
+    --color-grey-400: #737780;
+    --color-grey-500: #444955;
+    --color-grey-600: #444955;
+    --color-grey-700: #22252B;
+    --color-grey-800: #111215;
+
+    /* Color - Foundation */
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+    --color-grey: #F7F7F7;
+    --color-beige-ish: #FCFBFA;
+
+    /* Scale - Scale */
+    --scale-0: 0;
+    --scale-1: 4px;
+    --scale-2: 8px;
+    --scale-3: 12px;
+    --scale-4: 16px;
+    --scale-5: 20px;
+    --scale-6: 24px;
+    --scale-7: 28px;
+    --scale-8: 32px;
+    --scale-9: 36px;
+    --scale-10: 40px;
+
+    /* Scale - Spacing */
+    --scale-spacing-0: 0;
+    --scale-spacing-1: 8px;
+    --scale-spacing-2: 16px;
+    --scale-spacing-3: 24px;
+    --scale-spacing-4: 32px;
+    --scale-spacing-5: 40px;
+    --scale-spacing-6: 48px;
+    --scale-spacing-7: 56px;
+    --scale-spacing-8: 64px;
+
+    /* Radius - Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-xl: 32px;
+    --radius-2xl: 128px;
+    --radius-3xl: 360px;
+}

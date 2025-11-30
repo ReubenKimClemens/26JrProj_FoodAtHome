@@ -1,0 +1,9 @@
+:root {
+    --spacing-none: 0;
+    --spacing-2xs: 4px;
+    --spacing-xs: 8px;
+    --spacing-s: 16px;
+    --spacing-md: 24px;
+    --spacing-lg: 32px;
+    --spacing-xl: 36px;
+}

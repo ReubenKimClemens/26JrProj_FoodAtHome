@@ -1,0 +1,12 @@
+:root {
+    /* Tokens - Text */
+    --text-default: #444955;
+    --text-secondary: #737780;
+    --text-on-action: #FFFFFF;
+    --text-brand-primary: #0FA376;
+    --text-brand-primary-light: #E7F6F1;
+    --text-brand-secondary: #A30F3C;
+    --text-brand-secondary-light: #F6E7EC;
+    --text-danger: #F6E7EC;
+    --text-warning: #FF6B00;
+}

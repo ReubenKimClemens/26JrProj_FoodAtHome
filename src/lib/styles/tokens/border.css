@@ -1,0 +1,9 @@
+:root {
+    /* Border - Color */
+    --border-primary: #737780;
+    --border-secondary: #DADBDD;
+
+    /* Border - Stroke */
+    --border-thin: 1px;
+    --border-thick: 2px;
+}

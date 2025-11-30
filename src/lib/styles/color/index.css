@@ -1,0 +1,41 @@
+:root {
+    /* Color - Background */
+    --color-bg-default-light: #FFFFFF;
+    --color-bg-default-dark: #1E1E1E;
+    --color-bg-disabled-light: #D9D9D9;
+    --color-bg-disabled-dark: #383838;
+
+    /* Color - Text (Default) */
+    --color-text-default-light: #1E1E1E;
+    --color-text-default-dark: #FFFFFF;
+    --color-text-secondary-light: #757575;
+    --color-text-secondary-dark: #FFFFFF;
+    --color-text-tertiary-light: #B3B3B3;
+    --color-text-tertiary-dark: #FFFFFF;
+
+    /* Color - Text (Danger) */
+    --color-text-danger-light: #900B09;
+    --color-text-danger-dark: #FDD3D0;
+
+    /* Color - Text (Disabled) */
+    --color-text-disabled-inactive-light: #B3B3B3;
+    --color-text-disabled-inactive-dark: #757575;
+    --color-text-disabled-active-light: #B3B3B3;
+    --color-text-disabled-active-dark: #B3B3B3;
+
+    /* Color - Border (Default) */
+    --color-border-default-light: #D9D9D9;
+    --color-border-default-dark: #444444;
+
+    /* Color - Border (Neutral) */
+    --color-border-neutral-light: #303030;
+    --color-border-neutral-dark: #F3F3F3;
+
+    /* Color - Border (Danger) */
+    --color-border-danger-light: #900B09;
+    --color-border-danger-dark: #FDD3D0;
+
+    /* Color - Border (Disabled) */
+    --color-border-disabled-light: #B3B3B3;
+    --color-border-disabled-dark: #444444;
+}

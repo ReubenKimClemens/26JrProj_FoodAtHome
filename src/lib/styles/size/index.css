@@ -1,0 +1,12 @@
+:root {
+    /* Size - Space */
+    --size-space-200: 8px;
+    --size-space-300: 12px;
+    --size-space-400: 16px;
+
+    /* Size - Radius */
+    --size-radius-200: 8px;
+
+    /* Size - Stroke */
+    --size-stroke-100: 1px;
+}

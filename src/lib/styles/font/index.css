@@ -1,0 +1,41 @@
+:root {
+    /* Font - Title Extra Large */
+    --font-title-xlg-size: 32px;
+    --font-title-xlg-height: 40px;
+    --font-title-xlg-spacing: 0;
+
+    /* Font - Title Large */
+    --font-title-lg-size: 24px;
+    --font-title-lg-height: 32px;
+    --font-title-lg-spacing: 0;
+
+    /* Font - Title Medium */
+    --font-title-md-size: 20px;
+    --font-title-md-height: 24px;
+    --font-title-md-spacing: 0;
+
+    /* Font - Title Small */
+    --font-title-sm-size: 18px;
+    --font-title-sm-height: 24px;
+    --font-title-sm-spacing: 0;
+
+    /* Font - Body Large */
+    --font-body-lg-size: 20px;
+    --font-body-lg-height: 24px;
+    --font-body-lg-spacing: 0;
+
+    /* Font - Body Medium */
+    --font-body-md-size: 16px;
+    --font-body-md-height: 20px;
+    --font-body-md-spacing: 0;
+
+    /* Font - Body Small */
+    --font-body-sm-size: 14px;
+    --font-body-sm-height: 16px;
+    --font-body-sm-spacing: 20px;
+
+    /* Font - Body Extra Small */
+    --font-body-xsm-size: 12px;
+    --font-body-xsm-height: 16px;
+    --font-body-xsm-spacing: 20px;
+}
