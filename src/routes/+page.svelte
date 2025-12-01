@@ -66,7 +66,7 @@
     }
 </script>
 
-<div class="groceries-search-page">
+<div class="page-content">
     <header>
         <h1>Food at Home [TEST]</h1>
         <p class="app-description">The Food At Home app helps young adults, especially students, become more mindful of their grocery spending through small easy steps.</p>
@@ -123,13 +123,10 @@
 </div>
 
 <style>
-    .groceries-search-page {
-        max-width: 700px;
-        margin: 50px auto;
+    .page-content {
         padding: 25px;
+        padding-bottom: 80px; /* Space for bottom nav */
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        border: 1px solid #50CC8B;
-        border-radius: 12px;
     }
 
     header h1 {
@@ -179,7 +176,7 @@
         border: 0;
         height: 1px;
         background-color: #F2F2F4;
-        cursor: not-allowed;
+        margin: 20px 0;
     }
 
     .summary-bar {
