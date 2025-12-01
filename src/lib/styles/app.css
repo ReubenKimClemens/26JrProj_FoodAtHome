@@ -1,5 +1,5 @@
-@import './tokens/index.css';
-@import './brand/index.css';
-@import './font/index.css';
-@import './color/index.css';
-@import './size/index.css';
+@import '$lib/styles/tokens/index.css';
+@import '$lib/styles/brand/index.css';
+@import '$lib/styles/font/index.css';
+@import '$lib/styles/color/index.css';
+@import '$lib/styles/size/index.css';
