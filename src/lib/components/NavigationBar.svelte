@@ -43,7 +43,7 @@
       transform: translateX(-50%);
       display: flex;
       width: 100%;
-      max-width: 430px;
+      max-width: 420px;
       height: 96px;
       padding: var(--spacing-s) var(--spacing-lg);
       justify-content: space-between;
