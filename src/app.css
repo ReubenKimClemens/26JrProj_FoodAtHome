@@ -4,6 +4,9 @@
 @import '$lib/styles/color/index.css';
 @import '$lib/styles/size/index.css';
 
+
 body {
     padding: 0;
+    box-sizing: border-box;
 }
+

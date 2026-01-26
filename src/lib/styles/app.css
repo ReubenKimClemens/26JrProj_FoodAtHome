@@ -3,3 +3,123 @@
 @import '$lib/styles/font/index.css';
 @import '$lib/styles/color/index.css';
 @import '$lib/styles/size/index.css';
+
+
+.title-xl {
+  font-family: Quicksand;
+  font-size: 2rem; /* 32px */
+  font-weight: 700; 
+  text-transform: capitalize;
+  line-height: 40px;
+}
+
+.title-lg {
+  font-family: Quicksand;
+  font-size: 1.5rem; /* 24px */
+  font-weight: 700; 
+  text-transform: capitalize;
+  line-height: 32px;
+}
+
+.title-md {
+  font-family: Quicksand;
+  font-size: 1.25rem; /* 20px */
+  font-weight: 700; 
+  text-transform: capitalize;
+  line-height: 24px;
+}
+
+.title-sm {
+  font-family: Quicksand;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 700; 
+  text-transform: capitalize;
+  line-height: 24px;
+}
+
+.body-lg {
+  font-family: Nunito;
+  font-size: 1.25rem; /* 20px */
+  font-weight: 500; 
+  line-height: 24px;
+}
+
+.body-md {
+  font-family: Nunito;
+  font-size: 1rem; /* 16px */
+  font-weight: 500; 
+  line-height: 20px;
+}
+
+.body-md-bold-link {
+  font-family: Nunito;
+  font-size: 1rem; /* 16px */
+  font-weight: 700; 
+  text-decoration: underline;
+  line-height: 20px;
+}
+
+.body-md-bold {
+  font-family: Nunito;
+  font-size: 1rem; /* 16px */
+  font-weight: 700; 
+  line-height: 20px;
+}
+
+.body-md-link {
+  font-family: Nunito;
+  font-size: 1rem; /* 16px */
+  font-weight: 500; 
+  text-decoration: underline;
+  line-height: 20px;
+}
+
+.body-sm {
+  font-family: Nunito;
+  font-size: 0.875rem; /* 14px */
+  font-weight: 500; 
+  line-height: 16px;
+}
+
+.body-sm-bold {
+  font-family: Nunito;
+  font-size: 0.875rem; /* 14px */
+  font-weight: 700; 
+  line-height: 16px;
+}
+
+.body-sm {
+  font-family: Nunito;
+  font-size: 0.875rem; /* 14px */
+  font-weight: 500; 
+  line-height: 16px;
+}
+
+.body-xsm {
+  font-family: Nunito;
+  font-size: 0.75rem; /* 12px */
+  font-weight: 500; 
+  line-height: 16px;
+}
+
+.body-xsm-bold {
+  font-family: Nunito;
+  font-size: 0.75rem; /* 12px */
+  font-weight: 700; 
+  line-height: 16px;
+}
+
+/*effect style*/ 
+.small-icon-50 {
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+}
+.drop-shadow-for-navbar-100 {
+  box-shadow: 0px -1px 4px rgba(12, 12, 13, 0.1);
+}
+.drop-shadow-for-navbar-200 {
+  box-shadow: 0px -1px 4px rgba(12, 12, 13, 0.1), 0px -1px 4px rgba(12, 12, 13, 0.1);
+}
+.drop-shadow-for-navbar-300 {
+  box-shadow: 0px -4px 4px rgba(12, 12, 13, 0.1), 0px -4px 4px rgba(12, 12, 13, 0.1);
+}
+
