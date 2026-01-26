@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
   
-  // Import both active and inactive states for each icon
+  // 🟢 Active States
   import homeActive from '$lib/assets/home_active.svg';
   import homeInactive from '$lib/assets/home_inactive.svg';
   import fridgeActive from '$lib/assets/fridge_active.svg';
@@ -32,7 +32,7 @@
       id: 'Scan', 
       label: 'Scan', 
       path: '/scan',
-      icon: receipt // Scan always uses the same icon
+      icon: receipt 
     },
     { 
       id: 'Metrics', 
@@ -54,12 +54,12 @@
     goto(path);
   }
 
-  // Helper function to determine if a nav item is active
+
   function isActive(item) {
     return $page.url.pathname === item.path;
   }
 
-  // Helper function to get the correct icon
+
   function getIcon(item) {
     if (item.id === 'Scan') return item.icon;
     return isActive(item) ? item.iconActive : item.iconInactive;
@@ -85,7 +85,6 @@
 </nav>
 
 <style>
-  /* Your existing styles remain the same */
   .navbar {
     position: fixed;
     bottom: 0;
