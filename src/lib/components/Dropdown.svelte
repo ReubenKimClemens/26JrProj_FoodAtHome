@@ -135,7 +135,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      width: 100%;
+      width: 180px;
     }
   
     .label {
@@ -144,11 +144,6 @@
       font-family: 'Nunito', sans-serif;
       font-weight: 700;
       line-height: 20px;
-    }
-  
-    .required {
-      color: #DC2626;
-      margin-left: 2px;
     }
   
     .select {
@@ -168,10 +163,6 @@
       transition: border-color 0.2s ease, outline 0.2s ease;
     }
   
-    .select:hover:not(:disabled) {
-      border-color: var(--icons-default-brand-primary, #0FA376);
-    }
-  
     .select:focus {
       outline: 2px solid var(--icons-default-brand-primary, #0FA376);
       outline-offset: 0;
@@ -182,14 +173,6 @@
       background: #F3F4F6;
       cursor: not-allowed;
       opacity: 0.6;
-    }
-  
-    .select.error {
-      border-color: #DC2626;
-    }
-  
-    .select.error:focus {
-      outline-color: #DC2626;
     }
   
     .selected-text {
@@ -213,11 +196,7 @@
       transition: transform 0.2s ease;
       flex-shrink: 0;
     }
-  
-    .chevron-icon.rotated {
-      transform: rotate(180deg);
-    }
-  
+   
     .options {
       position: absolute;
       top: calc(100% + 4px);
@@ -255,23 +234,5 @@
       
       cursor: pointer;
       transition: background-color 0.2s ease;
-    }
-  
-    .option:hover {
-      background: #F3F4F6;
-    }
-  
-    .option.selected {
-      background: var(--icons-inverted-brand-primary, #E7F6F1);
-      color: var(--icons-default-brand-primary, #0FA376);
-      font-weight: 700;
-    }
-  
-    .error-message {
-      color: #DC2626;
-      font-size: 14px;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 500;
-      line-height: 16px;
     }
   </style>
