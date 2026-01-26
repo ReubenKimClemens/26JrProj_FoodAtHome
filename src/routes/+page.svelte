@@ -1,9 +1,12 @@
 <script>
+    import Input from '$lib/components/InputField.svelte';
+    let username = $state('');
     let searchQuery = $state('');
     let products = $state([]);
     let loading = $state(false);
     let error = $state('');
     let totalCost = $state(0);
+
 
     // 🔒 Maria's Spoonacular API Key 
     const API_KEY = 'cc2b7b342d844860a154f02ad7e4ca81';
@@ -122,10 +125,15 @@
     {/if}
 </div>
 
+<Input 
+label="Label" 
+placeholder="Value"
+/>
+
 <style>
     .page-content {
         padding: 25px;
-        padding-bottom: 80px; /* Space for bottom nav */
+        padding-bottom: 80px;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
