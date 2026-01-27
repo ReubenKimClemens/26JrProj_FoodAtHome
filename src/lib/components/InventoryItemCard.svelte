@@ -8,7 +8,7 @@
         addedDaysAgo = 2
     } = $props();
     
-    categoryColor = getCategoryColor(category);
+    let categoryColor = getCategoryColor(category);
 </script>
   
 <div class="item-card">
