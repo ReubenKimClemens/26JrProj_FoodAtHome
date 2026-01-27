@@ -2,7 +2,7 @@
   export let data;
   let { receipts, receiptItems } = data;
 
-  import { deleteReceipt, deleteReceiptItem, updateReceiptItem } from '$lib/api/receipts';
+  import { deleteReceipt, deleteReceiptItem, updateReceiptItem, updateReceipt } from '$lib/api/receipts';
   let selectedReceiptId: string | null = null;
 
   // Show items for a specific receipt
@@ -19,7 +19,9 @@
       if (selectedReceiptId === receiptId) selectedReceiptId = null;
     }
   }
-
+  async function testHello() {
+    console.log("hello");
+  }
   async function handleDeleteItem(itemId: string) {
     if (confirm('Delete this item?')) {
       await deleteReceiptItem(itemId);
@@ -39,6 +41,8 @@
       );
     }
   }
+  // testHello();
+  updateReceipt("17a2f4f8-b453-403d-86c3-eecad66a5fd4", 'store_name', 'Corner Store');
 </script>
 
 <style>
@@ -74,11 +78,11 @@
         <button on:click={() => handleDeleteItem(item.id)}>Delete Item</button>
         <button on:click={() => {
           const newName = prompt('New name', item.item_name);
-          if (newName) handleUpdateItem(item.id, 'item_name', newName);
+          if (newName) updateReceiptItem(item.id, 'item_name', newName);
         }}>Update Name</button>
         <button on:click={() => {
           const newPrice = parseFloat(prompt('New price', item.price));
-          if (!isNaN(newPrice)) handleUpdateItem(item.id, 'total_price', newPrice);
+          if (!isNaN(newPrice)) updateReceiptItem(item.id, 'total_price', newPrice);
         }}>Update Price</button>
       </div>
     </div>
