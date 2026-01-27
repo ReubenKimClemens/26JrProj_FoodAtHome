@@ -2,6 +2,7 @@
 	import NavigationBar from '$lib/components/NavigationBar.svelte';
 	import favicon from '$lib/assets/favicon.svg';
 	import '$lib/styles/app.css';
+	import { page } from '$app/stores';
 
 	let { children } = $props();
 </script>
@@ -12,13 +13,15 @@
 
 <div class="app-container">
 	{@render children()}
-	
-	<NavigationBar />
+
+	{#if $page.url.pathname !== '/loading'}
+		<NavigationBar />
+	{/if}
 </div>
 
 <style>
 	.app-container {
-		max-width: 430px; 
+		max-width: 402px; /* iPhone 14 Pro Max width, adjust as needed */
 		margin: 0 auto;
 		min-height: 100vh;
 		position: relative;

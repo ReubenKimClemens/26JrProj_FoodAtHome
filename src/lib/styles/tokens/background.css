@@ -1,6 +1,8 @@
+@import '../brand/index.css';
+
 :root {
     /* Background - Default */
-    --bg-brand-primary: #0FA376;
+    --bg-brand-primary: var(--color-green-500);
     --bg-brand-secondary: #A30F3C;
     --bg-page-primary: #FCFBFA;
     --bg-page-secondary: #FFFFFF;
