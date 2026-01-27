@@ -1,3 +1,11 @@
+<script>
+    let {
+      title = '',
+      linkText = '',      
+      children
+    } = $props();
+</script>
+
 <div class="sizefull-width-link">
     <div class="title">
         <div><span class="title_01_span">Title</span></div>
@@ -32,11 +40,6 @@
     text-decoration: underline;
     line-height: 20px;
     word-wrap: break-word;
-}
-
-.link {
-    text-align: center;
-    cursor: pointer;
 }
 
 .placeholder_span {

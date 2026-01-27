@@ -7,10 +7,17 @@
     } = $props();
     
     const percentage = $derived(Math.min(Math.max((value / max) * 100, 0), 100));
-  </script>
+</script>
   
-  <div class="progress-wrap" aria-label="Progress">
-    <div class="progress" role="progressbar" aria-valuenow={value} aria-valuemin="0" aria-valuemax={max}>
+<div class="progress-wrap" aria-label="Progress">
+    <div 
+      class="progress" 
+      role="progressbar" 
+      aria-valuenow={value} 
+      aria-valuemin="0" 
+      aria-valuemax={max}
+      aria-label="Progress: {Math.round(percentage)}%"
+    >
       <div 
         class="progress-bar" 
         style="width: {percentage}%; background: {color}"
@@ -20,7 +27,7 @@
     {#if showPercentage}
       <div class="percentage-text">{Math.round(percentage)}%</div>
     {/if}
-  </div>
+</div>
   
   <style>
     .progress-wrap {

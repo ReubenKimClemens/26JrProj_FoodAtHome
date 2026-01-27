@@ -1,5 +1,6 @@
 <script>
     import ChevronRight from '$lib/assets/chevron_right.svg';
+    import Divider from '$lib/components/Divider.svelte';
     
     let {
       onItemClick = (item) => {}
@@ -31,9 +32,9 @@
     function handleGuideClick(guide) {
       onItemClick(guide);
     }
-  </script>
+</script>
   
-  <div class="how-to-use-container">
+<div class="how-to-use-container">
     {#each guides as guide, index}
       <button 
         class="guide-item"
@@ -45,12 +46,12 @@
       </button>
       
       {#if index < guides.length - 1}
-        <div class="divider"></div>
+        <Divider />
       {/if}
     {/each}
-  </div>
+</div>
   
-  <style>
+<style>
     .how-to-use-container {
       padding: 8px 32px;
       margin-bottom: 24px;
@@ -63,7 +64,7 @@
   
     .guide-item {
       width: 100%;
-      padding: 16px 0;
+      padding: 10px 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -80,20 +81,6 @@
       font-size: 16px;
       font-family: 'Nunito', sans-serif;
       font-weight: 700;
-      line-height: 20px;
       flex: 1;
     }
-  
-    .chevron-icon {
-      width: 24px;
-      height: 24px;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
-  
-    .divider {
-      width: 100%;
-      height: 1px;
-      background: var(--border-primary, #737780);
-    }
-  </style>
+</style>

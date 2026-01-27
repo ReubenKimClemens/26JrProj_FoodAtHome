@@ -10,9 +10,9 @@
       required = false,
       ...restProps
     } = $props();
-  </script>
+</script>
   
-  <div class="input-field">
+<div class="input-field">
     {#if label}
       <label for={id} class="label">
         {label}
@@ -39,9 +39,9 @@
     {#if error}
       <span id="{id}-error" class="error-message">{error}</span>
     {/if}
-  </div>
+</div>
   
-  <style>
+<style>
     .input-field {
       display: flex;
       flex-direction: column;
@@ -58,24 +58,17 @@
       text-decoration: underline;
     }
   
-    .required {
-      color: #DC2626;
-      margin-left: 2px;
-    }
-  
     .input {
       min-width: 120px;
       padding: 12px 16px;
       background: var(--background-default-page-secondary, white);
       border: 1px solid var(--border-secondary, #DADBDD);
       border-radius: 8px;
-      
       color: var(--text-default, #444955);
       font-size: 16px;
       font-family: 'Nunito', sans-serif;
       font-weight: 500;
       line-height: 20px;
-      
       transition: border-color 0.2s ease, outline 0.2s ease;
     }
   
@@ -83,31 +76,10 @@
       color: var(--text-secondary, #737780);
     }
   
+    /* 🎯Focus state when user taps into the input */
     .input:focus {
       outline: 2px solid var(--icons-default-brand-primary, #0FA376);
       outline-offset: 0;
       border-color: transparent;
     }
-  
-    .input:disabled {
-      background: #F3F4F6;
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
-  
-    .input.error {
-      border-color: #DC2626;
-    }
-  
-    .input.error:focus {
-      outline-color: #DC2626;
-    }
-  
-    .error-message {
-      color: #DC2626;
-      font-size: 14px;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 500;
-      line-height: 16px;
-    }
-  </style>
+</style>

@@ -17,41 +17,62 @@
     let date = $state('');
     let note = $state('');
   
-    import categoryCarrot from '$lib/assets/category_carrot.svg';
-    import categoryMeat from '$lib/assets/category_beef.svg';
-    import categoryBread from '$lib/assets/category_wheat.svg';
-    import categoryMilk from '$lib/assets/category_milk.svg';
-    import categoryCup from '$lib/assets/category_soda.svg';
-    import categoryTrash from '$lib/assets/category_snacks.svg';
-    import categoryCannedFood from '$lib/assets/category_cannedfood.svg';
-    import categoryBottle from '$lib/assets/category_ketchup.svg';
-    import categoryPepper from '$lib/assets/category_chili.svg';
-    import categoryLeftover from '$lib/assets/category_leftover.svg';
-    import categorySnowflake from '$lib/assets/category_frozen.svg';
-    import categoryMisc from '$lib/assets/category_misc.svg';
+    import categoryAll from '$lib/assets/category_all_inactive.svg';
+    import categoryProduce from '$lib/assets/category_produce_inactive.svg';
+    import categoryProtein from '$lib/assets/category_protein_inactive.svg';
+    import categoryWheat from '$lib/assets/category_wheat_inactive.svg';
+    import categoryDairy from '$lib/assets/category_dairy_inactive.svg';
+    import categoryDrinks from '$lib/assets/category_drinks_inactive.svg';
+    import categorySnacks from '$lib/assets/category_snacks_inactive.svg';
+    import categoryPantry from '$lib/assets/category_pantry_inactive.svg';
+    import categorySauces from '$lib/assets/category_sauces_inactive.svg';
+    import categorySpices from '$lib/assets/category_spices_inactive.svg';
+    import categoryLeftover from '$lib/assets/category_leftover_inactive.svg';
+    import categoryFrozen from '$lib/assets/category_frozen_inactive.svg';
+    import categoryMisc from '$lib/assets/category_misc_inactive.svg';
+    import categoryDessert from '$lib/assets/category_dessert_inactive.svg';
   
     const categories = [
-      { id: 'produce', label: 'Produce', icon: categoryCarrot, color: '#FFF4ED' },
-      { id: 'protein', label: 'Protein', icon: categoryMeat, color: '#FFF0F0' },
-      { id: 'bread', label: 'Bread', icon: categoryBread, color: '#FFFAED' },
-      { id: 'dairy', label: 'Dairy', icon: categoryMilk, color: '#F4F3FF' },
-      { id: 'drinks', label: 'Drinks', icon: categoryCup, color: '#EFF6FF' },
-      { id: 'snacks', label: 'Snacks', icon: categoryTrash, color: '#ECFEFF' },
-      { id: 'pantry', label: 'Pantry', icon: categoryCannedFood, color: '#F4F3FF' },
-      { id: 'sauces', label: 'Sauces', icon: categoryBottle, color: '#FCE7F3' },
-      { id: 'spices', label: 'Spices', icon: categoryPepper, color: '#FFF0F0' },
-      { id: 'leftover', label: 'Leftover', icon: categoryLeftover, color: '#ECFEFF' },
-      { id: 'frozen', label: 'Frozen', icon: categorySnowflake, color: '#EFF6FF' },
-      { id: 'misc', label: 'Misc', icon: categoryMisc, color: '#F5F5F5' }
+      { id: 'All', label: 'All', icon: categoryAll, color: '#E6FAF7' },
+      { id: 'Produce', label: 'Produce', icon: categoryProduce, color: '#FFE1CC' },
+      { id: 'Protein', label: 'Protein', icon: categoryProtein, color: '#FCE9E9' },
+      { id: 'Wheat', label: 'Wheat', icon: categoryWheat, color: '#FFEFB0' },
+      { id: 'Dairy', label: 'Dairy', icon: categoryDairy, color: '#EAEAFC' },
+      { id: 'Drinks', label: 'Drinks', icon: categoryDrinks, color: '#E6F3FF' },
+      { id: 'Snacks', label: 'Snacks', icon: categorySnacks, color: '#E6F9FD' },
+      { id: 'Pantry', label: 'Pantry', icon: categoryPantry, color: '#EFEEFE' },
+      { id: 'Sauces', label: 'Sauces', icon: categorySauces, color: '#FAEAFC' },
+      { id: 'Spices', label: 'Spices', icon: categorySpices, color: '#FFE5E5' },
+      { id: 'Leftover', label: 'Leftover', icon: categoryLeftover, color: '#E6FAF7' },
+      { id: 'Frozen', label: 'Frozen', icon: categoryFrozen, color: '#B0DAFF' },
+      { id: 'Misc', label: 'Misc', icon: categoryMisc, color: '#DADBDD' },
+      { id: 'Dessert', label: 'Dessert', icon: categoryDessert, color: '#FDEDF5' }
     ];
   
+    // ❌Close modal when clicking outside (on backdrop)
     function handleBackdropClick(e) {
       if (e.target === e.currentTarget) {
         open = false;
       }
     }
   
+    // ⌨️Accessible keyboard navigation
+    function handleKeydown(e) {
+      if (e.key === 'Escape') {
+        open = false;
+      }
+    }
+
+
     function handleAdd() {
+      if (!itemName.trim()) {
+        alert('Please enter an item name');
+        return;
+      }
+      if (!selectedCategory) {
+        alert('Please select a category');
+        return;
+      }
       onAdd({
         itemName,
         price,
@@ -84,125 +105,157 @@
         quantity -= 1;
       }
     }
+
+    $effect(() => {
+      if (open) {
+        document.addEventListener('keydown', handleKeydown);
+        document.body.style.overflow = 'hidden';
+        
+        return () => {
+          document.removeEventListener('keydown', handleKeydown);
+          document.body.style.overflow = '';
+        };
+      }
+    });
   </script>
   
   {#if open}
+    <!-- 🌑Semi-transparent backdrop -->
     <div 
       class="modal-backdrop" 
       transition:fade={{ duration: 200 }}
       onclick={handleBackdropClick}
       role="presentation"
     >
-      <div 
-        class="modal"
-        transition:scale={{ duration: 300, easing: quintOut, start: 0.95 }}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modal-title"
-      >
-        <div class="modal-header">
-          <div class="handle"></div>
-          <h2 id="modal-title" class="modal-title">{title}</h2>
-        </div>
-  
-        <div class="modal-content">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="item-name">Item Name</label>
-              <input 
-                id="item-name"
-                type="text" 
-                bind:value={itemName}
-                class="input"
-              />
-            </div>
-            <div class="form-group">
-              <label for="price">Price</label>
-              <input 
-                id="price"
-                type="text" 
-                bind:value={price}
-                placeholder="$0.00"
-                class="input"
-              />
-            </div>
-          </div>
-  
+
+    <!-- 📦Main modal container -->
+    <div 
+      class="modal"
+      transition:scale={{ duration: 300, easing: quintOut, start: 0.95 }}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
+
+      <!-- 📌Modal header with drag handle and title -->
+      <div class="modal-header">
+        <div class="handle"></div>
+        <h2 id="modal-title" class="modal-title">{title}</h2>
+      </div>
+
+      <!-- 📝Form content area -->
+      <div class="modal-content">
+        <div class="form-row">
           <div class="form-group">
-            <div class="category-label">Category</div>
-            <div class="category-grid">
-              {#each categories as category}
-                <button
-                  type="button"
-                  class="category-btn"
-                  class:selected={selectedCategory === category.id}
-                  style="background-color: {category.color}"
-                  onclick={() => selectedCategory = category.id}
-                >
-                  <img src={category.icon} alt={category.label} class="category-icon" />
-                  <span class="category-label">{category.label}</span>
-                </button>
-              {/each}
-            </div>
+            <label for="item-name">Item Name</label>
+            <input 
+              id="item-name"
+              type="text" 
+              bind:value={itemName}
+              class="input"
+            />
           </div>
-  
-          <div class="form-row">
-            <div class="quantity-group">
-              <button type="button" class="qty-btn" onclick={decrementQuantity}>−</button>
-              <input 
-                type="number" 
-                bind:value={quantity}
-                class="qty-input"
-                min="1"
-              />
-              <button type="button" class="qty-btn" onclick={incrementQuantity}>+</button>
-            </div>
-            <div class="form-group flex-grow">
-              <input 
-                type="text" 
-                bind:value={unit}
-                placeholder="Unit"
-                class="input"
-              />
-            </div>
-          </div>
-  
           <div class="form-group">
-            <label for="date">Date</label>
-            <div class="date-input-wrapper">
-              <input 
-                id="date"
-                type="text" 
-                bind:value={date}
-                placeholder="mm/dd/yyyy"
-                class="input"
-              />
-              <span class="calendar-icon">📅</span>
-            </div>
-          </div>
-  
-          <div class="form-group">
-            <label for="note">Note</label>
-            <textarea 
-              id="note"
-              bind:value={note}
-              class="textarea"
-              rows="3"
-            ></textarea>
+            <label for="price">Price</label>
+            <input 
+              id="price"
+              type="text" 
+              bind:value={price}
+              placeholder="$0.00"
+              class="input"
+            />
           </div>
         </div>
-  
-        <div class="modal-actions">
-          <button class="btn btn-reset" onclick={handleReset}>
-            Reset
-          </button>
-          <button class="btn btn-add" onclick={handleAdd}>
-            Add
-          </button>
+
+        <!-- 🗂️Category Selection Grid -->
+        <div class="form-group">
+          <div class="category-label">Category</div>
+          <div class="category-grid">
+            {#each categories as category}
+              <button
+                type="button"
+                class="category-btn"
+                class:selected={selectedCategory === category.id}
+                style="background-color: {category.color}"
+                onclick={() => selectedCategory = category.id}
+              >
+                <img src={category.icon} alt={category.label} class="category-icon" />
+                <span class="category-label">{category.label}</span>
+              </button>
+            {/each}
+          </div>
+        </div>
+
+        <!-- 🔢Quantity & Unit Row -->
+        <div class="form-row">
+          <div class="quantity-group">
+            <button 
+              type="button" 
+              class="qty-btn" 
+              onclick={decrementQuantity}
+            >−</button>
+            <input 
+              type="number" 
+              bind:value={quantity}
+              class="qty-input"
+              min="1"
+              aria-label="Quantity"
+            />
+            <button 
+              type="button" 
+              class="qty-btn" 
+              onclick={incrementQuantity}
+              aria-label="Increase Quantity"  
+            >+</button>
+          </div>
+          <div class="form-group flex-grow">
+            <input 
+              type="text" 
+              bind:value={unit}
+              placeholder="Unit (e.g., lbs, oz)"
+              class="input"
+              aria-label="Unit"
+            />
+          </div>
+        </div>
+
+        <!-- 📅Date Picker -->
+        <div class="form-group">
+          <label for="date">Date</label>
+          <div class="date-input-wrapper">
+            <input 
+              id="date"
+              type="date" 
+              bind:value={date}
+              class="input"
+            />
+          </div>
+        </div>
+
+        <!-- 📝Notes Textarea -->
+        <div class="form-group">
+          <label for="note">Note</label>
+          <textarea 
+            id="note"
+            bind:value={note}
+            class="textarea"
+            rows="3"
+          ></textarea>
         </div>
       </div>
+
+      <!-- ♻Reset & Add -->
+      <div class="modal-actions">
+        <button class="btn btn-reset" onclick={handleReset}>
+          Reset
+        </button>
+        <button class="btn btn-add" onclick={handleAdd}>
+          Add
+        </button>
+      </div>
     </div>
-  {/if}
+  </div>
+{/if}
   
   <style>
     .modal-backdrop {
@@ -251,6 +304,7 @@
       line-height: 1.4;
       color: #000;
       margin: 0;
+      font-family: 'Quicksand', sans-serif;
     }
   
     .modal-content {
@@ -278,14 +332,16 @@
   
     label {
       font-size: 14px;
-      font-weight: 500;
-      color: #000;
+      font-weight: 600;
+      color: var(--text-default, #444955);
+      font-family: 'Nunito', sans-serif;
     }
   
     .category-label {
       font-size: 14px;
-      font-weight: 500;
-      color: #000;
+      font-weight: 600;
+      color: var(--text-default, #444955);
+      font-family: 'Nunito', sans-serif;
     }
   
     .input {
@@ -296,6 +352,8 @@
       color: #000;
       background: #fff;
       width: 100%;
+      font-family: 'Nunito', sans-serif;
+      transition: border-color 0.2s ease;
     }
   
     .input::placeholder {
@@ -309,8 +367,8 @@
   
     .category-grid {
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 12px;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
     }
   
     .category-btn {
@@ -318,11 +376,11 @@
       flex-direction: column;
       align-items: center;
       gap: 4px;
-      padding: 12px 8px;
+      padding: 8px 4px;
       border: 2px solid transparent;
       border-radius: 12px;
       cursor: pointer;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, transform 0.2s;
     }
   
     .category-btn.selected {
@@ -332,12 +390,15 @@
     .category-icon {
       width: 24px;
       height: 24px;
+      object-fit: contain;
     }
   
     .category-label {
-      font-size: 10px;
+      font-size: 9px;
       color: #000;
       text-align: center;
+      font-family: 'Nunito', sans-serif;
+      line-height: 1.2;
     }
   
     .quantity-group {
@@ -374,6 +435,7 @@
       font-size: 16px;
       font-weight: 500;
       color: #000;
+      font-family: 'Nunito', sans-serif;
     }
   
     .qty-input:focus {
@@ -382,15 +444,6 @@
   
     .date-input-wrapper {
       position: relative;
-    }
-  
-    .calendar-icon {
-      position: absolute;
-      right: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      font-size: 18px;
     }
   
     .textarea {
@@ -403,6 +456,11 @@
       width: 100%;
       resize: vertical;
       font-family: inherit;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .textarea::placeholder {
+      color: #9ca3af;
     }
   
     .textarea:focus {
@@ -426,6 +484,7 @@
       border: none;
       cursor: pointer;
       transition: transform 0.2s;
+      font-family: 'Nunito', sans-serif;
     }
   
     .btn:active {

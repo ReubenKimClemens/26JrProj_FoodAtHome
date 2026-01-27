@@ -1,10 +1,10 @@
 <script>
     import { goto } from '$app/navigation';
-    
     import UserIcon from '$lib/assets/icon_profile_edit.svg';
     import NotificationIcon from '$lib/assets/icon_notifications.svg';
     import LogoutIcon from '$lib/assets/icon_logout.svg';
     import ChevronRight from '$lib/assets/chevron_right.svg';
+    import Divider from '$lib/components/Divider.svelte';
     
     let {
       onSignOut = () => {}
@@ -21,13 +21,11 @@
         id: 'notifications',
         label: 'Notifications',
         icon: NotificationIcon,
-        // action: () => goto('/notifications')
       },
       {
         id: 'signout',
         label: 'Sign Out',
         icon: LogoutIcon,
-        // action: () => onSignOut()
       }
     ]);
     
@@ -51,12 +49,12 @@
       </button>
       
       {#if index < settings.length - 1}
-        <div class="divider"></div>
+        <Divider />
       {/if}
     {/each}
-  </div>
+</div>
   
-  <style>
+<style>
     .settings-container {
       padding: 8px 32px;
       background: var(--background-default-page-secondary, white);
@@ -68,7 +66,7 @@
   
     .setting-item {
       width: 100%;
-      padding: 16px 0;
+      padding: 10px 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -98,17 +96,5 @@
       font-family: 'Nunito', sans-serif;
       font-weight: 700;
       line-height: 20px;
-    }
-  
-    .chevron-icon {
-      width: 24px;
-      height: 24px;
-      object-fit: contain;
-    }
-  
-    .divider {
-      width: 100%;
-      height: 1px;
-      background: var(--border-primary, #737780);
     }
 </style>

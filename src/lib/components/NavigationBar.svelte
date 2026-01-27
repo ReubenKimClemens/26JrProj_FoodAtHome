@@ -5,11 +5,11 @@
   // 🟢 Active States
   import homeActive from '$lib/assets/nav_home_active.svg';
   import homeInactive from '$lib/assets/nav_home_inactive.svg';
-  import fridgeActive from '$lib/assets/nav_inventory_active.svg';
-  import fridgeInactive from '$lib/assets/nav_inventory_inactive.svg';
+  import inventoryActive from '$lib/assets/nav_inventory_active.svg';
+  import inventoryInactive from '$lib/assets/nav_inventory_inactive.svg';
   import receipt from '$lib/assets/nav_receipt.svg';
-  import graphActive from '$lib/assets/nav_metrics_active.svg';
-  import graphInactive from '$lib/assets/nav_metrics_inactive.svg';
+  import metricsActive from '$lib/assets/nav_metrics_active.svg';
+  import metricsInactive from '$lib/assets/nav_metrics_inactive.svg';
   import profileActive from '$lib/assets/nav_profile_active.svg';
   import profileInactive from '$lib/assets/nav_profile_inactive.svg';
 
@@ -25,8 +25,8 @@
       id: 'Inventory', 
       label: 'Inventory', 
       path: '/inventory',
-      iconActive: fridgeActive,
-      iconInactive: fridgeInactive
+      iconActive: inventoryActive,
+      iconInactive: inventoryInactive
     },
     { 
       id: 'Scan', 
@@ -38,8 +38,8 @@
       id: 'Metrics', 
       label: 'Metrics', 
       path: '/metrics',
-      iconActive: graphActive,
-      iconInactive: graphInactive
+      iconActive: metricsActive,
+      iconInactive: metricsInactive
     },
     { 
       id: 'Profile', 
@@ -54,11 +54,9 @@
     goto(path);
   }
 
-
   function isActive(item) {
     return $page.url.pathname === item.path;
   }
-
 
   function getIcon(item) {
     if (item.id === 'Scan') return item.icon;
@@ -76,6 +74,7 @@
       aria-label={item.label}
       aria-current={isActive(item) ? 'page' : undefined}
     >
+
       <div class="icon-wrapper" class:scan-icon={item.id === 'Scan'}>
         <img src={getIcon(item)} alt={item.label} class="nav-icon" />
       </div>
@@ -121,12 +120,6 @@
     line-height: 20px;
     color: var(--text-default, #374151);
     transition: color 0.2s ease;
-  }
-
-  .nav-icon {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
   }
 
   .icon-wrapper {

@@ -23,23 +23,24 @@
         }
       ]
     } = $props();
-  </script>
+</script>
   
-  <div class="scanning-tips-container">
+<div class="scanning-tips-container">
     {#each tips as tip}
       <div class="tip-card">
         <div class="tip-number">
           <span>{tip.number}</span>
         </div>
+
         <div class="tip-content">
           <h3 class="tip-title">{tip.title}</h3>
           <p class="tip-description">{tip.description}</p>
         </div>
       </div>
     {/each}
-  </div>
+</div>
   
-  <style>
+<style>
     .scanning-tips-container {
       display: flex;
       flex-direction: column;
@@ -102,4 +103,4 @@
       line-height: 16px;
       margin: 0;
     }
-  </style>
+</style>
