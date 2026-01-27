@@ -1,7 +1,7 @@
 <script>
-
+    import ListGridToggle from '$lib/components/ListGridToggle.svelte'
 </script>
 
-<style>
-    
-</style>
+<div>
+    <ListGridToggle />
+</div>

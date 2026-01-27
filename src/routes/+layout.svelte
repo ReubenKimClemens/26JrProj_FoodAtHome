@@ -18,7 +18,7 @@
 
 <style>
 	.app-container {
-		max-width: 430px; /* iPhone 14 Pro Max width, adjust as needed */
+		max-width: 402px; /* iPhone 14 Pro Max width, adjust as needed */
 		margin: 0 auto;
 		min-height: 100vh;
 		position: relative;
