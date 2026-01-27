@@ -1,6 +1,8 @@
 <script>
     import Input from '$lib/components/InputField.svelte';
     import SectionCard from '$lib/components/SectionCard.svelte';
+    import ProgressBar from '$lib/components/ProgressBar.svelte';
+    import Divider from '$lib/components/Divider.svelte';
     // let username = $state('');
     // let searchQuery = $state('');
     // let products = $state([]);
@@ -148,6 +150,10 @@ placeholder="Value"
       {/snippet}
     </SectionCard>
   </div>
+  
+  <Divider />
+  
+  <ProgressBar value={25} max={100} />
 
 <style>
     .page-container {
