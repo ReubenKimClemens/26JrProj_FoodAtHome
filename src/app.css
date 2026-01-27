@@ -1,3 +1,7 @@
+/* This root app.css pulls in all the project’s shared design styles 
+(tokens, brand, fonts, colors, sizes) and applies a global reset so 
+every page starts with consistent styling. */
+
 @import '$lib/styles/tokens/index.css';
 @import '$lib/styles/brand/index.css';
 @import '$lib/styles/font/index.css';
