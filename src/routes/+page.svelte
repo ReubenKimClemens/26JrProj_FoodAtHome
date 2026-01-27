@@ -1,75 +1,75 @@
 <script>
     import Input from '$lib/components/InputField.svelte';
-    let username = $state('');
-    let searchQuery = $state('');
-    let products = $state([]);
-    let loading = $state(false);
-    let error = $state('');
-    let totalCost = $state(0);
+    import SectionCard from '$lib/components/SectionCard.svelte';
+    // let username = $state('');
+    // let searchQuery = $state('');
+    // let products = $state([]);
+    // let loading = $state(false);
+    // let error = $state('');
+    // let totalCost = $state(0);
 
 
-    // 🔒 Maria's Spoonacular API Key 
-    const API_KEY = 'cc2b7b342d844860a154f02ad7e4ca81';
-    const API_BASE = 'https://api.spoonacular.com/food/products/search';
+    // // 🔒 Maria's Spoonacular API Key 
+    // const API_KEY = 'cc2b7b342d844860a154f02ad7e4ca81';
+    // const API_BASE = 'https://api.spoonacular.com/food/products/search';
 
-    async function searchGroceries() {
-        // ✅ Validate
-        if (!searchQuery.trim()) {
-            error = 'Please enter a search term.';
-            products = [];
-            return;
-        }
+    // async function searchGroceries() {
+    //     // ✅ Validate
+    //     if (!searchQuery.trim()) {
+    //         error = 'Please enter a search term.';
+    //         products = [];
+    //         return;
+    //     }
         
-        // 🔁 Reset
-        loading = true;
-        error = '';
-        products = [];
-        totalCost = 0;
+    //     // 🔁 Reset
+    //     loading = true;
+    //     error = '';
+    //     products = [];
+    //     totalCost = 0;
 
-        try {
-            // ☎️ Call API ---
-            const encodedQuery = encodeURIComponent(searchQuery);
-            const url = `${API_BASE}?query=${encodedQuery}&number=10&apiKey=${API_KEY}`;
+    //     try {
+    //         // ☎️ Call API ---
+    //         const encodedQuery = encodeURIComponent(searchQuery);
+    //         const url = `${API_BASE}?query=${encodedQuery}&number=10&apiKey=${API_KEY}`;
             
-            const response = await fetch(url);
+    //         const response = await fetch(url);
 
-            // ⌨️ Handle any HTTP errors
-            if (!response.ok) {
-                throw new Error(`API Error: HTTP Status ${response.status} - ${response.statusText}.`);
-            }
+    //         // ⌨️ Handle any HTTP errors
+    //         if (!response.ok) {
+    //             throw new Error(`API Error: HTTP Status ${response.status} - ${response.statusText}.`);
+    //         }
 
-            const data = await response.json();
+    //         const data = await response.json();
             
-            // 🤔 Process Data
-            if (data.products && data.products.length > 0) {
-                products = data.products.map(product => {
-                    const mockPrice = Math.floor(Math.random() * 300) / 100 + 0.99; // $0.99 to $3.99
-                    return {
-                        id: product.id,
-                        title: product.title,
-                        image: product.image,
-                        price: mockPrice
-                    };
-                });
+    //         // 🤔 Process Data
+    //         if (data.products && data.products.length > 0) {
+    //             products = data.products.map(product => {
+    //                 const mockPrice = Math.floor(Math.random() * 300) / 100 + 0.99; // $0.99 to $3.99
+    //                 return {
+    //                     id: product.id,
+    //                     title: product.title,
+    //                     image: product.image,
+    //                     price: mockPrice
+    //                 };
+    //             });
                 
-                totalCost = products.reduce((sum, p) => sum + p.price, 0);
+    //             totalCost = products.reduce((sum, p) => sum + p.price, 0);
                 
-            } else {
-                error = `No products found for "${searchQuery}". Try something more general!`;
-            }
+    //         } else {
+    //             error = `No products found for "${searchQuery}". Try something more general!`;
+    //         }
 
-        } catch (e) {
-            // ❌ Handle any errors
-            console.error('Search failed:', e);
-            error = `Failed to fetch data. ${e instanceof Error ? e.message : 'An unknown error occurred.'}`;
-            products = [];
-        } finally {
-            loading = false;
-        }
-    }
+    //     } catch (e) {
+    //         // ❌ Handle any errors
+    //         console.error('Search failed:', e);
+    //         error = `Failed to fetch data. ${e instanceof Error ? e.message : 'An unknown error occurred.'}`;
+    //         products = [];
+    //     } finally {
+    //         loading = false;
+    //     }
+    // }
 </script>
-
-<div class="page-content">
+<!-- <div class="page-content">
     <header>
         <h1>Food at Home [TEST]</h1>
         <p class="app-description">The Food At Home app helps young adults, especially students, become more mindful of their grocery spending through small easy steps.</p>
@@ -123,15 +123,43 @@
             </ul>
         </section>
     {/if}
-</div>
+</div> -->
 
 <Input 
 label="Label" 
 placeholder="Value"
 />
 
+<div class="page-container">
+    <SectionCard 
+      title="Recently Added" 
+      linkText="See All" 
+      linkHref="/inventory?sort=recent"
+    >
+      {#snippet children()}
+        {#each recentItems as item}
+          <div class="list-item">
+            <div>
+              <div class="item-title">{item.name}</div>
+              <div class="item-meta">{item.category} · {item.added}</div>
+            </div>
+          </div>
+        {/each}
+      {/snippet}
+    </SectionCard>
+  </div>
+
 <style>
-    .page-content {
+    .page-container {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        width: 100%;
+        margin: 24px auto;
+        
+  }
+
+    /* .page-content {
         padding: 25px;
         padding-bottom: 80px;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -262,5 +290,5 @@ placeholder="Value"
         background-color: #50CC8B;
         color: #FFFBF0;
         border: 1px solid #008F5D;
-    }
+    } --> */
 </style>
