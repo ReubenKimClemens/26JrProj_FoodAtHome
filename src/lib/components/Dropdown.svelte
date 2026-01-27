@@ -5,7 +5,7 @@
       label = '',
       value = $bindable(''),
       options = [],
-      placeholder = 'Select an option',
+      placeholder = 'Newest First',
       disabled = false,
       error = '',
       id = crypto.randomUUID(),
@@ -22,6 +22,7 @@
       )
     );
     
+    // 📝Displayed text in the dropdown button
     const displayText = $derived(() => {
       if (!selectedOption) return placeholder;
       return typeof selectedOption === 'object' 
@@ -29,23 +30,27 @@
         : selectedOption;
     });
     
+    // 🖱️Open or close the dropdown when clicked
     function toggleDropdown() {
       if (!disabled) {
         isOpen = !isOpen;
       }
     }
     
+    // ✅When user selects an option, update the value and close menu
     function selectOption(option) {
       value = typeof option === 'object' ? option.value : option;
       isOpen = false;
     }
     
+    // 👆Close dropdown when clicking outside of it
     function handleClickOutside(event) {
       if (dropdownRef && !dropdownRef.contains(event.target)) {
         isOpen = false;
       }
     }
     
+    // ⌨️Accessible keyboard navigation
     function handleKeydown(event) {
       if (disabled) return;
       
@@ -65,18 +70,9 @@
         };
       }
     });
-  </script>
+</script>
   
-  <div class="dropdown-field" bind:this={dropdownRef}>
-    {#if label}
-      <label for={id} class="label">
-        {label}
-        {#if required}
-          <span class="required">*</span>
-        {/if}
-      </label>
-    {/if}
-    
+<div class="dropdown-field" bind:this={dropdownRef}>    
     <button
       type="button"
       {id}
@@ -92,16 +88,16 @@
       aria-describedby={error ? `${id}-error` : undefined}
       {...restProps}
     >
-      <span class="selected-text" class:placeholder={!value}>
-        {displayText()}
-      </span>
+    <span class="selected-text" class:placeholder={!value}>
+      {displayText()}
+    </span>
       
-      <img 
-        src={ChevronDown} 
-        alt="" 
-        class="chevron-icon"
-        class:rotated={isOpen}
-      />
+    <img 
+      src={ChevronDown} 
+      alt="" 
+      class="chevron-icon"
+      class:rotated={isOpen}
+    />
     </button>
     
     {#if isOpen}
@@ -127,23 +123,15 @@
     {#if error}
       <span id="{id}-error" class="error-message">{error}</span>
     {/if}
-  </div>
+</div>
   
-  <style>
+<style>
     .dropdown-field {
       position: relative;
       display: flex;
       flex-direction: column;
       gap: 8px;
-      width: 180px;
-    }
-  
-    .label {
-      color: var(--text-default, #444955);
-      font-size: 16px;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      line-height: 20px;
+      width: 100%;
     }
   
     .select {
@@ -153,12 +141,10 @@
       background: var(--background-default-page-secondary, white);
       border: 1px solid var(--border-secondary, #DADBDD);
       border-radius: 8px;
-      
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 8px;
-      
       cursor: pointer;
       transition: border-color 0.2s ease, outline 0.2s ease;
     }
@@ -184,18 +170,6 @@
       font-weight: 500;
       line-height: 20px;
     }
-  
-    .selected-text.placeholder {
-      color: var(--text-secondary, #737780);
-    }
-  
-    .chevron-icon {
-      width: 16px;
-      height: 16px;
-      object-fit: contain;
-      transition: transform 0.2s ease;
-      flex-shrink: 0;
-    }
    
     .options {
       position: absolute;
@@ -203,17 +177,14 @@
       left: 0;
       right: 0;
       z-index: 100;
-      
       padding: 8px;
       background: var(--background-default-page-secondary, white);
       box-shadow: 0px 4px 6px rgba(12, 12, 13, 0.1), 0px 2px 4px rgba(12, 12, 13, 0.06);
       border-radius: 8px;
       border: 1px solid var(--border-secondary, #DADBDD);
-      
       display: flex;
       flex-direction: column;
       gap: 4px;
-      
       max-height: 300px;
       overflow-y: auto;
     }
@@ -224,15 +195,13 @@
       background: none;
       border: none;
       border-radius: 4px;
-      
       text-align: left;
       color: var(--text-default, #444955);
       font-size: 16px;
       font-family: 'Nunito', sans-serif;
       font-weight: 500;
       line-height: 20px;
-      
       cursor: pointer;
       transition: background-color 0.2s ease;
     }
-  </style>
+</style>

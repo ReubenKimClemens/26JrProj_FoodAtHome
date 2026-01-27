@@ -1,22 +1,19 @@
 <script>
     let {
       categories = [
-        'All', 'Produce', 'Protein', 'Bread', 'Dairy', 
+        'All', 'Produce', 'Protein', 'Wheat', 'Dairy', 
         'Drinks', 'Snacks', 'Pantry', 'Sauces', 'Spices',
         'Leftover', 'Frozen', 'Misc', 'Dessert'
       ],
       activeCategory = $bindable('All')
     } = $props();
-    
-    function handleCategoryClick(category) {
-      activeCategory = category;
-    }
-    
+
+    // 🎨Background colors for each category when NOT selected
     const categoryColors = {
       'All': { light: '#E7F6F1', dark: '#0FA376' },
       'Produce': { light: '#FFE1CC', dark: '#FF6B00' },
       'Protein': { light: '#FCE9E9', dark: '#DC2626' },
-      'Bread': { light: '#FFEFB0', dark: '#B59100' },
+      'Wheat': { light: '#FFEFB0', dark: '#B59100' },
       'Dairy': { light: '#EAEAFC', dark: '#3030E0' },
       'Drinks': { light: '#E6F3FF', dark: '#3C82F6' },
       'Snacks': { light: '#E6F9FD', dark: '#00C0E8' },
@@ -28,9 +25,15 @@
       'Misc': { light: '#DADBDD', dark: '#444955' },
       'Dessert': { light: '#FDEDF5', dark: '#EC4899' }
     };
-  </script>
-  
-  <div class="category-tags-container">
+
+    // 🖱️When user clicks a category icon, update to its active color
+    function handleCategoryClick(category) {
+    activeCategory = category;
+    }
+</script>
+
+<!-- 📱Scrollable container of category icons -->
+<div class="category-tags-container">
     {#each categories as category}
       <button
         class="category-tag"
@@ -44,17 +47,18 @@
             : categoryColors[category].dark};
         "
         onclick={() => handleCategoryClick(category)}
+        aria-label="Filter by {category}"
+        aria-pressed={activeCategory === category}
       >
         {category}
       </button>
     {/each}
-  </div>
+</div>
   
-  <style>
+<style>
     .category-tags-container {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+      gap: 16px;
       padding: 16px;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
@@ -72,13 +76,11 @@
       cursor: pointer;
       white-space: nowrap;
       transition: all 0.2s ease;
-      
       font-size: 14px;
       font-family: 'Nunito', sans-serif;
       font-weight: 700;
       line-height: 16px;
       color: var(--text-color);
-      
       flex-shrink: 0;
     }
 </style>

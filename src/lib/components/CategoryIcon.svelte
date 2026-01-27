@@ -1,18 +1,19 @@
 <script>
     let {
       categories = [
-        'All', 'Produce', 'Protein', 'Bread', 'Dairy', 
+        'All', 'Produce', 'Protein', 'Wheat', 'Dairy', 
         'Drinks', 'Snacks', 'Pantry', 'Sauces', 'Spices',
         'Leftover', 'Frozen', 'Misc', 'Dessert'
       ],
       activeCategory = $bindable('All')
     } = $props();
     
+    // 🖼️Icon names for each category
     const categoryIcons = {
       'All': 'category_all',
       'Produce': 'category_produce',
       'Protein': 'category_protein',
-      'Bread': 'category_wheat',
+      'Wheat': 'category_wheat',
       'Dairy': 'category_dairy',
       'Drinks': 'category_drinks',
       'Snacks': 'category_snacks',
@@ -25,6 +26,7 @@
       'Dessert': 'category_dessert'
     };
     
+    // 🎨Background colors for each category when NOT selected
     const categoryBgColors = {
       'All': '#E6FAF7',
       'Produce': '#FFE1CC',
@@ -42,6 +44,7 @@
       'Dessert': '#FDEDF5'
     };
     
+    // 🖱️When user clicks a category icon, update to its active color
     function handleCategoryClick(category) {
       activeCategory = category;
     }
@@ -52,7 +55,8 @@
       return `/src/lib/assets/${iconName}_${state}.svg`;
     }
 </script>
-  
+
+<!-- 📱Scrollable container of category icons -->
 <div class="category-icons-container">
     {#each categories as category}
       <button 
@@ -74,7 +78,7 @@
       </button>
     {/each}
 </div>
-  
+
 <style>
     .category-icons-container {
       display: flex;
@@ -99,10 +103,6 @@
       padding: 0;
       transition: transform 0.2s ease;
       flex-shrink: 0;
-    }
-  
-    .category-icon:active {
-      transform: scale(0.95);
     }
   
     .label {

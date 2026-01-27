@@ -29,7 +29,7 @@ export async function getReceipt(receiptId) {
     .from('receipts')
     .select('*')
     .eq('id', receiptId)
-    .single(); // ensures only one record is returned
+    .single();
 
   if (error) throw new Error(error.message);
   return data;

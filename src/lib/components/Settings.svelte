@@ -1,9 +1,9 @@
 <script>
     import { goto } from '$app/navigation';
     
-    import UserIcon from '$lib/assets/profile_edit.svg';
-    import NotificationIcon from '$lib/assets/notifications.svg';
-    import LogoutIcon from '$lib/assets/logout.svg';
+    import UserIcon from '$lib/assets/icon_profile_edit.svg';
+    import NotificationIcon from '$lib/assets/icon_notifications.svg';
+    import LogoutIcon from '$lib/assets/icon_logout.svg';
     import ChevronRight from '$lib/assets/chevron_right.svg';
     
     let {

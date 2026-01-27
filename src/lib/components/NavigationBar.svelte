@@ -3,15 +3,15 @@
   import { goto } from '$app/navigation';
   
   // 🟢 Active States
-  import homeActive from '$lib/assets/home_active.svg';
-  import homeInactive from '$lib/assets/home_inactive.svg';
-  import fridgeActive from '$lib/assets/fridge_active.svg';
-  import fridgeInactive from '$lib/assets/fridge_inactive.svg';
-  import receipt from '$lib/assets/receipt.svg';
-  import graphActive from '$lib/assets/graph_active.svg';
-  import graphInactive from '$lib/assets/graph_inactive.svg';
-  import profileActive from '$lib/assets/profile_active.svg';
-  import profileInactive from '$lib/assets/profile_inactive.svg';
+  import homeActive from '$lib/assets/nav_home_active.svg';
+  import homeInactive from '$lib/assets/nav_home_inactive.svg';
+  import fridgeActive from '$lib/assets/nav_inventory_active.svg';
+  import fridgeInactive from '$lib/assets/nav_inventory_inactive.svg';
+  import receipt from '$lib/assets/nav_receipt.svg';
+  import graphActive from '$lib/assets/nav_metrics_active.svg';
+  import graphInactive from '$lib/assets/nav_metrics_inactive.svg';
+  import profileActive from '$lib/assets/nav_profile_active.svg';
+  import profileInactive from '$lib/assets/nav_profile_inactive.svg';
 
   const navItems = [
     { 
