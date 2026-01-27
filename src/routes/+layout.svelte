@@ -2,6 +2,7 @@
 	import NavigationBar from '$lib/components/NavigationBar.svelte';
 	import favicon from '$lib/assets/favicon.svg';
 	import '$lib/styles/app.css';
+	import { page } from '$app/stores';
 
 	let { children } = $props();
 </script>
@@ -12,8 +13,10 @@
 
 <div class="app-container">
 	{@render children()}
-	
-	<NavigationBar />
+
+	{#if $page.url.pathname !== '/loading'}
+		<NavigationBar />
+	{/if}
 </div>
 
 <style>

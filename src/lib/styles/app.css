@@ -5,6 +5,10 @@
 @import '$lib/styles/size/index.css';
 
 
+html {
+  color: var(--text-default);
+}
+
 .title-xl {
   font-family: Quicksand;
   font-size: 2rem; /* 32px */
