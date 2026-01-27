@@ -1,3 +1,7 @@
+// This supabaseServerClient.js file creates a Supabase client specifically for server-side code, letting our 
+// backend routes or server endpoints securely access the database for things like authentication, queries, or 
+// server-only operations.
+
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.SUPABASE_URL;

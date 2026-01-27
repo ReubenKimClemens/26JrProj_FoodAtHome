@@ -49,7 +49,7 @@
   .container { padding: 1rem; font-family: sans-serif; }
   .receipt, .item { border: 1px solid #ccc; padding: 0.5rem; margin-bottom: 0.5rem; border-radius: 4px; }
   .buttons { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
-  input { padding: 0.2rem; width: 100px; }
+  /* input { padding: 0.2rem; width: 100px; } */
 </style>
 
 <div class="container">
