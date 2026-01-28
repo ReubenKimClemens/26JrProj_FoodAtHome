@@ -25,12 +25,10 @@
 
 <style>
     .content {
-        background: lightgrey;
-        height: 100vh;
+        width: fit-content;
+        height: 100%;
         display: flex;
-        justify-content: center;
-        padding-top: 5rem;
-        
+        justify-content: center;        
     }
 
 
@@ -43,7 +41,7 @@
 
         width: 3rem;
         height: 3rem;
-        box-shadow: var(--drop-shadow-for-navbar-200);
+        box-shadow: var(--box-shadow);
         border-radius: var(--radius-minimal);
 
         align-items: center;
