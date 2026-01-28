@@ -11,7 +11,10 @@
 <div class="content">
 
     <div class="top-nav">
-        <X size={30}/>
+        <button on:click={() => goto('/')} class="back-btn">
+            <X size={30}/>
+        </button>
+        
 
         <button class="help-btn" on:click={() => goto('/scan/scanning-tips')}>
 
@@ -66,6 +69,11 @@
     }
 
     .help-btn{
+        cursor: pointer;
+        border: none;
+        background: transparent;
+    }
+    .back-btn{
         cursor: pointer;
         border: none;
         background: transparent;

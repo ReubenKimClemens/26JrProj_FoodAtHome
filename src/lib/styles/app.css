@@ -7,7 +7,7 @@
 
 html {
   color: var(--text-default);
-  background: lightgrey;
+  background-color: var(--bg-default);
 }
 
 .title-xl {

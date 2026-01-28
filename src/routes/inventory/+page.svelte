@@ -78,6 +78,8 @@
     .inventory-screen {
         font-family: var(--font-family-title);
         padding-bottom: 7rem;
+        width: 90%;
+        align-self: center;
     }
     .filters {
         display: flex;

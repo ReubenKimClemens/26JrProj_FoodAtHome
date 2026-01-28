@@ -61,7 +61,9 @@
     .metric-screen {
         font-family: var(--font-family-title);
         padding-bottom: 7rem;
+        align-self: center;
         gap: 1rem;
+        width: 90%;
     }
     .store-list {
         display: flex;
