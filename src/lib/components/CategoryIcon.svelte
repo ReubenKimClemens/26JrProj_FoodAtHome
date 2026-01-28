@@ -52,7 +52,7 @@
     function getIconPath(category, isActive) {
       const iconName = categoryIcons[category];
       const state = isActive ? 'active' : 'inactive';
-      return `/src/lib/assets/${iconName}_${state}.svg`;
+      return `$lib/assets/${iconName}_${state}.svg`;
     }
 </script>
 
