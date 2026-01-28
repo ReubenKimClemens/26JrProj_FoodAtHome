@@ -11,7 +11,7 @@
 <div class="content">
 
     <div class="top-nav">
-        <button on:click={() => goto('/')} class="back-btn">
+        <button on:click={() => goto('/home')} class="back-btn">
             <X size={30}/>
         </button>
         
