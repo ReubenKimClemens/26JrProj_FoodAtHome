@@ -15,7 +15,9 @@
 </svelte:head>
 
 <div class="app-container">
-	{@render children()}
+	<div class="content-wrapper">
+		{@render children()}
+	</div>
 
 	{#if !noNavBar.includes($page.url.pathname)}
 		<NavigationBar />
@@ -24,14 +26,13 @@
 
 <style>
 	.app-container {
-		max-width: 402px; /* iPhone 14 Pro Max width, adjust as needed */
+		max-width: 402px; 
 		margin: 0 auto;
 		min-height: 100vh;
 		position: relative;
-		display: flex;
-		flex-direction: column;
+	}
 
-		border: 1px solid lightgrey;
-		background: white;
+	.content-wrapper {
+		padding-bottom: 120px; 
 	}
 </style>
