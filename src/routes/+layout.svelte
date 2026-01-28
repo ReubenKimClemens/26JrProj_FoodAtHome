@@ -5,6 +5,9 @@
 	import { page } from '$app/stores';
 
 	let { children } = $props();
+
+	// exclude page that doesn't need navbar
+	const noNavBar = ['/loading', '/scan'];
 </script>
 
 <svelte:head>
@@ -14,7 +17,7 @@
 <div class="app-container">
 	{@render children()}
 
-	{#if $page.url.pathname !== '/loading'}
+	{#if !noNavBar.includes($page.url.pathname)}
 		<NavigationBar />
 	{/if}
 </div>
@@ -27,5 +30,8 @@
 		position: relative;
 		display: flex;
 		flex-direction: column;
+
+		border: 1px solid lightgrey;
+		background: white;
 	}
 </style>

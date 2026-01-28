@@ -7,7 +7,9 @@
 
 <button
   {type}
-  class={`btn btn-${variant} btn-${size} ${block ? "btn-block" : ""} title-sm`}
+  class={`btn btn-${variant} btn-${size} ${block ? "btn-block" : ""} ${
+    variant === "primary" ? "title-sm" : "body-md"
+  }`}
   on:click
 >
   <slot>Button</slot>
