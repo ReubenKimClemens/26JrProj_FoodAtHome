@@ -12,9 +12,13 @@
 
     <div class="top-nav">
         <X size={30}/>
-        <img src={QuestionMark} alt="help button">
 
+        <button class="help-btn" on:click={() => goto('/scan/scanning-tips')}>
+
+            <img src={QuestionMark} alt="help button">
+        </button>
         
+
     </div>
     
 
@@ -59,6 +63,12 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
+    }
+
+    .help-btn{
+        cursor: pointer;
+        border: none;
+        background: transparent;
     }
 
     .tips-container {

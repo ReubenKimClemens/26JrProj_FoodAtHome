@@ -7,7 +7,7 @@
 	let { children } = $props();
 
 	// exclude page that doesn't need navbar
-	const noNavBar = ['/loading', '/scan'];
+	const noNavBar = ['/loading', '/scan', '/achievements'];
 </script>
 
 <svelte:head>
