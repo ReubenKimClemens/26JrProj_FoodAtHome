@@ -1,28 +1,26 @@
 <script>
     let {
       title = '',
-      linkText = '',      
-      children
+      linkText = '',
+      linkHref = '#',
+      content
     } = $props();
 </script>
 
-<div class="sizefull-width-link">
+<div class="section-card">
     <div class="title">
-        <div><span class="title_01_span">Title</span></div>
-        <div class="link-box">
-            <div class="link"><span class="link_span">Link</span></div>
-            <div class="vector"></div>
-        </div>
+        <div><span class="title_span">{title}</span></div>
+        <a href={linkHref} class="link-box">
+            <span class="link_span">{linkText}</span>
+        </a>
     </div>
-    <div class="contentplaceholder">
-        <div class="content">
-            <div><span class="placeholder_span">Placeholder</span></div>
-        </div>
+    <div class="content-wrapper">
+        {@render content()}
     </div>
 </div>
 
 <style>
-.title_01_span {
+.title_span {
     color: var(--text-default, #444955);
     font-size: 20px;
     font-family: Quicksand;
@@ -42,45 +40,21 @@
     word-wrap: break-word;
 }
 
-.placeholder_span {
-    color: var(--text-secondary, #737780);
-    font-size: 16px;
-    font-family: Nunito;
-    font-weight: 500;
-    text-transform: capitalize;
-    word-wrap: break-word;
-}
-
-.content {
-    align-self: stretch;
-    background: var(--background-default-page-secondary, white);
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 4px;
-    display: flex;
-}
-
 .link-box {
-    width: 115px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    padding-left: 32px;
-    padding-right: 24px;
+    padding: 8px 24px 8px 32px;
     background: var(--background-default-brand-primary, #0FA376);
     border-top-left-radius: 360px;
     border-top-right-radius: 16px;
     justify-content: center;
     align-items: center;
     display: flex;
+    text-decoration: none;
 }
 
-.contentplaceholder {
-    width: 365px;
-    padding-left: 32px;
-    padding-right: 32px;
-    padding-top: 24px;
-    padding-bottom: 24px;
+.content-wrapper {
+    align-self: stretch;
+    padding: 24px 32px;
+    margin-bottom: 24px;
     background: var(--background-default-page-secondary, white);
     box-shadow: 0px 1px 4px rgba(12, 12, 13, 0.05), 0px 1px 4px rgba(12, 12, 13, 0.10);
     overflow: hidden;
@@ -90,7 +64,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 16px;
+    gap: 4px;
     display: flex;
 }
 
@@ -101,7 +75,7 @@
     display: inline-flex;
 }
 
-.sizefull-width-link {
+.section-card {
     width: 100%;
     height: 100%;
     border-radius: 8px;

@@ -62,6 +62,7 @@
       border-radius: 8px;
       display: flex;
       flex-direction: column;
+      margin: 24px 0;
     }
   
     .setting-item {

@@ -31,7 +31,7 @@
   
   <style>
     .progress-wrap {
-      padding: 14px 18px 8px;
+      padding: 14px 0 8px;
       width: 100%;
       max-width: 404px;
     }
