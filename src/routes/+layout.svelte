@@ -12,7 +12,9 @@
 </svelte:head>
 
 <div class="app-container">
-	{@render children()}
+	<div class="content-wrapper">
+		{@render children()}
+	</div>
 
 	{#if $page.url.pathname !== '/loading'}
 		<NavigationBar />
@@ -25,7 +27,9 @@
 		margin: 0 auto;
 		min-height: 100vh;
 		position: relative;
-		display: flex;
-		flex-direction: column;
+	}
+
+	.content-wrapper {
+		padding-bottom: 120px; 
 	}
 </style>

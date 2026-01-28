@@ -19,9 +19,13 @@
   ]);
 </script>
 
+<!-- Good Morning/Afternoon/Evening Cronch! -->
 <PageHeader userName="Cronch" />
+
+<!-- Budget Check Component -->
 <BudgetCheck />
 
+<!-- Inventory -->
 <SectionCard title="inventory" linkText="View all" linkHref="/inventory">
   {#snippet content()}
       <div class="inventory-content">
@@ -41,6 +45,7 @@
   {/snippet}
 </SectionCard>
 
+<!-- Shopping Lists -->
 <SectionCard title="shopping lists" linkText="View all" linkHref="/shopping-lists">
   {#snippet content()}
       <div class="shopping-lists-content">
@@ -64,6 +69,7 @@
 </SectionCard>
 
 <style>
+/* Inventory */
 .inventory-content {
   width: 100%;
   display: flex;
@@ -109,6 +115,7 @@
   text-transform: capitalize;
 }
 
+/* Shopping Lists */
 .shopping-lists-content {
     width: 100%;
     display: flex;
