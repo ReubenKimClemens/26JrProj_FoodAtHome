@@ -52,7 +52,7 @@
     function getIconPath(category, isActive) {
       const iconName = categoryIcons[category];
       const state = isActive ? 'active' : 'inactive';
-      return `$lib/assets/${iconName}_${state}.svg`;
+      return `https://ugtagpsyuefymncffczc.supabase.co/storage/v1/object/public/Category%20Icons/${iconName}_${state}.svg`;
     }
 </script>
 
