@@ -63,7 +63,6 @@
         padding-bottom: 7rem;
         align-self: center;
         gap: 1rem;
-        width: 90%;
     }
     .store-list {
         display: flex;
@@ -72,8 +71,9 @@
     }
     .metric-data-container {
         display: flex;
+        justify-content: center;
         flex-wrap: wrap;
-        gap: 1rem;
+        gap: .5rem;
         margin-bottom: 2rem;
     }
 </style>
