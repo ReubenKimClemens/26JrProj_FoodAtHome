@@ -9,13 +9,7 @@
   let showModal = $state(false);
   let budgetInput = $state('400');
 
-  const spent = 42.18;
-  const budget = 400;
-  const comparison = '8.7% less than yesterday';
-
-  const remaining = $derived(budget - spent);
-  const percentage = $derived(Math.round((spent / budget) * 100));
-
+  let { spent = 42.18, budget = 400, remaining = budget - spent, percentage = Math.round((spent / budget) * 100)} = $props();
   function openModal() {
     showModal = true;
   }
@@ -56,7 +50,7 @@
 
       <div class="spending-info">
         <div class="amount-spent-container">
-          <div class="comparison-text">{comparison}</div>
+          <!-- <div class="comparison-text">{comparison}</div> -->
           <div class="spent-amount">${spent.toFixed(2)} spent</div>
         </div>
 
