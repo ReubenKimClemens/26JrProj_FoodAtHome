@@ -6,17 +6,40 @@
     import SwipeableItem from '$lib/components/SwipeableItem.svelte';
     import Modal from '$lib/components/Modal.svelte';
     import PlusIcon from '$lib/assets/plus.svg';
+    import { getDaysSinceAdded, deleteReceiptItem } from '$lib/api/receipts.js';
+
+    let { data } = $props();
         
     let selectedCategory = $state('All');
-    let items = $state([
-        { id: 1, itemName: '2% Milk', quantity: 1, category: 'Dairy', addedDaysAgo: 2 },
-        { id: 2, itemName: 'Eggs', quantity: 12, category: 'Dairy', addedDaysAgo: 1 },
-        { id: 3, itemName: 'Bread', quantity: 1, category: 'Bakery', addedDaysAgo: 3 },
-        { id: 4, itemName: 'Bananas', quantity: 6, category: 'Produce', addedDaysAgo: 0 }
-    ]);
+    let sortOrder = $state('Newest First');
+    
+    let allItems = $state([...data.allItems]);
 
-    function removeItem(itemId) {
-        items = items.filter(i => i.id !== itemId);
+    // Remove the () from $derived - it's not a function
+    let filteredAndSortedItems = $derived.by(() => {
+        // Filter by category
+        let items = selectedCategory === 'All' 
+            ? allItems 
+            : allItems.filter(item => item.category === selectedCategory);
+        
+        // Sort by date
+        if (sortOrder === 'Newest First') {
+            items = [...items].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        } else {
+            items = [...items].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+        }
+        
+        return items;
+    });
+
+    async function handleDelete(itemId) {
+        try {
+            await deleteReceiptItem(itemId);
+            allItems = allItems.filter(item => item.id !== itemId);
+        } catch (error) {
+            console.error('Failed to delete:', error);
+            alert('Failed to delete item');
+        }
     }
 
     let addModalOpen = $state(false);
@@ -42,7 +65,7 @@
 
     <div class="filters">
         <div class="filter-dropdown">
-            <Dropdown bind:value={selectedCategory} 
+            <Dropdown bind:value={sortOrder} 
                 options={['Newest First', 'Oldest First']}
                 placeholder="Newest First" />
         </div>
@@ -50,14 +73,14 @@
     </div>
     
     <h3 class="swipe-tip">Swipe right to TOSS | Swipe left to CHOMP</h3>
-    {#each items as item (item.id)}
+    {#each filteredAndSortedItems as item (item.id)}
     <SwipeableItem 
-        itemName={item.itemName}
+        itemName={item.item_name}
         quantity={item.quantity}
-        category={item.category}
-        addedDaysAgo={item.addedDaysAgo}
-        onToss={() => removeItem(item.id)}
-        onChomp={() => removeItem(item.id)}
+        category={item.category || 'Uncategorized'}
+        addedDaysAgo={getDaysSinceAdded(item.created_at)}
+        onToss={() => handleDelete(item.id)}
+        onChomp={() => handleDelete(item.id)}
     />
     {/each}
 </div>
@@ -78,7 +101,6 @@
     .inventory-screen {
         font-family: var(--font-family-title);
         padding-bottom: 7rem;
-        width: 90%;
         align-self: center;
     }
     .filters {
