@@ -8,18 +8,17 @@
 
   let { data } = $props();
 
-  let spent = data.activeBudget ? data.activeBudget.total_spent : 0;
-  let budget = data.activeBudget ? data.activeBudget.budget_amount : 400;
-  let remaining = budget - spent;
-let percentage = budget > 0 ? Math.round((spent / budget) * 100) : 0;
 </script>
 
 <!-- Good Morning/Afternoon/Evening Cronch! -->
 <PageHeader userName="Cronch" />
 
 <!-- Budget Check Component -->
-<BudgetCheck spent={spent} budget={budget} remaining={remaining} percentage={percentage} />
-
+<BudgetCheck 
+  budgetId={data.activeBudget?.id} 
+  spent={data.activeBudget?.total_spent ?? 0} 
+  budget={data.activeBudget?.budget_amount ?? 400} 
+/>
 <!-- Inventory -->
 <SectionCard title="inventory" linkText="View all" linkHref="/inventory">
   {#snippet content()}
