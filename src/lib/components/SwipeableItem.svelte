@@ -3,20 +3,37 @@
     import tossIcon from '$lib/assets/toss.svg';
     import chompIcon from '$lib/assets/chomp.svg';
     
-    let { itemName = '2% Milk', quantity = 1, category = 'Dairy', addedDaysAgo = 2, onToss = () => {}, onChomp = () => {} } = $props();
+    let { 
+        itemName = '2% Milk', 
+        quantity = 1, 
+        category = 'Dairy', 
+        addedDaysAgo = 2, 
+        onToss = () => {}, 
+        onChomp = () => {},
+        onTap = null  // ← ADDED: tap/click handler for editing
+    } = $props();
     
     let offsetX = $state(0);
     let startX = $state(0);
     let isDragging = $state(false);
+    let hasMoved = $state(false);  // ← ADDED: track if user actually swiped
     
     function onPointerDown(e) {
         isDragging = true;
+        hasMoved = false;  // ← ADDED: reset on new touch
         startX = e.clientX - offsetX;
     }
     
     function onPointerMove(e) {
         if (!isDragging) return;
-        offsetX = Math.min(200, Math.max(e.clientX - startX, -200));
+        const newOffset = Math.min(200, Math.max(e.clientX - startX, -200));
+        
+        // ← ADDED: detect if user moved more than 5px (swipe vs tap)
+        if (Math.abs(newOffset - offsetX) > 5) {
+            hasMoved = true;
+        }
+        
+        offsetX = newOffset;
     }
     
     function onPointerUp() {
@@ -28,6 +45,14 @@
             offsetX = -200;
         } else {
             offsetX = 0;
+        }
+    }
+
+    // ← ADDED: handle tap/click
+    function handleTap(e) {
+        // Only trigger tap if user didn't swipe AND onTap exists
+        if (!hasMoved && onTap && offsetX === 0) {
+            onTap();
         }
     }
 </script>
@@ -45,7 +70,9 @@
     <div 
         class="content"
         style="transform: translateX({offsetX}px); transition: {isDragging ? 'none' : 'transform 0.3s'};"
-        onpointerdown={onPointerDown}>
+        onpointerdown={onPointerDown}
+        onclick={handleTap}
+    >
         <InventoryItemCard {itemName} {quantity} {category} {addedDaysAgo} />
     </div>
     

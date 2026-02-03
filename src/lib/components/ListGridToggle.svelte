@@ -28,7 +28,6 @@
         width: fit-content;
         height: 100%;
         display: flex;
-        justify-content: center;        
     }
 
 

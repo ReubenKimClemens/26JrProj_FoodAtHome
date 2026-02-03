@@ -1,4 +1,6 @@
 <script>
+  import {updateBudgetAmount} from '$lib/api/receipts.js';
+  import { invalidateAll } from '$app/navigation';
   import { fade, fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
   import BudgetIcon from '$lib/assets/icon_budgetcheck.svg';
@@ -9,7 +11,7 @@
   let showModal = $state(false);
   let budgetInput = $state('400');
 
-  let { spent = 42.18, budget = 400, remaining = budget - spent, percentage = Math.round((spent / budget) * 100)} = $props();
+  let {budgetId = null, spent = 42.18, budget = 400, remaining = budget - spent, percentage = Math.round((spent / budget) * 100)} = $props();
   function openModal() {
     showModal = true;
   }
@@ -24,8 +26,12 @@
     }
   }
 
-  function handleConfirm() {
+  async function handleConfirm() {
     console.log('Budget set to:', budgetInput);
+    if (budgetId !== null) {
+      await updateBudgetAmount(budgetId, budgetInput);
+      await invalidateAll(); 
+    }
     closeModal();
   }
 
@@ -168,16 +174,6 @@
     position: relative;
   }
 
-  .comparison-text {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    color: var(--text-secondary, #737780);
-    font-size: 12px;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 500;
-    line-height: 16px;
-  }
 
   .spent-amount {
     position: absolute;
