@@ -78,6 +78,7 @@ export async function updateReceipt(receiptId, rField, rValue) {
   return data;
 }
 
+
 /* Get all items from a specific receipt  */
 export async function getItemsFromReceipt(receiptId) {
   const { data, error } = await supabase
@@ -104,7 +105,6 @@ export function getDaysSinceAdded(date) {
   const addedDate = new Date(date);
   const diffInTime = currentDate - addedDate;
   const diffInDays = Math.floor(diffInTime / (1000 * 3600 * 24));
-  console.log('Days since added:', diffInDays);
   return diffInDays;
 }
 
@@ -124,6 +124,50 @@ export async function updateReceiptItem(receiptItemId, receiptItemField, receipt
     .from('receipt_items')
     .update({ [receiptItemField]: receiptItemValue})
     .eq('id', receiptItemId)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+/* add new receipt item */
+export async function addReceiptItem(userId, itemData) {
+  const { data, error } = await supabase
+    .from('receipt_items')
+    .insert({
+      user_id: userId,
+      item_name: itemData.itemName,
+      quantity: itemData.quantity,
+      unit_name: itemData.unit,
+      unit_price: itemData.price ? parseFloat(itemData.price.replace(/[$,]/g, '')) : null,
+      total_price: itemData.price && itemData.quantity 
+        ? parseFloat(itemData.price.replace(/[$,]/g, '')) * itemData.quantity 
+        : null,
+      category: itemData.category,
+      created_at: itemData.date || new Date().toISOString()
+    })
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+/* edit receipt item */
+export async function editReceiptItem(itemData) {
+  const { data, error } = await supabase
+    .from('receipt_items')
+    .update({
+      item_name: itemData.itemName,
+      quantity: itemData.quantity,
+      unit_name: itemData.unit,
+      unit_price: itemData.price ? parseFloat(itemData.price.replace(/[$,]/g, '')) : null,
+      total_price: itemData.price && itemData.quantity 
+        ? parseFloat(itemData.price.replace(/[$,]/g, '')) * itemData.quantity 
+        : null,
+      category: itemData.category
+    })
+    .eq('id', itemData.id)
     .select()
     .single();
 
@@ -347,4 +391,17 @@ export async function getActiveBudget(userId) {
 
   if (error) throw new Error(error.message);
   return data || null;
+}
+
+/* update budget amount */
+export async function updateBudgetAmount(budgetId, newAmount) {
+  const { data, error } = await supabase
+    .from('budgets')
+    .update({ ['budget_amount']: newAmount})
+    .eq('id', budgetId)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+  return data;
 }
