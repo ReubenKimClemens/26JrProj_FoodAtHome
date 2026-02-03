@@ -54,8 +54,11 @@
   // ❌Close modal when clicking outside (on backdrop)
   function handleBackdropClick(e) {
     if (e.target === e.currentTarget) {
-      open = false;
+      handleClose();
     }
+  }
+  function handleClose() {
+    open = false;
   }
 
   // ⌨️Accessible keyboard navigation
@@ -157,7 +160,7 @@
 
     <!-- 📌Modal header with drag handle and title -->
     <div class="modal-header">
-      <div class="handle"></div>
+      <div class="handle" onclick={handleClose}></div>
       <h2 id="modal-title" class="modal-title">{title}</h2>
     </div>
 
