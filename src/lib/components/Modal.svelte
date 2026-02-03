@@ -318,6 +318,7 @@
     width: 36px;
     height: 4px;
     background: #d1d5db;
+    padding: .1rem;
     border-radius: 2px;
   }
 
