@@ -1,12 +1,18 @@
 <script>
-  import PageHeader from '$lib/components/PageHeader.svelte';
-  import BudgetCheck from '$lib/components/BudgetCheck.svelte';
-  import SectionCard from '$lib/components/SectionCard.svelte';
-  import ProgressBar from '$lib/components/ProgressBar.svelte';
-  import Divider from '$lib/components/Divider.svelte';
-  import ChevronRight from '$lib/assets/chevron-right.svg'
+    import PageHeader from '$lib/components/PageHeader.svelte';
+    
+    import BudgetCheck from '$lib/components/BudgetCheck.svelte';
+    import SectionCard from '$lib/components/SectionCard.svelte';
+    import ProgressBar from '$lib/components/ProgressBar.svelte';
+    import Divider from '$lib/components/Divider.svelte';
+    import ChevronRight from '$lib/assets/chevron-right.svg'
 
-  let { data } = $props();
+    let { data } = $props();
+
+    let budget = $state(data.activeBudget?.budget_amount ?? 400);
+    let spent = $state(data.activeBudget?.total_spent ?? 0);
+    let remaining = $state(budget - spent);
+    let percentage = $state(Math.round((spent / budget) * 100));
 
 </script>
 
@@ -16,8 +22,10 @@
 <!-- Budget Check Component -->
 <BudgetCheck 
   budgetId={data.activeBudget?.id} 
-  spent={data.activeBudget?.total_spent ?? 0} 
-  budget={data.activeBudget?.budget_amount ?? 400} 
+  {spent}
+  bind:budget
+  bind:remaining
+  bind:percentage
 />
 <!-- Inventory -->
 <SectionCard title="inventory" linkText="View all" linkHref="/inventory">

@@ -1,6 +1,5 @@
 <script>
   import {updateBudgetAmount} from '$lib/api/receipts.js';
-  import { invalidateAll } from '$app/navigation';
   import { fade, fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
   import BudgetIcon from '$lib/assets/icon_budgetcheck.svg';
@@ -11,8 +10,14 @@
   let showModal = $state(false);
   let budgetInput = $state('400');
 
-  let {budgetId = null, spent = 42.18, budget = 400, remaining = budget - spent, percentage = Math.round((spent / budget) * 100)} = $props();
+  let {budgetId = null, spent = 42.18, 
+    budget = $bindable(400), 
+    remaining = $bindable(budget - spent), 
+    percentage = $bindable(Math.round((spent / budget) * 100))
+  } = $props();
+  
   function openModal() {
+    budgetInput = budget.toString();
     showModal = true;
   }
 
@@ -27,10 +32,23 @@
   }
 
   async function handleConfirm() {
-    console.log('Budget set to:', budgetInput);
+    const newAmount = parseFloat(budgetInput.replace(/[$,]/g, ''));
+  
+  if (isNaN(newAmount) || newAmount <= 0) {
+    alert('Please enter a valid budget amount');
+    return;
+  }
+
     if (budgetId !== null) {
-      await updateBudgetAmount(budgetId, budgetInput);
-      await invalidateAll(); 
+      try {
+        await updateBudgetAmount(budgetId, budgetInput);
+        budget = newAmount;
+        remaining = newAmount - spent;
+        percentage = Math.round((spent / newAmount) * 100);
+      } catch (error) {
+        console.error('Error updating budget amount:', error);
+        alert('There was an error updating your budget. Please try again.');      
+      }
     }
     closeModal();
   }
@@ -68,10 +86,11 @@
     </div>
 
     <div class="status-bar">
-      <div class="remaining-text">${remaining.toFixed(2)} remaining</div>
+      
+      <div class="percentage-text">{percentage}%</div>
       <div class="progress-wrapper">
         <ProgressBar value={spent} max={budget} color="#0FA376" />
-        <div class="percentage-text">{percentage}%</div>
+        <div class="remaining-text">${remaining.toFixed(2)} remaining</div>
       </div>
     </div>
 

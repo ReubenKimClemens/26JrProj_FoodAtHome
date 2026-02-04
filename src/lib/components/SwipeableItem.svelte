@@ -10,25 +10,25 @@
         addedDaysAgo = 2, 
         onToss = () => {}, 
         onChomp = () => {},
-        onTap = null  // ← ADDED: tap/click handler for editing
+        onTap = null
     } = $props();
     
     let offsetX = $state(0);
     let startX = $state(0);
     let isDragging = $state(false);
-    let hasMoved = $state(false);  // ← ADDED: track if user actually swiped
+    let hasMoved = $state(false);
+    const THRESHOLD = 100;
     
     function onPointerDown(e) {
         isDragging = true;
-        hasMoved = false;  // ← ADDED: reset on new touch
+        hasMoved = false;
         startX = e.clientX - offsetX;
     }
     
     function onPointerMove(e) {
         if (!isDragging) return;
         const newOffset = Math.min(200, Math.max(e.clientX - startX, -200));
-        
-        // ← ADDED: detect if user moved more than 5px (swipe vs tap)
+
         if (Math.abs(newOffset - offsetX) > 5) {
             hasMoved = true;
         }
@@ -39,18 +39,16 @@
     function onPointerUp() {
         isDragging = false;
         
-        if (offsetX > 100) {
-            offsetX = 200;
-        } else if (offsetX < -100) {
-            offsetX = -200;
+        if (offsetX > 75) {
+            onToss();
+        } else if (offsetX < -75) {
+            onChomp();
         } else {
             offsetX = 0;
         }
     }
 
-    // ← ADDED: handle tap/click
     function handleTap(e) {
-        // Only trigger tap if user didn't swipe AND onTap exists
         if (!hasMoved && onTap && offsetX === 0) {
             onTap();
         }
