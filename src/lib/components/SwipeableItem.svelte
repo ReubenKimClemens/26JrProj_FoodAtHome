@@ -3,31 +3,54 @@
     import tossIcon from '$lib/assets/toss.svg';
     import chompIcon from '$lib/assets/chomp.svg';
     
-    let { itemName = '2% Milk', quantity = 1, category = 'Dairy', addedDaysAgo = 2, onToss = () => {}, onChomp = () => {} } = $props();
+    let { 
+        itemName = '2% Milk', 
+        quantity = 1, 
+        category = 'Dairy', 
+        addedDaysAgo = 2, 
+        onToss = () => {}, 
+        onChomp = () => {},
+        onTap = null
+    } = $props();
     
     let offsetX = $state(0);
     let startX = $state(0);
     let isDragging = $state(false);
+    let hasMoved = $state(false);
+    const THRESHOLD = 100;
     
     function onPointerDown(e) {
         isDragging = true;
+        hasMoved = false;
         startX = e.clientX - offsetX;
     }
     
     function onPointerMove(e) {
         if (!isDragging) return;
-        offsetX = Math.min(200, Math.max(e.clientX - startX, -200));
+        const newOffset = Math.min(200, Math.max(e.clientX - startX, -200));
+
+        if (Math.abs(newOffset - offsetX) > 5) {
+            hasMoved = true;
+        }
+        
+        offsetX = newOffset;
     }
     
     function onPointerUp() {
         isDragging = false;
         
-        if (offsetX > 100) {
-            offsetX = 200;
-        } else if (offsetX < -100) {
-            offsetX = -200;
+        if (offsetX > 75) {
+            onToss();
+        } else if (offsetX < -75) {
+            onChomp();
         } else {
             offsetX = 0;
+        }
+    }
+
+    function handleTap(e) {
+        if (!hasMoved && onTap && offsetX === 0) {
+            onTap();
         }
     }
 </script>
@@ -45,7 +68,9 @@
     <div 
         class="content"
         style="transform: translateX({offsetX}px); transition: {isDragging ? 'none' : 'transform 0.3s'};"
-        onpointerdown={onPointerDown}>
+        onpointerdown={onPointerDown}
+        onclick={handleTap}
+    >
         <InventoryItemCard {itemName} {quantity} {category} {addedDaysAgo} />
     </div>
     

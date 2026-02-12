@@ -1,45 +1,47 @@
 <script>
-  import PageHeader from '$lib/components/PageHeader.svelte';
-  import BudgetCheck from '$lib/components/BudgetCheck.svelte';
-  import SectionCard from '$lib/components/SectionCard.svelte';
-  import ProgressBar from '$lib/components/ProgressBar.svelte';
-  import Divider from '$lib/components/Divider.svelte';
-  import ChevronRight from '$lib/assets/chevron-right.svg'
+    import PageHeader from '$lib/components/PageHeader.svelte';
+    
+    import BudgetCheck from '$lib/components/BudgetCheck.svelte';
+    import SectionCard from '$lib/components/SectionCard.svelte';
+    import ProgressBar from '$lib/components/ProgressBar.svelte';
+    import Divider from '$lib/components/Divider.svelte';
+    import ChevronRight from '$lib/assets/chevron-right.svg'
 
-  let inventoryData = $state({
-        total: 10,
-        protein: 3,
-        others: 7
-  });
+    let { data } = $props();
 
-  let shoppingLists = $state([
-        { name: 'Costco-Oct', itemCount: 10 },
-        { name: "Trader Joe's", itemCount: 12 },
-        { name: 'Wegmans', itemCount: 4 }
-  ]);
+    let budget = $state(data.activeBudget?.budget_amount ?? 400);
+    let spent = $state(data.activeBudget?.total_spent ?? 0);
+    let remaining = $state(budget - spent);
+    let percentage = $state(Math.round((spent / budget) * 100));
+
 </script>
 
 <!-- Good Morning/Afternoon/Evening Cronch! -->
 <PageHeader userName="Cronch" />
 
 <!-- Budget Check Component -->
-<BudgetCheck />
-
+<BudgetCheck 
+  budgetId={data.activeBudget?.id} 
+  {spent}
+  bind:budget
+  bind:remaining
+  bind:percentage
+/>
 <!-- Inventory -->
 <SectionCard title="inventory" linkText="View all" linkHref="/inventory">
   {#snippet content()}
       <div class="inventory-content">
           <div class="inventory-row">
               <span class="total-label">total Items</span>
-              <span class="total-value">{inventoryData.total}</span>
+              <span class="total-value">{data.totalCount}</span>
           </div>
           <div class="inventory-row">
               <span class="item-label">Protein</span>
-              <span class="item-value">{inventoryData.protein}</span>
+              <span class="item-value">{data.proteinCount}</span>
           </div>
           <div class="inventory-row">
               <span class="item-label">Others</span>
-              <span class="item-value">{inventoryData.others}</span>
+              <span class="item-value">{data.otherCount}</span>
           </div>
       </div>
   {/snippet}
@@ -49,10 +51,10 @@
 <SectionCard title="shopping lists" linkText="View all" linkHref="/shopping-lists">
   {#snippet content()}
       <div class="shopping-lists-content">
-          {#each shoppingLists as list, index}
+          {#each data.topShoppingLists as list, index}
               <a href="/shopping-lists" class="shopping-list-item">
                   <div class="list-info">
-                      <span class="list-name">{list.name}</span>
+                      <span class="list-name">{list.list_name}</span>
                       <div class="item-count-tag">
                           <span class="count-number">{list.itemCount}</span>
                           <span class="count-text">items</span>
@@ -60,7 +62,7 @@
                   </div>
                   <img src={ChevronRight} alt="" class="chevron-icon" />
               </a>
-              {#if index < shoppingLists.length - 1}
+              {#if index < data.topShoppingLists.length - 1}
                   <Divider />
               {/if}
           {/each}

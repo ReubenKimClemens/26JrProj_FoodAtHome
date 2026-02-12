@@ -1,4 +1,5 @@
 <script>
+  import {updateBudgetAmount} from '$lib/api/receipts.js';
   import { fade, fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
   import BudgetIcon from '$lib/assets/icon_budgetcheck.svg';
@@ -9,14 +10,14 @@
   let showModal = $state(false);
   let budgetInput = $state('400');
 
-  const spent = 42.18;
-  const budget = 400;
-  const comparison = '8.7% less than yesterday';
-
-  const remaining = $derived(budget - spent);
-  const percentage = $derived(Math.round((spent / budget) * 100));
-
+  let {budgetId = null, spent = 42.18, 
+    budget = $bindable(400), 
+    remaining = $bindable(budget - spent), 
+    percentage = $bindable(Math.round((spent / budget) * 100))
+  } = $props();
+  
   function openModal() {
+    budgetInput = budget.toString();
     showModal = true;
   }
 
@@ -30,8 +31,25 @@
     }
   }
 
-  function handleConfirm() {
-    console.log('Budget set to:', budgetInput);
+  async function handleConfirm() {
+    const newAmount = parseFloat(budgetInput.replace(/[$,]/g, ''));
+  
+  if (isNaN(newAmount) || newAmount <= 0) {
+    alert('Please enter a valid budget amount');
+    return;
+  }
+
+    if (budgetId !== null) {
+      try {
+        await updateBudgetAmount(budgetId, budgetInput);
+        budget = newAmount;
+        remaining = newAmount - spent;
+        percentage = Math.round((spent / newAmount) * 100);
+      } catch (error) {
+        console.error('Error updating budget amount:', error);
+        alert('There was an error updating your budget. Please try again.');      
+      }
+    }
     closeModal();
   }
 
@@ -56,7 +74,7 @@
 
       <div class="spending-info">
         <div class="amount-spent-container">
-          <div class="comparison-text">{comparison}</div>
+          <!-- <div class="comparison-text">{comparison}</div> -->
           <div class="spent-amount">${spent.toFixed(2)} spent</div>
         </div>
 
@@ -68,10 +86,11 @@
     </div>
 
     <div class="status-bar">
-      <div class="remaining-text">${remaining.toFixed(2)} remaining</div>
+      
+      <div class="percentage-text">{percentage}%</div>
       <div class="progress-wrapper">
         <ProgressBar value={spent} max={budget} color="#0FA376" />
-        <div class="percentage-text">{percentage}%</div>
+        <div class="remaining-text">${remaining.toFixed(2)} remaining</div>
       </div>
     </div>
 
@@ -174,16 +193,6 @@
     position: relative;
   }
 
-  .comparison-text {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    color: var(--text-secondary, #737780);
-    font-size: 12px;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 500;
-    line-height: 16px;
-  }
 
   .spent-amount {
     position: absolute;

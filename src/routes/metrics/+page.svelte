@@ -2,10 +2,24 @@
     import Dropdown from '$lib/components/Dropdown.svelte';
     import GroceryListCard from '$lib/components/StoreCard.svelte';
     import MetricData from '$lib/components/MetricData.svelte';
-    import BarGraph from '$lib/assets/FAH_Alpha_Metricsscreen_Daily.webp';
     import TopCategories from '$lib/components/TopCategories.svelte';
+    import BarGraphDaily from '$lib/assets/FAH_Alpha_Metricsscreen_Daily.webp';
+    import BarGraphWeekly from '$lib/assets/FAH_Alpha_Metricsscreen_Weekly.webp';
+    import BarGraphMonthly from '$lib/assets/FAH_Alpha_Metricsscreen_Monthly.webp';
+    import BarGraphYearly from '$lib/assets/FAH_Alpha_Metricsscreen_Yearly.webp';
 
     let selectedCategory = $state('All');
+
+    const graphImages = {
+        'Today': BarGraphDaily,
+        'Yesterday': BarGraphDaily,
+        'This Week': BarGraphWeekly,
+        'This Month': BarGraphMonthly,
+        'This Year': BarGraphYearly
+    };
+
+    let currentGraph = $derived(graphImages[selectedCategory] || BarGraphDaily);
+
     let stores = $state([
         {name: "Trader Joe's", date: "12/09/2025", items: 8, price: 42.18},
         {name: "Walmart", date: "12/08/2025", items: 8, price: 27.40},
@@ -30,11 +44,11 @@
 <div class="metric-screen">
     <h1>Metrics</h1>
     <Dropdown bind:value={selectedCategory} 
-        options={['Today', 'Yesterday', 'This Week', 'This Month', 'Custom']}
+        options={['Today', 'Yesterday', 'This Week', 'This Month', 'This Year']}
         placeholder="Daily" />
     <h2>December 03 - December 09</h2>
 
-    <img src={BarGraph} alt="Bar Graph Showing Daily Metrics" />
+    <img src={currentGraph} alt="Bar Graph Showing {selectedCategory} Metrics" />
 
     <div class="metric-data-container">
         {#each metrics as metric}
@@ -63,7 +77,6 @@
         padding-bottom: 7rem;
         align-self: center;
         gap: 1rem;
-        width: 90%;
     }
     .store-list {
         display: flex;
@@ -72,8 +85,9 @@
     }
     .metric-data-container {
         display: flex;
+        justify-content: center;
         flex-wrap: wrap;
-        gap: 1rem;
+        gap: .5rem;
         margin-bottom: 2rem;
     }
 </style>
