@@ -5,6 +5,7 @@
     import { MoveLeft } from 'lucide-svelte';
     import QuestionMark from '$lib/assets/icon_questionmark.svg';
     import { X } from 'lucide-svelte';
+    import { Upload } from 'lucide-svelte';
     import {goto} from '$app/navigation';
 
     let fileInput;
@@ -47,7 +48,7 @@
         {#if imagePreview}
             <img src={imagePreview} alt="Preview" class="preview-image" />
         {:else}
-            <Camera size={50}/>
+            <Upload size={50}/>
         {/if}
     </div>
     
@@ -75,7 +76,7 @@
                 defaults={{ size: "md", block: true }}
                 buttons={[
                 { label: "Add Items Manually", variant: "outline", onClick: () => goto('/scan/manual-items') },
-                { label: "Scan Receipt", variant: "primary", onClick: triggerFileInput }
+                { label: "Upload Receipt", variant: "primary", onClick: triggerFileInput }
                 ]}
             />
     </div>
