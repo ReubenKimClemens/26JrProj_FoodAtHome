@@ -33,7 +33,6 @@
         <button on:click={() => goto('/')} class="back-btn">
             <X size={30}/>
         </button>
-        
 
         <button class="help-btn" on:click={() => goto('/scan/scanning-tips')}>
 
@@ -51,7 +50,8 @@
             <Camera size={50}/>
         {/if}
     </div>
-
+    
+    
     <input
         type="file"
         accept="image/*"
@@ -59,7 +59,7 @@
         on:change={handleImageUpload}
         style="display: none;"
     />
-    
+
     <div class="bottom-wrapper">
     
         <div class="tips-container">
@@ -83,11 +83,13 @@
 
 
 <style>
+
     .preview-image {
         max-width: 100%;
         max-height: 100%;
         object-fit: contain;
     }
+
     .content {
         height: calc(100vh - 96px);
         padding: var(--spacing-s);
@@ -109,12 +111,12 @@
         border: none;
         background: transparent;
     }
+
     .back-btn{
         cursor: pointer;
         border: none;
         background: transparent;
     }
-
     .tips-container {
         display: flex;
         justify-content: center;
