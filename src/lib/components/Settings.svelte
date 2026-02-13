@@ -5,7 +5,8 @@
     import LogoutIcon from '$lib/assets/icon_logout.svg';
     import ChevronRight from '$lib/assets/chevron_right.svg';
     import Divider from '$lib/components/Divider.svelte';
-    
+    import trash from '$lib/assets/trash.svg'
+
     let {
       onSignOut = () => {}
     } = $props();
@@ -16,6 +17,12 @@
         label: 'Profile',
         icon: UserIcon,
         action: () => goto('/profile')
+      },
+      {
+        id: 'recently-deleted',
+        label: 'Recently Deleted Items',
+        icon: trash,
+        action: () => goto('/profile/recently-deleted')
       },
       {
         id: 'notifications',
@@ -30,7 +37,9 @@
     ]);
     
     function handleSettingClick(setting) {
-      setting.action();
+      if (setting.action) {
+        setting.action();
+      }
     }
 </script>
 

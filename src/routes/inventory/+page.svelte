@@ -90,7 +90,7 @@
 
 <div class="inventory-screen">
     <header class="title-and-add">
-        <h1>Inventory</h1>
+        <h1 class="title-lg">Inventory</h1>
         <button onclick={() => addModalOpen = true} class="add-button" aria-label="Add new item">
             <img src={PlusIcon} alt="" />
         </button>
@@ -110,7 +110,7 @@
         <ListGridToggle />
     </div>
     
-    <p class="swipe-tip">Swipe right to TOSS | Swipe left to CHOMP | Tap to EDIT</p>
+    <p class="swipe-tip body-sm">Swipe right to TOSS | Swipe left to CHOMP | Tap to EDIT</p>
 
     {#each filteredAndSortedItems as item (item.id)}
         <SwipeableItem 
@@ -168,7 +168,7 @@
 
     .swipe-tip {
         font-size: 0.9rem;
-        color: var(--color-text-secondary);
+        color: var(--text-secondary);
         margin-bottom: 1rem;
         text-align: center;
     }

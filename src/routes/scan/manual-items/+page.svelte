@@ -125,7 +125,7 @@
             layout="2-column"
             defaults={{ size: "md", block: true }}
             buttons={[
-                { label: "Scan Instead", variant: "outline", onClick: () => goto('/scan') },
+                { label: "Upload Receipt", variant: "outline", onClick: () => goto('/scan') },
                 { label: "Confirm", variant: "primary", onClick: handleConfirm }
             ]}
         />

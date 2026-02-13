@@ -5,6 +5,7 @@
     import { MoveLeft } from 'lucide-svelte';
     import QuestionMark from '$lib/assets/icon_questionmark.svg';
     import { X } from 'lucide-svelte';
+    import { Upload } from 'lucide-svelte';
     import {goto} from '$app/navigation';
 
     let fileInput;
@@ -33,7 +34,6 @@
         <button on:click={() => goto('/')} class="back-btn">
             <X size={30}/>
         </button>
-        
 
         <button class="help-btn" on:click={() => goto('/scan/scanning-tips')}>
 
@@ -48,10 +48,11 @@
         {#if imagePreview}
             <img src={imagePreview} alt="Preview" class="preview-image" />
         {:else}
-            <Camera size={50}/>
+            <Upload size={50}/>
         {/if}
     </div>
-
+    
+    
     <input
         type="file"
         accept="image/*"
@@ -59,7 +60,7 @@
         on:change={handleImageUpload}
         style="display: none;"
     />
-    
+
     <div class="bottom-wrapper">
     
         <div class="tips-container">
@@ -75,7 +76,7 @@
                 defaults={{ size: "md", block: true }}
                 buttons={[
                 { label: "Add Items Manually", variant: "outline", onClick: () => goto('/scan/manual-items') },
-                { label: "Scan Receipt", variant: "primary", onClick: triggerFileInput }
+                { label: "Upload Receipt", variant: "primary", onClick: triggerFileInput }
                 ]}
             />
     </div>
@@ -83,11 +84,13 @@
 
 
 <style>
+
     .preview-image {
         max-width: 100%;
         max-height: 100%;
         object-fit: contain;
     }
+
     .content {
         height: calc(100vh - 96px);
         padding: var(--spacing-s);
@@ -109,12 +112,12 @@
         border: none;
         background: transparent;
     }
+
     .back-btn{
         cursor: pointer;
         border: none;
         background: transparent;
     }
-
     .tips-container {
         display: flex;
         justify-content: center;

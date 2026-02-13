@@ -2,30 +2,30 @@
 
 :root {
     /* Background - Default */
-    --bg-brand-primary: #0FA376;
-    --bg-brand-secondary: #A07AD9;
-    --bg-page-primary: #FCFBFA;
-    --bg-page-secondary: #FFFFFF;
-    --bg-accent-1: #FFF0E5;
-    --bg-accent-2: #E6FAF7;
-    --bg-accent-3: #E6F3FF;
-    --bg-accent-4: #E6F9FD;
-    --bg-accent-5: #EFEEFE;
-    --bg-accent-6: #FFFEF9;
-    --bg-accent-7: #FAEAFC;
-    --bg-accent-8: #FFE5E5;
+    --bg-brand-primary: var(--color-green-500);
+    --bg-brand-secondary: var(--color-violet-500);
+    --bg-page-primary: var(--color-beige-ish);
+    --bg-page-secondary: var(--color-white);
+    --bg-accent-1: var(--color-orange-50);
+    --bg-accent-2: var(--color-mint-50);
+    --bg-accent-3: var(--color-light-blue-50);
+    --bg-accent-4: var(--color-cyan-50);
+    --bg-accent-5: var(--color-purple-50);
+    --bg-accent-6: var(--color-yellow-50);
+    --bg-accent-7: var(--color-pink-50);
+    --bg-accent-8: var(--color-red-50);
 
     /* Background - Inverted */
-    --bg-inverted-brand-primary: #E7F6F1;
-    --bg-inverted-brand-secondary: #F6F2FB;
-    --bg-inverted-primary: #111215;
-    --bg-inverted-secondary: #737780;
-    --bg-inverted-accent-1: #FF9040;
-    --bg-inverted-accent-2: #33D3C2;
-    --bg-inverted-accent-3: #33A0FF;
-    --bg-inverted-accent-4: #33CDED;
-    --bg-inverted-accent-5: #8177F7;
-    --bg-inverted-accent-6: #FEF5D2;
-    --bg-inverted-accent-7: #D559E6;
-    --bg-inverted-accent-8: #FF4040;
+    --bg-inverted-brand-primary: var(--color-green-50);
+    --bg-inverted-brand-secondary: var(--color-violet-50);
+    --bg-inverted-primary: var(--color-grey-800);
+    --bg-inverted-secondary: var(--color-grey-400);
+    --bg-inverted-accent-1: var(--color-orange-400);
+    --bg-inverted-accent-2: var(--color-mint-400);
+    --bg-inverted-accent-3: var(--color-light-blue-400);
+    --bg-inverted-accent-4: var(--color-cyan-400);
+    --bg-inverted-accent-5: var(--color-purple-400);
+    --bg-inverted-accent-6: var(--color-yellow-400);
+    --bg-inverted-accent-7: var(--color-pink-400);
+    --bg-inverted-accent-8: var(--color-red-400);
 }
