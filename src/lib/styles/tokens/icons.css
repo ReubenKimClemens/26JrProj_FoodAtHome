@@ -1,30 +1,32 @@
+@import '../brand/index.css';
+
 :root {
     /* Icons - Default */
-    --icons-brand-primary: #0FA376;
-    --icons-brand-secondary: #A07AD9;
-    --icons-default: #444955;
-    --icons-secondary: #737780;
-    --icons-tertiary: #FFFFFF;
-    --icons-accent-1: #FF6B00;
-    --icons-accent-2: #00C8B3;
-    --icons-accent-3: #00C8B3;
-    --icons-accent-4: #00C0E8;
-    --icons-accent-5: #6155F5;
-    --icons-accent-6: #FEF3C7;
-    --icons-accent-7: #CB30E0;
-    --icons-accent-8: #FF0000;
+    --icons-brand-primary: var(--color-green-500);
+    --icons-brand-secondary: var(--color-violet-500);
+    --icons-default: var(--color-grey-500);
+    --icons-secondary: var(--color-grey-400);
+    --icons-tertiary: var(--color-white);
+    --icons-accent-1: var(--color-orange-500);
+    --icons-accent-2: var(--color-mint-500);
+    --icons-accent-3: var(--color-mint-500);
+    --icons-accent-4: var(--color-cyan-500);
+    --icons-accent-5: var(--color-purple-500);
+    --icons-accent-6: var(--color-yellow-500);
+    --icons-accent-7: var(--color-pink-500);
+    --icons-accent-8: var(--color-red-500);
 
     /* Icons - Inverted */
-    --icons-inverted-brand-primary: #E7F6F1;
-    --icons-inverted-brand-secondary: #F6F2FB;
-    --icons-inverted-primary: #F7F7F7;
-    --icons-inverted-secondary: #FFFFFF;
-    --icons-inverted-accent-1: #FFF0E5;
-    --icons-inverted-accent-2: #E6FAF7;
-    --icons-inverted-accent-3: #E6F3FF;
-    --icons-inverted-accent-4: #E6F9FD;
-    --icons-inverted-accent-5: #EFEEFE;
-    --icons-inverted-accent-6: #FFFEF9;
-    --icons-inverted-accent-7: #FAEAFC;
-    --icons-inverted-accent-8: #FFE5E5;
+    --icons-inverted-brand-primary: var(--color-green-50);
+    --icons-inverted-brand-secondary: var(--color-violet-50);
+    --icons-inverted-primary: var(--color-grey-50);
+    --icons-inverted-secondary: var(--color-white);
+    --icons-inverted-accent-1: var(--color-orange-50);
+    --icons-inverted-accent-2: var(--color-mint-50);
+    --icons-inverted-accent-3: var(--color-light-blue-50);
+    --icons-inverted-accent-4: var(--color-cyan-50);
+    --icons-inverted-accent-5: var(--color-purple-50);
+    --icons-inverted-accent-6: var(--color-yellow-50);
+    --icons-inverted-accent-7: var(--color-pink-50);
+    --icons-inverted-accent-8: var(--color-red-50);
 }

@@ -1,9 +1,11 @@
+@import '../brand/index.css';
+
 :root {
-    --spacing-none: 0;
-    --spacing-2xs: 4px;
-    --spacing-xs: 8px;
-    --spacing-s: 16px;
-    --spacing-md: 24px;
-    --spacing-lg: 32px;
-    --spacing-xl: 36px;
+    --spacing-none: var(--scale-spacing-0);
+    --spacing-2xs: var(--scale-1);
+    --spacing-xs: var(--scale-spacing-1);
+    --spacing-s: var(--scale-spacing-2);
+    --spacing-md: var(--scale-spacing-3);
+    --spacing-lg: var(--scale-spacing-4);
+    --spacing-xl: var(--scale-9);
 }

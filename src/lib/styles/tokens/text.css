@@ -1,12 +1,12 @@
 :root {
     /* Tokens - Text */
-    --text-default: #444955;
-    --text-secondary: #737780;
-    --text-on-action: #FFFFFF;
-    --text-brand-primary: #0FA376;
-    --text-brand-primary-light: #E7F6F1;
-    --text-brand-secondary: #A07AD9;
-    --text-brand-secondary-light: #F6E7EC;
-    --text-danger: #FF0000;
-    --text-warning: #FF6B00;
+    --text-default: var(--color-grey-500);
+    --text-secondary: var(--color-grey-400);
+    --text-on-action: var(--color-white);
+    --text-brand-primary: var(--color-green-500);
+    --text-brand-primary-light: var(--var-green-50);
+    --text-brand-secondary: var(--color-violet-500);
+    --text-brand-secondary-light: var(--color-violet-50);
+    --text-danger: var(--color-red-500);
+    --text-warning: var(--color-orange-500);
 }
