@@ -11,6 +11,7 @@
   let budgetInput = $state('400');
 
   let {budgetId = null, spent = 42.18, 
+    showTitle = true,
     budget = $bindable(400), 
     remaining = $bindable(budget - spent), 
     percentage = $bindable(Math.round((spent / budget) * 100))
@@ -64,7 +65,9 @@
 </script>
 
 <section class="budget-check">
-  <h2 class="section-title">Budget Check</h2>
+  {#if showTitle}
+    <h2 class="section-title">Budget Check</h2>
+  {/if}
 
   <div class="budget-content">
     <div class="spending-row">
@@ -147,7 +150,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 24px;
+    /* margin-bottom: 24px; */
   }
 
   .section-title {
@@ -297,7 +300,7 @@
 
   .modal {
     width: 100%;
-    max-width: 420px;
+    max-width: 402px;
     padding: 32px 16px;
     background: white;
     border-radius: 32px 32px 0 0;
