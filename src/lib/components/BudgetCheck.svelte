@@ -2,7 +2,8 @@
   import {updateBudgetAmount} from '$lib/api/receipts.js';
   import { fade, fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
-  import BudgetIcon from '$lib/assets/icon_budgetcheck.svg';
+  import BudgetIcon from '$lib/assets/icon_budgetcheck_green.svg';
+  import BudgetIconOrange from '$lib/assets/icon_budgetcheck_orange.svg';
   import ProgressBar from '$lib/components/ProgressBar.svelte';
   import InputField from '$lib/components/InputField.svelte';
   import Button from '$lib/components/Button.svelte';
@@ -15,6 +16,8 @@
     remaining = $bindable(budget - spent), 
     percentage = $bindable(Math.round((spent / budget) * 100))
   } = $props();
+  
+  let isOverBudget = $derived(spent > budget);
   
   function openModal() {
     budgetInput = budget.toString();
@@ -66,18 +69,18 @@
 <section class="budget-check">
   <h2 class="section-title">Budget Check</h2>
 
-  <div class="budget-content">
-    <div class="spending-row">
+  <div class="budget-content" style="background: {isOverBudget ? '#FFF0E5' : '#E7F6F1'}">    <div class="spending-row">
       <div class="status-icon">
-        <img src={BudgetIcon} alt="" />
+        <img src={isOverBudget ? BudgetIconOrange : BudgetIcon} alt="" />      
       </div>
 
       <div class="spending-info">
         <div class="amount-spent-container">
           <!-- <div class="comparison-text">{comparison}</div> -->
-          <div class="spent-amount">${spent.toFixed(2)} spent</div>
+          <div class="spent-amount" style="color: {isOverBudget ? '#FF9040' : '#0FA376'}">
+            ${spent.toFixed(2)} spent
+          </div>
         </div>
-
         <div class="budget-total">
           <div class="total-amount">${budget.toFixed(0)}</div>
           <div class="budget-label">Budget</div>
@@ -89,7 +92,7 @@
       
       <div class="percentage-text">{percentage}%</div>
       <div class="progress-wrapper">
-        <ProgressBar value={spent} max={budget} color="#0FA376" />
+        <ProgressBar value={spent} max={budget} color={isOverBudget ? '#FF9040' : '#0FA376'} />        
         <div class="remaining-text">${remaining.toFixed(2)} remaining</div>
       </div>
     </div>
@@ -198,7 +201,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    color: var(--text-brand-primary, #0FA376);
+    /* color: var(--text-brand-primary, #0FA376); */
     font-size: 18px;
     font-family: 'Quicksand', sans-serif;
     font-weight: 700;
