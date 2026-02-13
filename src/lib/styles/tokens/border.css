@@ -1,7 +1,7 @@
 :root {
 /* Border - Color */
-    --border-primary: #737780;
-    --border-secondary: #DADBDD;
+    --border-primary: var(--color-grey-400);
+    --border-secondary: var(--color-grey-100);
 
 /* Border - Stroke */
     --border-thin: 1px;

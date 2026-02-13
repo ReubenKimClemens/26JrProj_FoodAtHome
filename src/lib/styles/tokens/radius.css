@@ -1,5 +1,7 @@
+@import '../brand/index.css';
+
 :root {
-    --radius-minimal: 4px;
-    --radius-rounded: 8px;
-    --radius-full: 360px;
+    --radius-minimal: var(--radius-sm);
+    --radius-rounded: var(--radius-md);
+    --radius-full: var(--radius-3xl);
 }

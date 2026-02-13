@@ -11,6 +11,7 @@
   let budgetInput = $state('400');
 
   let {budgetId = null, spent = 42.18, 
+    showTitle = true,
     budget = $bindable(400), 
     remaining = $bindable(budget - spent), 
     percentage = $bindable(Math.round((spent / budget) * 100))
@@ -64,7 +65,9 @@
 </script>
 
 <section class="budget-check">
-  <h2 class="section-title">Budget Check</h2>
+  {#if showTitle}
+    <h2 class="section-title">Budget Check</h2>
+  {/if}
 
   <div class="budget-content">
     <div class="spending-row">
@@ -87,15 +90,24 @@
 
     <div class="status-bar">
       
-      <div class="percentage-text">{percentage}%</div>
+      <!-- <div class="percentage-text">{percentage}%</div> -->
       <div class="progress-wrapper">
+
+        <div class="remaining-text body-md-bold">
+          ${remaining.toFixed(2)} left to spend
+        </div>
         <ProgressBar value={spent} max={budget} color="#0FA376" />
-        <div class="remaining-text">${remaining.toFixed(2)} remaining</div>
+        <!-- <div class="remaining-text">${remaining.toFixed(2)} remaining</div> -->
+
+        <div class="spent-text body-xsm">
+          <p>${spent.toFixed(2)} spent</p>
+          <p>out of ${budget.toFixed(0)}</p>
+        </div>
       </div>
     </div>
 
     <button class="set-budget-link" onclick={openModal}>
-      Set new budget
+      Set new monthly budget
     </button>
   </div>
 </section>
@@ -138,7 +150,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 24px;
+    /* margin-bottom: 24px; */
   }
 
   .section-title {
@@ -225,25 +237,39 @@
   }
 
   .remaining-text {
-    color: var(--text-secondary, #737780);
-    font-size: 14px;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 500;
-    line-height: 16px;
+    color: var(--text-default);
+    text-align: left;
+    width: 100%;
   }
+
+
+  .spent-text {
+    color: var(--text-secondary);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .spent-text p {
+    display: block;
+    padding: 0;
+    margin: 0;
+  }
+
 
   .progress-wrapper {
     display: flex;
     align-items: center;
+    flex-direction: column;
     gap: 8px;
   }
 
-  .percentage-text {
+  /* .percentage-text {
     color: var(--text-secondary, #737780);
     font-size: 14px;
     font-family: 'Nunito', sans-serif;
     font-weight: 500;
-  }
+  } */
 
   .set-budget-link {
     background: none;
@@ -274,7 +300,7 @@
 
   .modal {
     width: 100%;
-    max-width: 420px;
+    max-width: 402px;
     padding: 32px 16px;
     background: white;
     border-radius: 32px 32px 0 0;
