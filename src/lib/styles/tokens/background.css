@@ -2,8 +2,8 @@
 
 :root {
     /* Background - Default */
-    --bg-brand-primary: var(--color-green-500);
-    --bg-brand-secondary: #A30F3C;
+    --bg-brand-primary: #0FA376;
+    --bg-brand-secondary: #A07AD9;
     --bg-page-primary: #FCFBFA;
     --bg-page-secondary: #FFFFFF;
     --bg-accent-1: #FFF0E5;
@@ -11,13 +11,13 @@
     --bg-accent-3: #E6F3FF;
     --bg-accent-4: #E6F9FD;
     --bg-accent-5: #EFEEFE;
-    --bg-accent-6: #FFFAE6;
+    --bg-accent-6: #FFFEF9;
     --bg-accent-7: #FAEAFC;
     --bg-accent-8: #FFE5E5;
 
     /* Background - Inverted */
     --bg-inverted-brand-primary: #E7F6F1;
-    --bg-inverted-brand-secondary: #F6E7EC;
+    --bg-inverted-brand-secondary: #F6F2FB;
     --bg-inverted-primary: #111215;
     --bg-inverted-secondary: #737780;
     --bg-inverted-accent-1: #FF9040;
@@ -25,7 +25,7 @@
     --bg-inverted-accent-3: #33A0FF;
     --bg-inverted-accent-4: #33CDED;
     --bg-inverted-accent-5: #8177F7;
-    --bg-inverted-accent-6: #FFD633;
+    --bg-inverted-accent-6: #FEF5D2;
     --bg-inverted-accent-7: #D559E6;
     --bg-inverted-accent-8: #FF4040;
 }

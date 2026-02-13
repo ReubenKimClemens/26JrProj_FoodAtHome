@@ -17,6 +17,18 @@
     --color-red-700: #800000;
     --color-red-800: #400000;
 
+    /* Color - Dark Red */
+    --color-dark-red-50: #FCE9E9;
+    --color-dark-red-100: #F4BCBC;
+    --color-dark-red-200: #EF9B9B;
+    --color-dark-red-300: #E86E6E;
+    --color-dark-red-400: #E35151;
+    --color-dark-red-500: #DC2626;
+    --color-dark-red-600: #C82323;
+    --color-dark-red-700: #9C1B1B;
+    --color-dark-red-800: #791515;
+    --color-dark-red-900: #5C1010;
+
     /* Color - Berry */
     --color-berry-50: #F6E7EC;
     --color-berry-100: #E2B5C3;
@@ -64,6 +76,18 @@
     --color-mint-800: #006E62;
     --color-mint-900: #00544B;
 
+    /* Color - Blue */
+    --color-blue-50: #ECF3FE;
+    --color-blue-100: #C3D8FC;
+    --color-blue-200: #A5C6FB;
+    --color-blue-300: #7CABF9;
+    --color-blue-400: #639BF8;
+    --color-blue-500: #3C82F6;
+    --color-blue-600: #3776E0;
+    --color-blue-700: #2B5CAF;
+    --color-blue-800: #214887;
+    --color-blue-900: #193767;
+
     /* Color - Light Blue */
     --color-light-blue-50: #E6F3FF;
     --color-light-blue-100: #B0DAFF;
@@ -75,6 +99,18 @@
     --color-light-blue-700: #0061B5;
     --color-light-blue-800: #004B8C;
     --color-light-blue-900: #00396B;
+
+    /* Color - Dark Blue */
+    --color-dark-blue-50: #EAEAFC;
+    --color-dark-blue-100: #BFBFF5;
+    --color-dark-blue-200: #A0A0F1;
+    --color-dark-blue-300: #7474EA;
+    --color-dark-blue-400: #5959E6;
+    --color-dark-blue-500: #3030E0;
+    --color-dark-blue-600: #2C2CCC;
+    --color-dark-blue-700: #22229F;
+    --color-dark-blue-800: #1A1A7B;
+    --color-dark-blue-900: #14145E;
 
     /* Color - Cyan */
     --color-cyan-50: #E6F9FD;
@@ -100,17 +136,42 @@
     --color-purple-800: #352F87;
     --color-purple-900: #292467;
 
+    /* Color - Violet */
+    --color-violet-50: #F6F2FB;
+    --color-violet-100: #E2D6F3;
+    --color-violet-200: #D3C2EE;
+    --color-violet-300: #BFA6E6;
+    --color-violet-400: #B395E1;
+    --color-violet-500: #A07AD9;
+    --color-violet-600: #926FC5;
+    --color-violet-700: #72579A;
+    --color-violet-800: #584377;
+    --color-violet-900: #584377;
+
     /* Color - Yellow */
-    --color-yellow-50: #FFFAE6;
-    --color-yellow-100: #FFEFB0;
-    --color-yellow-200: #FFE88A;
-    --color-yellow-300: #FFDD54;
-    --color-yellow-400: #FFD633;
-    --color-yellow-500: #FFCC00;
-    --color-yellow-600: #E8BA00;
-    --color-yellow-700: #B59100;
-    --color-yellow-800: #8C7000;
-    --color-yellow-900: #6B5600;
+    --color-yellow-50: #FFFEF9;
+    --color-yellow-100: #FFFBEE;
+    --color-yellow-200: #FFF9E5;
+    --color-yellow-300: #FEF7D9;
+    --color-yellow-400: #FEF5D2;
+    --color-yellow-500: #FEF3C7;
+    --color-yellow-600: #E7DDB5;
+    --color-yellow-700: #B4AD8D;
+    --color-yellow-800: #8C866D;
+    --color-yellow-900: #6B6654;
+
+    /* Color - Light Yellow */
+    --color-light-yellow-50: #FFFAE6;
+    --color-light-yellow-100: #FFEFB0;
+    --color-light-yellow-200: #FFE88A;
+    --color-light-yellow-300: #FFDD54;
+    --color-light-yellow-400: #FFD633;
+    --color-light-yellow-500: #FFCC00;
+    --color-light-yellow-600: #E8BA00;
+    --color-light-yellow-700: #B59100;
+    --color-light-yellow-800: #8C7000;
+    --color-light-yellow-900: #6B5600;
+
 
     /* Color - Pink */
     --color-pink-50: #FAEAFC;
@@ -124,6 +185,18 @@
     --color-pink-800: #701A7B;
     --color-pink-900: #55145E;
 
+    /* Color - Light Pink */
+    --color-light-pink-50: #FDEDF5;
+    --color-light-pink-100: #F9C6DF;
+    --color-light-pink-200: #F6ABD0;
+    --color-light-pink-300: #F284BB;
+    --color-light-pink-400: #F06DAD;
+    --color-light-pink-500: #EC4899;
+    --color-light-pink-600: #D7428B;
+    --color-light-pink-700: #A8336D;
+    --color-light-pink-800: #822854;
+    --color-light-pink-900: #631E40;
+
     /* Color - Grey */
     --color-grey-50: #F7F7F7;
     --color-grey-100: #DADBDD;
@@ -131,7 +204,7 @@
     --color-grey-300: #A1A4AA;
     --color-grey-400: #737780;
     --color-grey-500: #444955;
-    --color-grey-600: #444955;
+    --color-grey-600: #333740;
     --color-grey-700: #22252B;
     --color-grey-800: #111215;
 

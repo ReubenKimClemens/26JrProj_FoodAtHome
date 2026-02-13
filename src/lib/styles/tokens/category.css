@@ -1,0 +1,41 @@
+:root {
+    /* Category - Dark*/
+    --category-dark-brand-primary: #0FA376;
+    --category-dark-brand-secondary: #A07AD9;
+    --category-dark-default: #111215;
+    --category-dark-secondary: #737780;
+    --category-dark-tertiary: #FFFFFF;
+    --category-dark-produce: #FF6B00;
+    --category-dark-bread: #B59100;
+    --category-dark-frozen: #007CE8;
+    --category-dark-leftover: #00C8B3;
+    --category-dark-dairy: #3030E0;
+    --category-dark-pantry: #6155F5;
+    --category-dark-drinks: #3C82F6;
+    --category-dark-sauces: #CB30E0;
+    --category-dark-protein: #DC2626;
+    --category-dark-snacks: #00C0E8;
+    --category-dark-spices: #FF0000;
+    --category-dark-misc: #444955;
+    --category-dark-desserts: #EC4899;
+
+    /* Category - Light */
+    --category-light-brand-primary: #E7F6F1;
+    --category-light-brand-secondary: #F6F2FB;
+    --category-light-default: #F7F7F7;
+    --category-light-secondary: #FFFFFF;
+    --category-light-tertiary: #FFFFFF;
+    --category-light-produce: #FFE1CC;
+    --category-light-bread: #FFEFB0;
+    --category-light-frozen: #B0DAFF;
+    --category-light-leftover: #E6FAF7;
+    --category-light-dairy: #EAEAFC;
+    --category-light-pantry: #EFEEFE;
+    --category-light-drinks: #E6F3FF;
+    --category-light-sauces: #FAEAFC;
+    --category-light-protein: #FCE9E9;
+    --category-light-snacks: #E6F9FD;
+    --category-light-spices: #FFE5E5;
+    --category-light-misc: #DADBDD;
+    --category-light-desserts: #FDEDF5;
+}

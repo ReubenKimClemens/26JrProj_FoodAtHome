@@ -1,11 +1,12 @@
 :root {
-    /* Border - Color */
+/* Border - Color */
     --border-primary: #737780;
     --border-secondary: #DADBDD;
 
-    /* Border - Stroke */
+/* Border - Stroke */
     --border-thin: 1px;
     --border-thick: 2px;
 
+/* Border - Shadow */
     --box-shadow: 0px 1px 4px 0px #0c0c0d36;
 }
