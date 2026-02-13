@@ -43,6 +43,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin: 24px 0 0;
   }
 
   .header-title {

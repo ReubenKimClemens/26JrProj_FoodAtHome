@@ -6,7 +6,7 @@
 
 	let { children } = $props();
 
-	const noNavBar = ['/loading', 'login', '/scan', '/achievements'];
+	const noNavBar = ['/loading', '/login', '/scan', '/achievements'];
 </script>
 
 <svelte:head>

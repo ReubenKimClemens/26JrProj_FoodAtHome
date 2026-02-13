@@ -28,7 +28,7 @@
   import categorySnacks from '$lib/assets/category_snacks_inactive.svg';
   import categoryPantry from '$lib/assets/category_pantry_inactive.svg';
   import categorySauces from '$lib/assets/category_sauces_inactive.svg';
-  import categorySpices from '$lib/assets/category_spices_inactive.svg';
+  import categorySpices from '$lib/assets/category_spices_inactive.png';
   import categoryLeftover from '$lib/assets/category_leftover_inactive.svg';
   import categoryFrozen from '$lib/assets/category_frozen_inactive.svg';
   import categoryMisc from '$lib/assets/category_misc_inactive.svg';

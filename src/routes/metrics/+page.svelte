@@ -1,5 +1,6 @@
 <script>
     import Dropdown from '$lib/components/Dropdown.svelte';
+    import PageHeader from '$lib/components/PageHeader.svelte';
     import GroceryListCard from '$lib/components/StoreCard.svelte';
     import MetricData from '$lib/components/MetricData.svelte';
     import TopCategories from '$lib/components/TopCategories.svelte';
@@ -42,11 +43,11 @@
 </script>
 
 <div class="metric-screen">
-    <h1>Metrics</h1>
+    <PageHeader title="Metrics" />
     <Dropdown bind:value={selectedCategory} 
         options={['Today', 'Yesterday', 'This Week', 'This Month', 'This Year']}
         placeholder="Daily" />
-    <h2>December 03 - December 09</h2>
+    <PageHeader title="December 03 - December 09" />
 
     <img src={currentGraph} alt="Bar Graph Showing {selectedCategory} Metrics" />
 
@@ -56,7 +57,7 @@
         {/each}
     </div>
 
-    <h2>Store Visits</h2>
+    <PageHeader title="Store Visits" />
     <div class="store-list">
         {#each stores as store}
             <GroceryListCard 
@@ -67,7 +68,7 @@
         />{/each}
     </div>
 
-    <h2>Top Categories</h2>
+    <PageHeader title="Top Categories" />
     <TopCategories categories={categories} />
 </div>
 
