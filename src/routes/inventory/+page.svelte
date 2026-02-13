@@ -7,6 +7,7 @@
     import SwipeableItem from '$lib/components/SwipeableItem.svelte';
     import Modal from '$lib/components/Modal.svelte';
     import PlusIcon from '$lib/assets/plus.svg';
+    import SearchBar from '$lib/components/SearchBar.svelte';
     import { getDaysSinceAdded, deleteReceiptItem } from '$lib/api/receipts.js';
 
     let { data } = $props();
@@ -17,11 +18,21 @@
     let addModalOpen = $state(false);
     let editModalOpen = $state(false);
     let editingItem = $state(null);
+    let searchQuery = $state('');
 
     let filteredAndSortedItems = $derived.by(() => {
         let items = selectedCategory === 'All' 
             ? allItems 
             : allItems.filter(item => item.category === selectedCategory);
+
+        // 🔍Filter by search query
+        if (searchQuery.trim()) {
+            const q = searchQuery.toLowerCase();
+            items = items.filter(item => 
+                item.item_name?.toLowerCase().includes(q) ||
+                item.category?.toLowerCase().includes(q)
+            );
+        }
         
         return sortOrder === 'Newest First'
             ? items.toSorted((a, b) => new Date(b.created_at) - new Date(a.created_at))
@@ -97,15 +108,17 @@
         </button>
     </header>
 
+    <SearchBar bind:value={searchQuery} placeholder="Search" />
+
     <CategoryIcon bind:activeCategory={selectedCategory} />
 
     <div class="filters">
         <div class="filter-dropdown">
             <Dropdown 
-            bind:value={sortOrder} 
-            options={['Newest First', 'Oldest First']}
-            placeholder="Newest First" 
-        />
+                bind:value={sortOrder} 
+                options={['Newest First', 'Oldest First']}
+                placeholder="Newest First" 
+            />
         </div>
         
         <ListGridToggle />
@@ -124,6 +137,10 @@
             onTap={() => openEditModal(item)}
         />
     {/each}
+
+    {#if filteredAndSortedItems.length === 0}
+        <p class="empty-state">No items found.</p>
+    {/if}
 </div>
 
 <Modal 
@@ -158,6 +175,7 @@
         margin-bottom: 1rem;
         justify-content: space-between;
     }
+
     .filter-dropdown {
         width: fit-content;
     }
@@ -181,5 +199,13 @@
 
     .add-button:hover {
         background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .empty-state {
+        text-align: center;
+        color: var(--text-subtle, #AAADB3);
+        font-family: 'Nunito', sans-serif;
+        font-size: 0.875rem;
+        margin-top: 2rem;
     }
 </style>
