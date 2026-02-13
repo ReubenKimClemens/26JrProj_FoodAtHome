@@ -36,7 +36,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 24px 0 0;
   }
 
   .header-content {
@@ -44,6 +43,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin: 24px 0 0;
   }
 
   .header-title {

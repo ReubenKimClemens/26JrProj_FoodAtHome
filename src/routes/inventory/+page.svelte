@@ -1,5 +1,6 @@
 <script>
     import { addReceiptItem, updateReceiptItem } from '$lib/api/receipts.js';
+    import PageHeader from '$lib/components/PageHeader.svelte';
     import CategoryIcon from '$lib/components/CategoryIcon.svelte';
     import Dropdown from '$lib/components/Dropdown.svelte';
     import ListGridToggle from '$lib/components/ListGridToggle.svelte';
@@ -90,7 +91,11 @@
 
 <div class="inventory-screen">
     <header class="title-and-add">
+<<<<<<< maria
+        <PageHeader title="Profile" />
+=======
         <h1 class="title-lg">Inventory</h1>
+>>>>>>> main
         <button onclick={() => addModalOpen = true} class="add-button" aria-label="Add new item">
             <img src={PlusIcon} alt="" />
         </button>
@@ -151,10 +156,6 @@
         margin-bottom: 1.5rem;
     }
 
-    h1 {
-        margin: 0;
-    }
-
     .filters {
         display: flex;
         gap: 1rem;
@@ -165,12 +166,17 @@
         width: fit-content;
     }
 
-
     .swipe-tip {
+<<<<<<< maria
+        font-size: 0.8rem;
+        color: var(--color-text-secondary);
+=======
         font-size: 0.9rem;
         color: var(--text-secondary);
+>>>>>>> main
         margin-bottom: 1rem;
         text-align: center;
+        font-family: 'Nunito', sans-serif;
     }
 
     .add-button {

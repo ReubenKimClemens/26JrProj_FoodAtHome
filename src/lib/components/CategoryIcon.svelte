@@ -49,10 +49,13 @@
       activeCategory = category;
     }
     
+    const pngCategories = ['Spices', 'Leftover'];
+
     function getIconPath(category, isActive) {
       const iconName = categoryIcons[category];
       const state = isActive ? 'active' : 'inactive';
-      return `https://ugtagpsyuefymncffczc.supabase.co/storage/v1/object/public/Category%20Icons/${iconName}_${state}.svg`;
+      const ext = pngCategories.includes(category) ? 'png' : 'svg';
+      return `https://ugtagpsyuefymncffczc.supabase.co/storage/v1/object/public/Category%20Icons/${iconName}_${state}.${ext}`;
     }
 </script>
 
@@ -70,8 +73,9 @@
         <div class="icon-circle">
           <img 
             src={getIconPath(category, activeCategory === category)} 
-            alt="" 
-            class="icon" 
+            alt=""
+            class="icon"
+            data-category={category}
           />
         </div>
         <span class="label">{category}</span>
@@ -103,6 +107,12 @@
       padding: 0;
       transition: transform 0.2s ease;
       flex-shrink: 0;
+    }
+
+    .icon[data-category="Spices"],
+    .icon[data-category="Leftover"] {
+      width: 48px;
+      height: 48px;
     }
   
     .label {
