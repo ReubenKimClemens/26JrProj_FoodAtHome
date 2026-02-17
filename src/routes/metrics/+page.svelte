@@ -66,7 +66,6 @@
 </script>
 
 <div class="metric-screen">
-<<<<<<< maria
     <PageHeader title="Metrics" />
     <Dropdown bind:value={selectedCategory} 
         options={['Today', 'Yesterday', 'This Week', 'This Month', 'This Year']}
@@ -74,13 +73,6 @@
     <PageHeader title="December 03 - December 09" />
 
     <img src={currentGraph} alt="Bar Graph Showing {selectedCategory} Metrics" />
-=======
-    <h1 class="title-lg">Metrics</h1>
-
-    <Dropdown bind:value={selectedCategory} 
-        options={['Today', 'Yesterday', 'This Week', 'This Month', 'This Year']}
-        placeholder="This Week" />
->>>>>>> main
 
         
     <div class="data">
@@ -141,8 +133,6 @@
             <TopCategories categories={categories} />
         </section>
     </div>
-
-<<<<<<< maria
     <PageHeader title="Store Visits" />
     <div class="store-list">
         {#each stores as store}
@@ -156,9 +146,6 @@
 
     <PageHeader title="Top Categories" />
     <TopCategories categories={categories} />
-=======
-
->>>>>>> main
 </div>
 
 <style>
