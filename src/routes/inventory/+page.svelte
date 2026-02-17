@@ -91,11 +91,8 @@
 
 <div class="inventory-screen">
     <header class="title-and-add">
-<<<<<<< maria
         <PageHeader title="Profile" />
-=======
         <h1 class="title-lg">Inventory</h1>
->>>>>>> main
         <button onclick={() => addModalOpen = true} class="add-button" aria-label="Add new item">
             <img src={PlusIcon} alt="" />
         </button>
@@ -167,13 +164,8 @@
     }
 
     .swipe-tip {
-<<<<<<< maria
         font-size: 0.8rem;
         color: var(--color-text-secondary);
-=======
-        font-size: 0.9rem;
-        color: var(--text-secondary);
->>>>>>> main
         margin-bottom: 1rem;
         text-align: center;
         font-family: 'Nunito', sans-serif;
