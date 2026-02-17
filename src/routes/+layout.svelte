@@ -6,8 +6,7 @@
 
 	let { children } = $props();
 
-	// exclude page that doesn't need navbar
-	const noNavBar = ['/loading', '/scan', '/achievements'];
+	const noNavBar = ['/loading', '/login', '/scan', '/achievements'];
 </script>
 
 <svelte:head>
@@ -26,13 +25,17 @@
 
 <style>
 	.app-container {
-		max-width: 402px; 
-		margin: 0 auto;
-		min-height: 100vh;
-		position: relative;
+	max-width: 402px;
+	margin: 0 auto;
+	min-height: 100vh;
+	position: relative;
+	background-color: var(--bg-page-primary);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	}
 
 	.content-wrapper {
-		padding-bottom: 120px; 
+	padding-bottom: 120px;
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
 	}
 </style>

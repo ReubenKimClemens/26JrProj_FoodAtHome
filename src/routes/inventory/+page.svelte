@@ -1,5 +1,6 @@
 <script>
     import { addReceiptItem, updateReceiptItem } from '$lib/api/receipts.js';
+    import PageHeader from '$lib/components/PageHeader.svelte';
     import CategoryIcon from '$lib/components/CategoryIcon.svelte';
     import Dropdown from '$lib/components/Dropdown.svelte';
     import ListGridToggle from '$lib/components/ListGridToggle.svelte';
@@ -92,6 +93,7 @@
 
 <div class="inventory-screen">
     <header class="title-and-add">
+        <PageHeader title="Profile" />
         <h1 class="title-lg">Inventory</h1>
         <button onclick={() => addModalOpen = true} class="add-button" aria-label="Add new item">
             <img src={PlusIcon} alt="" />
@@ -168,10 +170,6 @@
         margin-bottom: 1.5rem;
     }
 
-    h1 {
-        margin: 0;
-    }
-
     .filters {
         display: flex;
         gap: 1rem;
@@ -182,12 +180,12 @@
         width: fit-content;
     }
 
-
     .swipe-tip {
-        font-size: 0.9rem;
-        color: var(--text-secondary);
+        font-size: 0.8rem;
+        color: var(--color-text-secondary);
         margin-bottom: 1rem;
         text-align: center;
+        font-family: 'Nunito', sans-serif;
     }
 
     .add-button {
@@ -201,27 +199,5 @@
 
     .add-button:hover {
         background-color: rgba(0, 0, 0, 0.05);
-    }
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 1rem;
-        margin-top: 1rem;
-    }
-
-    .grid-item {
-        background: none;
-        border: none;
-        padding: 0;
-        cursor: pointer;
-        transition: transform 0.2s;
-    }
-
-    .grid-item:hover {
-        transform: translateY(-2px);
-    }
-
-    .grid-item:active {
-        transform: scale(0.98);
     }
 </style>

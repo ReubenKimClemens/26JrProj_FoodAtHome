@@ -8,7 +8,8 @@
     title = 'Add New Item',
     onAdd = () => {},
     onReset = () => {},
-    initialData = null  // ← ADDED: For pre-filling when editing
+    // ⛽️Pre-filling when edits are made
+    initialData = null
   } = $props();
 
   let itemName = $state('');
@@ -28,8 +29,8 @@
   import categorySnacks from '$lib/assets/category_snacks_inactive.svg';
   import categoryPantry from '$lib/assets/category_pantry_inactive.svg';
   import categorySauces from '$lib/assets/category_sauces_inactive.svg';
-  import categorySpices from '$lib/assets/category_spices_inactive.svg';
-  import categoryLeftover from '$lib/assets/category_leftover_inactive.svg';
+  import categorySpices from '$lib/assets/category_spices_inactive.png';
+  import categoryLeftover from '$lib/assets/category_leftover_inactive.png';
   import categoryFrozen from '$lib/assets/category_frozen_inactive.svg';
   import categoryMisc from '$lib/assets/category_misc_inactive.svg';
   import categoryDessert from '$lib/assets/category_dessert_inactive.svg';
@@ -88,7 +89,7 @@
       note
     });
     open = false;
-    handleReset();  // ← ADDED: Clear form after adding
+    handleReset();  //🧼Clear form after adding
   }
 
   function handleReset() {
@@ -112,7 +113,7 @@
     }
   }
 
-  // ← ADDED: Pre-fill form when modal opens with initialData
+  // ← ⛽️Pre-fill form when modal opens with initialData
   $effect(() => {
     if (open && initialData) {
       itemName = initialData.item_name || '';
@@ -123,7 +124,7 @@
       date = initialData.created_at ? new Date(initialData.created_at).toISOString().split('T')[0] : '';
       note = '';
     } else if (open && !initialData) {
-      handleReset();  // Reset form for add mode
+      handleReset();
     }
   });
 
@@ -160,7 +161,14 @@
 
     <!-- 📌Modal header with drag handle and title -->
     <div class="modal-header">
-      <div class="handle" onclick={handleClose}></div>
+      <div 
+        class="handle" 
+        onclick={handleClose}
+        onkeydown={(e) => e.key === 'Enter' && handleClose()}
+        role="button"
+        tabindex="0"
+        aria-label="Close modal"
+      ></div>
       <h2 id="modal-title" class="modal-title">{title}</h2>
     </div>
 
@@ -265,7 +273,7 @@
       </div>
     </div>
 
-    <!-- ♻Reset & Add/Save ← CHANGED: Button text changes based on mode -->
+    <!-- 🔁Button text changes based on mode -->
     <div class="modal-actions">
       <button class="btn btn-reset" onclick={handleReset}>
         Reset
