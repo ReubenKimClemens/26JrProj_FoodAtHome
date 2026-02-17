@@ -14,8 +14,6 @@
     import { ChevronLeft } from 'lucide-svelte';
     import { ChevronRight } from 'lucide-svelte';
 
-
-
     let selectedCategory = $state('All');
 
     const graphImages = {

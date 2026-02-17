@@ -20,6 +20,7 @@
     import ItemGroceryList from '$lib/components/ItemGroceryList.svelte';
     import InventoryList from '$lib/components/InventoryList.svelte';
     import SwipeableItem from '$lib/components/SwipeableItem.svelte';
+    import GridViewCard from '$lib/components/GridViewCard.svelte';
 
     let allAchievements = [{img: Bag, name: 'Do you have FAH?', state: 'active'}, {img: Orange, name: 'Wise Head', state: 'inactive'}, {img: Star, name: 'Getting Started', state: 'active'},{img: Tomato, name: 'First Item', state: 'active'},{img: Receipt, name: 'Receipt Warrior', state: 'active'},{img: Broccoli, name: 'Chomp Machine', state: 'active'}];
 
@@ -62,6 +63,13 @@
     ];
     let isChecked = false;
   </script>
+
+<GridViewCard 
+category="Protein"
+name="Chicken Thighs"
+daysAgo={2}
+count={10}
+/>
 
   <ItemListCard category="Dairy" quantity={4} itemName="Bananas" />
 

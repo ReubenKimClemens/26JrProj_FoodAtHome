@@ -4,11 +4,13 @@
     import Dropdown from '$lib/components/Dropdown.svelte';
     import ListGridToggle from '$lib/components/ListGridToggle.svelte';
     import SwipeableItem from '$lib/components/SwipeableItem.svelte';
+    import GridViewCard from '$lib/components/GridViewCard.svelte';
     import Modal from '$lib/components/Modal.svelte';
     import PlusIcon from '$lib/assets/plus.svg';
     import { getDaysSinceAdded, deleteReceiptItem } from '$lib/api/receipts.js';
 
     let { data } = $props();
+    let view = $state('list');
         
     let selectedCategory = $state('All');
     let sortOrder = $state('Newest First');
@@ -107,22 +109,37 @@
         />
         </div>
         
-        <ListGridToggle />
+        <ListGridToggle bind:view />
     </div>
     
-    <p class="swipe-tip body-sm">Swipe right to TOSS | Swipe left to CHOMP | Tap to EDIT</p>
-
-    {#each filteredAndSortedItems as item (item.id)}
-        <SwipeableItem 
-            itemName={item.item_name}
-            quantity={item.quantity}
-            category={item.category || 'Uncategorized'}
-            addedDaysAgo={getDaysSinceAdded(item.created_at)}
-            onToss={() => handleDelete(item.id)}
-            onChomp={() => handleDelete(item.id)}
-            onTap={() => openEditModal(item)}
-        />
-    {/each}
+    {#if view === 'list'}
+        <p class="swipe-tip body-sm">Swipe right to TOSS | Swipe left to CHOMP | Tap to EDIT</p>
+        
+        {#each filteredAndSortedItems as item (item.id)}
+            <SwipeableItem 
+                itemName={item.item_name}
+                quantity={item.quantity}
+                category={item.category || 'Uncategorized'}
+                addedDaysAgo={getDaysSinceAdded(item.created_at)}
+                onToss={() => handleDelete(item.id)}
+                onChomp={() => handleDelete(item.id)}
+                onTap={() => openEditModal(item)}
+            />
+        {/each}
+    {:else}
+        <div class="grid">
+            {#each filteredAndSortedItems as item (item.id)}
+                <button onclick={() => openEditModal(item)} class="grid-item">
+                    <GridViewCard
+                        category={item.category || 'Uncategorized'}
+                        name={item.item_name}
+                        daysAgo={getDaysSinceAdded(item.created_at)}
+                        count={item.quantity}
+                    />
+                </button>
+            {/each}
+        </div>
+    {/if}
 </div>
 
 <Modal 
@@ -184,5 +201,27 @@
 
     .add-button:hover {
         background-color: rgba(0, 0, 0, 0.05);
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .grid-item {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .grid-item:hover {
+        transform: translateY(-2px);
+    }
+
+    .grid-item:active {
+        transform: scale(0.98);
     }
 </style>

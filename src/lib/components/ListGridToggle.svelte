@@ -1,34 +1,31 @@
 <script>
   import { Grid2X2, List } from 'lucide-svelte';
-  let view = 'list';
+  let { view = $bindable('list') } = $props();
 </script>
 
-<div class="content">
-    <div class="toggle-container">
+<div class="toggle-container">
         
-<button
-  class:activeItem={view === 'list'}
-  on:click={() => view = 'list'}
->
-  <List size={30} />
-</button>
+  <button
+    class:active={view === 'list'}
+    onclick={() => view = 'list'}
+  >
+    <List size={30} />
+  </button>
 
-<button
-  class:activeItem={view === 'grid'}
-  on:click={() => view = 'grid'}
->
-  <Grid2X2 size={30} />
-</button>
-    </div>
+  <button
+    class:active={view === 'grid'}
+    onclick={() => view = 'grid'}
+    >
+    <Grid2X2 size={30} />
+  </button>
 </div>
 
 
 <style>
-    .content {
-        width: fit-content;
-        height: 100%;
-        display: flex;
-    }
+  .toggle-container {
+    display: flex;
+    gap: 0.25rem;
+  }
 
 
     button {
@@ -44,10 +41,11 @@
         border-radius: var(--radius-minimal);
 
         align-items: center;
+        display: flex;
       justify-content: center;
     }
 
-    .activeItem {
+    .active  {
         background-color: var(--bg-brand-primary);
         color: var(--icons-tertiary);
     }
