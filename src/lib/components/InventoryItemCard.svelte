@@ -9,6 +9,13 @@
     } = $props();
     
     let categoryColor = getCategoryColor(category);
+
+
+    function calculateDate(num) {
+        if (num === 0) return 'Today';
+        if (num === 1) return 'Yesterday';
+        return num + ' Days Ago';
+    }
 </script>
   
 <div class="item-card">
@@ -20,10 +27,10 @@
     <div class="item-footer">
       <span 
         class="category-badge"
-        style="background: {categoryColor.bg}; color: {categoryColor.text};">
+        style="background: {categoryColor.light}; color: {categoryColor.dark};">
         {category}
         </span>
-        <span class="timestamp">Added {addedDaysAgo} Days Ago</span>
+        <span class="timestamp">Added {calculateDate(addedDaysAgo)}</span>
     </div>
 </div>
   
