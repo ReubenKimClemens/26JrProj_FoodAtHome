@@ -65,7 +65,6 @@
         { name: 'Dairy', amount: 35.00, percentage: 22, color: '#10B981' }
     ]);
 </script>
-{data.totalSpent}
 <div class="metric-screen">
     <PageHeader title="Metrics" />
     <Dropdown bind:value={selectedCategory} 

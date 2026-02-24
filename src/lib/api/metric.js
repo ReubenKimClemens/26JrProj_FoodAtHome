@@ -28,7 +28,7 @@ export async function NumberOfItems(userId) {
 // Number of receipts in the database
 export async function NumberOfReceipts(userId) {
     const { data, error } = await supabase
-        .from('receipt_items')
+        .from('receipts')
         .select('*', { count: 'exact' })
         .eq('user_id', userId);
     if (error) {
