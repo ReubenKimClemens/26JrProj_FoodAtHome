@@ -28,6 +28,9 @@
     // budget card
     let { data } = $props();
 
+    let avgPerDay = data.totalSpent / 30;
+    let avgPerReceipt = data.totalSpent / data.numberOfReceipts;
+
     let budget = $state(data.activeBudget?.budget_amount ?? 400);
     let spent = $state(data.activeBudget?.total_spent ?? 0);
     let remaining = $state(budget - spent);
@@ -46,14 +49,14 @@
 
     let metrics = $state([
         // daily view only has these 2 info
-        {title: "Number of Items", count: 29},
-        {title: "Number of Receipts", count: 4},
+        {title: "Number of Items", count: data.numberOfItems},
+        {title: "Number of Receipts", count: data.numberOfReceipts},
 
         // for weekly, monthly & yearly
-        {title: "Avg per day", amount: 22.66},
-        {title: "Avg per Receipt", amount: 39.65},
-        {title: "Highest Receipt", amount: 56.08, date: "12/04/2025"},
-        {title: "Lowest Receipt", amount: 27.40, date: "12/08/2025"}
+        {title: "Avg per day", amount: avgPerDay},
+        {title: "Avg per Receipt", amount: avgPerReceipt},
+        {title: "Highest Receipt", amount: data.highestReceiptCost, date: "12/04/2025"},
+        {title: "Lowest Receipt", amount: data.lowestReceiptCost, date: "12/08/2025"}
     ]);
 
     let categories= $state([
@@ -62,7 +65,7 @@
         { name: 'Dairy', amount: 35.00, percentage: 22, color: '#10B981' }
     ]);
 </script>
-
+{data.totalSpent}
 <div class="metric-screen">
     <PageHeader title="Metrics" />
     <Dropdown bind:value={selectedCategory} 
