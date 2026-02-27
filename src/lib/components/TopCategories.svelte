@@ -15,12 +15,13 @@
     {#each categories as category}
         <div class="row">
             <div class="header">
-                <span class="name">{category.name}</span>
-                <span class="amount">${category.amount.toFixed(2)}</span>
+                <span class="name body-md">{category.name}</span>
+                <span class="amount body-md-bold">${category.amount.toFixed(2)}</span>
             </div>
+
             <div class="progress-row">
                 <ProgressBar value={category.amount} max={total} color={category.color} />
-                <span class="percent">{category.percentage}%</span>
+                <span class="percent body-md">{category.percentage}%</span>
             </div>
         </div>
     {/each}
@@ -31,10 +32,10 @@
         display: flex;
         background-color: white;
         flex-direction: column;
-        gap: 20px;
-        padding: 16px;
+        gap: 16px;
+        padding: 24px 32px;
         background: white;
-        border-radius: 16px;
+        border-radius: var(--radius-rounded);
         font-family: var(--font-body);
         box-shadow: var(--box-shadow);
     }
@@ -42,7 +43,7 @@
     .row {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 4px;
     }
 
     .header {
@@ -51,14 +52,11 @@
     }
 
     .name {
-        font-size: 18px;
-        color: #6B7280;
+        color: var(--text-default);
     }
 
     .amount {
-        font-size: 18px;
-        color: #1F2937;
-        font-weight: 600;
+        color: var(--text-default);
     }
 
     .progress-row {
@@ -68,8 +66,7 @@
     }
 
     .percent {
-        font-size: 16px;
-        color: #9CA3AF;
+        color: var(--text-secondary);
         min-width: 45px;
         text-align: right;
     }

@@ -1,10 +1,13 @@
 <script>
+    // Main 
     import ButtonGroup from "$lib/components/ButtonGroup.svelte";
     import { Lightbulb } from 'lucide-svelte';
     import { Camera } from 'lucide-svelte';
     import { MoveLeft } from 'lucide-svelte';
     import QuestionMark from '$lib/assets/icon_questionmark.svg';
+    import Modal from '$lib/components/Modal.svelte';
     import { X } from 'lucide-svelte';
+    import { Upload } from 'lucide-svelte';
     import {goto} from '$app/navigation';
 
     let fileInput;
@@ -16,6 +19,20 @@
         fileInput.click();
     }
 
+    let modalOpen = $state(false);
+    let modalTitle = $state('Add New Item');
+    let editingItem = $state(null);
+
+    function handleSave(data) {
+        goto('/scan/manual-items', { state: { existingItems: $state.snapshot([data]) } });
+    }
+    
+    function handleAdd() {
+        editingItem = null;
+        modalTitle = 'Add New Item';
+        modalOpen = true;
+    }
+
     function handleImageUpload(event) {
         const file = event.target.files[0];
         if (file) {
@@ -25,7 +42,9 @@
         }
         goto('/scan/scanned-items');
     }
+    
 </script>
+
 
 <div class="content">
 
@@ -33,7 +52,6 @@
         <button on:click={() => goto('/')} class="back-btn">
             <X size={30}/>
         </button>
-        
 
         <button class="help-btn" on:click={() => goto('/scan/scanning-tips')}>
 
@@ -48,10 +66,11 @@
         {#if imagePreview}
             <img src={imagePreview} alt="Preview" class="preview-image" />
         {:else}
-            <Camera size={50}/>
+            <Upload size={50}/>
         {/if}
     </div>
-
+    
+    
     <input
         type="file"
         accept="image/*"
@@ -59,7 +78,7 @@
         on:change={handleImageUpload}
         style="display: none;"
     />
-    
+
     <div class="bottom-wrapper">
     
         <div class="tips-container">
@@ -74,20 +93,27 @@
                 layout="2-column"
                 defaults={{ size: "md", block: true }}
                 buttons={[
-                { label: "Add Items Manually", variant: "outline", onClick: () => goto('/scan/manual-items') },
-                { label: "Scan Receipt", variant: "primary", onClick: triggerFileInput }
+                { label: "Add Items Manually", variant: "outline", onClick: () => handleAdd() },
+                { label: "Upload Receipt", variant: "primary", onClick: triggerFileInput }
                 ]}
             />
     </div>
 </div>
 
-
+<Modal 
+    bind:open={modalOpen} 
+    title={modalTitle}
+    initialData={editingItem}
+    onAdd={handleSave}
+/>
 <style>
+
     .preview-image {
         max-width: 100%;
         max-height: 100%;
         object-fit: contain;
     }
+
     .content {
         height: calc(100vh - 96px);
         padding: var(--spacing-s);
@@ -109,12 +135,12 @@
         border: none;
         background: transparent;
     }
+
     .back-btn{
         cursor: pointer;
         border: none;
         background: transparent;
     }
-
     .tips-container {
         display: flex;
         justify-content: center;

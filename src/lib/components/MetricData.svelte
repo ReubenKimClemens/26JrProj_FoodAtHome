@@ -8,39 +8,36 @@
 </script>
 
 <div class="card">
-    <div class="label">{label}</div>
-    <div class="amount">{count}</div>
+    <div class="label body-sm">{label}</div>
+    <div class="amount title-md">{count}</div>
     {#if amount}
-        <div class="amount">${amount.toFixed(2)}</div>
+        <div class="amount title-md">${amount.toFixed(2)}</div>
     {/if}
     {#if date}
-        <div class="label">{date}</div>
+        <div class="label body-sm">{date}</div>
     {/if}
 </div>
 
 <style>
     .card {
-        background: white;
-        border-radius: 16px;
-        padding: 14px;
+        background: var(--bg-page-secondary);
+        border-radius: var(--radius-rounded);
+        padding: 12px 16px;
         box-shadow: var(--box-shadow);
         display: flex;
         flex-direction: column;
-        width: 40%;
-        gap: 5px;
-        font-family: var(--font-body);
+        width: calc(100/2);
+        gap: 8px;
     }
 
     .label {
-        font-size: 18px;
-        color: #9CA3AF;
-        font-weight: 500;
+        color: var(--text-secondary);
         
     }
 
     .amount {
-        font-size: 24px;
-        color: #1F2937;
-        font-weight: 700;
+        color: var(--text-default);
     }
+
+
 </style>

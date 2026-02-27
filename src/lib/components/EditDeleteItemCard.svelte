@@ -21,7 +21,7 @@
         <div class="item-footer">
             <span 
                 class="category-badge"
-                style="background: {categoryColor.bg}; color: {categoryColor.text};">
+                style="background: {categoryColor.light}; color: {categoryColor.dark};">
                 {category}
             </span>
             <span class="quantity">Qty: {quantity}</span>

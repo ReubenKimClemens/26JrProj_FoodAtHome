@@ -5,12 +5,14 @@
     import Dropdown from '$lib/components/Dropdown.svelte';
     import ListGridToggle from '$lib/components/ListGridToggle.svelte';
     import SwipeableItem from '$lib/components/SwipeableItem.svelte';
+    import GridViewCard from '$lib/components/GridViewCard.svelte';
     import Modal from '$lib/components/Modal.svelte';
     import PlusIcon from '$lib/assets/plus.svg';
     import SearchBar from '$lib/components/SearchBar.svelte';
     import { getDaysSinceAdded, deleteReceiptItem } from '$lib/api/receipts.js';
 
     let { data } = $props();
+    let view = $state('list');
         
     let selectedCategory = $state('All');
     let sortOrder = $state('Newest First');
@@ -102,7 +104,7 @@
 
 <div class="inventory-screen">
     <header class="title-and-add">
-        <PageHeader title="Profile" />
+        <PageHeader title="Inventory" />
         <button onclick={() => addModalOpen = true} class="add-button" aria-label="Add new item">
             <img src={PlusIcon} alt="" />
         </button>
@@ -121,9 +123,10 @@
             />
         </div>
         
-        <ListGridToggle />
+        <ListGridToggle bind:view />
     </div>
     
+<<<<<<< HEAD
     <p class="swipe-tip">Swipe right to TOSS | Swipe left to CHOMP | Tap to EDIT</p>
 
     {#each filteredAndSortedItems as item (item.id)}
@@ -140,6 +143,35 @@
 
     {#if filteredAndSortedItems.length === 0}
         <p class="empty-state">No items found.</p>
+=======
+    {#if view === 'list'}
+        <p class="swipe-tip body-sm">Swipe right to TOSS | Swipe left to CHOMP | Tap to EDIT</p>
+        
+        {#each filteredAndSortedItems as item (item.id)}
+            <SwipeableItem 
+                itemName={item.item_name}
+                quantity={item.quantity}
+                category={item.category || 'Uncategorized'}
+                addedDaysAgo={getDaysSinceAdded(item.created_at)}
+                onToss={() => handleDelete(item.id)}
+                onChomp={() => handleDelete(item.id)}
+                onTap={() => openEditModal(item)}
+            />
+        {/each}
+    {:else}
+        <div class="grid">
+            {#each filteredAndSortedItems as item (item.id)}
+                <button onclick={() => openEditModal(item)} class="grid-item">
+                    <GridViewCard
+                        category={item.category || 'Uncategorized'}
+                        name={item.item_name}
+                        daysAgo={getDaysSinceAdded(item.created_at)}
+                        count={item.quantity}
+                    />
+                </button>
+            {/each}
+        </div>
+>>>>>>> fe358fa871de2ac2a6259a6825093f2323587223
     {/if}
 </div>
 
@@ -200,6 +232,7 @@
     .add-button:hover {
         background-color: rgba(0, 0, 0, 0.05);
     }
+<<<<<<< HEAD
 
     .empty-state {
         text-align: center;
@@ -209,3 +242,6 @@
         margin-top: 2rem;
     }
 </style>
+=======
+</style>
+>>>>>>> fe358fa871de2ac2a6259a6825093f2323587223

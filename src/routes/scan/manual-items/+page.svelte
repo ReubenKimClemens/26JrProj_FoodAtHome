@@ -1,4 +1,5 @@
 <script>
+    // Manual Items Page
     import { goto } from '$app/navigation';
     import { ArrowLeft, Plus } from 'lucide-svelte';
     import ButtonGroup from "$lib/components/ButtonGroup.svelte";
@@ -6,6 +7,7 @@
     import Modal from '$lib/components/Modal.svelte';
     import { addReceiptItem } from '$lib/api/receipts';
     import InputField from '$lib/components/InputField.svelte';
+    import { page } from '$app/stores';
 
     let storeName = $state('Walmart');
     let date = $state('2025-12-09');
@@ -17,6 +19,12 @@
    });
 
     let items = $state([]);
+
+    $effect(() => {
+        if ($page.state?.existingItems) {
+            items = $page.state.existingItems;
+        }
+    });
 
     let modalOpen = $state(false);
     let modalTitle = $state('Add New Item');
@@ -125,7 +133,7 @@
             layout="2-column"
             defaults={{ size: "md", block: true }}
             buttons={[
-                { label: "Scan Instead", variant: "outline", onClick: () => goto('/scan') },
+                { label: "Upload Receipt", variant: "outline", onClick: () => goto('/scan') },
                 { label: "Confirm", variant: "primary", onClick: handleConfirm }
             ]}
         />
