@@ -93,8 +93,7 @@
 
 <div class="inventory-screen">
     <header class="title-and-add">
-        <PageHeader title="Profile" />
-        <h1 class="title-lg">Inventory</h1>
+        <PageHeader title="Inventory" />
         <button onclick={() => addModalOpen = true} class="add-button" aria-label="Add new item">
             <img src={PlusIcon} alt="" />
         </button>
