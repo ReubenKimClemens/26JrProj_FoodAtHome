@@ -93,24 +93,16 @@
 
     <div class="status-bar">
       
-      <!-- <div class="percentage-text">{percentage}%</div> -->
       <div class="progress-wrapper">
-<<<<<<< HEAD
-        <ProgressBar value={spent} max={budget} color={isOverBudget ? '#FF9040' : '#0FA376'} />        
-        <div class="remaining-text">${remaining.toFixed(2)} remaining</div>
-=======
-
         <div class="remaining-text body-md-bold">
           ${remaining.toFixed(2)} left to spend
         </div>
         <ProgressBar value={spent} max={budget} color="#0FA376" />
-        <!-- <div class="remaining-text">${remaining.toFixed(2)} remaining</div> -->
 
         <div class="spent-text body-xsm">
           <p>${spent.toFixed(2)} spent</p>
           <p>out of ${budget.toFixed(0)}</p>
         </div>
->>>>>>> fe358fa871de2ac2a6259a6825093f2323587223
       </div>
     </div>
 
@@ -158,7 +150,6 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    /* margin-bottom: 24px; */
   }
 
   .section-title {
@@ -174,6 +165,7 @@
 
   .budget-content {
     padding: 24px;
+    margin-bottom: 24px;
     background: var(--Color-Green-50, #E7F6F1);
     box-shadow: 0px 1px 4px rgba(12, 12, 13, 0.05), 0px 1px 4px rgba(12, 12, 13, 0.10);
     border-radius: 8px;
@@ -218,7 +210,6 @@
     position: absolute;
     left: 0;
     top: 0;
-    /* color: var(--text-brand-primary, #0FA376); */
     font-size: 18px;
     font-family: 'Quicksand', sans-serif;
     font-weight: 700;
@@ -271,13 +262,6 @@
     flex-direction: column;
     gap: 8px;
   }
-
-  /* .percentage-text {
-    color: var(--text-secondary, #737780);
-    font-size: 14px;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 500;
-  } */
 
   .set-budget-link {
     background: none;

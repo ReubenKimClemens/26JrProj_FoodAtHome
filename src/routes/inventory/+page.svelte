@@ -126,24 +126,6 @@
         <ListGridToggle bind:view />
     </div>
     
-<<<<<<< HEAD
-    <p class="swipe-tip">Swipe right to TOSS | Swipe left to CHOMP | Tap to EDIT</p>
-
-    {#each filteredAndSortedItems as item (item.id)}
-        <SwipeableItem 
-            itemName={item.item_name}
-            quantity={item.quantity}
-            category={item.category || 'Uncategorized'}
-            addedDaysAgo={getDaysSinceAdded(item.created_at)}
-            onToss={() => handleDelete(item.id)}
-            onChomp={() => handleDelete(item.id)}
-            onTap={() => openEditModal(item)}
-        />
-    {/each}
-
-    {#if filteredAndSortedItems.length === 0}
-        <p class="empty-state">No items found.</p>
-=======
     {#if view === 'list'}
         <p class="swipe-tip body-sm">Swipe right to TOSS | Swipe left to CHOMP | Tap to EDIT</p>
         
@@ -171,7 +153,6 @@
                 </button>
             {/each}
         </div>
->>>>>>> fe358fa871de2ac2a6259a6825093f2323587223
     {/if}
 </div>
 
@@ -232,16 +213,4 @@
     .add-button:hover {
         background-color: rgba(0, 0, 0, 0.05);
     }
-<<<<<<< HEAD
-
-    .empty-state {
-        text-align: center;
-        color: var(--text-subtle, #AAADB3);
-        font-family: 'Nunito', sans-serif;
-        font-size: 0.875rem;
-        margin-top: 2rem;
-    }
 </style>
-=======
-</style>
->>>>>>> fe358fa871de2ac2a6259a6825093f2323587223
