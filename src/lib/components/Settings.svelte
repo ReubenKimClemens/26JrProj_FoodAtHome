@@ -13,12 +13,6 @@
     
     const settings = $derived([
       {
-        id: 'profile',
-        label: 'Profile',
-        icon: UserIcon,
-        action: () => goto('/profile')
-      },
-      {
         id: 'recently-deleted',
         label: 'Recently Deleted Items',
         icon: trash,

@@ -8,9 +8,9 @@
       type = 'button',
       ...restProps
     } = $props();
-  </script>
+</script>
   
-  <button
+<button
     class="button-wrapper"
     class:primary={variant === 'primary'}
     class:secondary={variant === 'secondary'}
@@ -22,9 +22,9 @@
     {...restProps}
   >
     <span class="button-text">{text}</span>
-  </button>
+</button>
   
-  <style>
+<style>
     .button-wrapper {
       width: 100%;
       padding: 8px;
@@ -34,15 +34,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: opacity 0.2s, transform 0.2s;
-    }
-  
-    .button-wrapper:hover:not(:disabled) {
-      opacity: 0.9;
+      transition: background-color 0.15s ease, transform 0.1s ease;
     }
   
     .button-wrapper:active:not(:disabled) {
-      transform: scale(0.98);
+      transform: scale(0.97);
     }
   
     .button-wrapper:disabled {
@@ -55,9 +51,17 @@
       box-shadow: 0px 1px 4px rgba(12, 12, 13, 0.05), 0px 1px 4px rgba(12, 12, 13, 0.10);
     }
   
+    .button-wrapper.primary:active:not(:disabled) {
+      background: rgba(15, 163, 118, 0.9);
+    }
+  
     .button-wrapper.secondary {
       background: transparent;
       border: 2px solid var(--background-default-brand-primary, #0FA376);
+    }
+  
+    .button-wrapper.secondary:active:not(:disabled) {
+      background: rgba(15, 163, 118, 0.1);
     }
   
     .button-text {
@@ -73,4 +77,4 @@
     .button-wrapper.secondary .button-text {
       color: var(--background-default-brand-primary, #0FA376);
     }
-  </style>
+</style>

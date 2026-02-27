@@ -22,7 +22,11 @@
     box-shadow: var(--shadow);
     background: var(--bg);
     cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+  }
 
+  .btn:active {
+    transform: scale(0.97);
   }
 
   /* sizes */
@@ -47,9 +51,17 @@
     color: var(--text-on-action);
   }
 
+  .btn-primary:active {
+    background: rgba(15, 163, 118, 0.9);
+  }
+
   .btn-secondary{
     background: var(--bg-page-secondary);
     color: var(--text-brand-primary);
+  }
+
+  .btn-secondary:active {
+    background: rgba(15, 163, 118, 0.1);
   }
 
   .btn-outline{
@@ -58,8 +70,16 @@
     border-color: var(--text-brand-primary);
   }
 
+  .btn-outline:active {
+    background: rgba(15, 163, 118, 0.1);
+  }
+
   .btn-danger{
     background: var(--bg-page-secondary);
     color: var(--text-danger);
+  }
+
+  .btn-danger:active {
+    background: rgba(255, 64, 64, 0.1);
   }
 </style>
