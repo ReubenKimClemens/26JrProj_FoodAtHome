@@ -335,7 +335,7 @@
             aria-label="Increase Quantity"  
           >+</button>
         </div>
-        
+
         <div class="form-group flex-grow">
           <input 
             type="text" 
@@ -367,8 +367,8 @@
         <textarea 
           id="note"
           bind:value={note}
-          class="textarea"
-          rows="3"
+          class="textarea body-md"
+          rows="4"
         ></textarea>
       </div>
     </div>
@@ -474,14 +474,9 @@
 
   .input:focus {
     outline: none;
-    border-color: #10b981;
+    border-color: var(--text-brand-primary);
   }
 
-  .categories-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
 
   /* .category-btn {
     display: flex;
@@ -513,6 +508,11 @@
     line-height: 1.2;
   } */
 
+  .quantity-row {
+    display: flex;
+    gap: 8px;
+  }
+
   .quantity-group {
     display: flex;
     align-items: center;
@@ -533,11 +533,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #000;
+    color: var(--text-default);
   }
 
   .qty-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.8);
   }
 
   .qty-input {
@@ -560,14 +560,12 @@
 
   .textarea {
     border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    font-size: 14px;
-    color: #000;
+    padding: 1rem;
+    border-radius: 8px;
+    color: var(--text-default);
     background: #fff;
     width: 100%;
     resize: vertical;
-    font-family: inherit;
-    font-family: 'Nunito', sans-serif;
   }
 
   .textarea::placeholder {
