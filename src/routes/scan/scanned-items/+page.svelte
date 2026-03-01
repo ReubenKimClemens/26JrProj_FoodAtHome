@@ -5,18 +5,13 @@
     import EditDeleteItemCard from '$lib/components/EditDeleteItemCard.svelte';
     import Modal from '$lib/components/Modal.svelte';
     import { addReceiptItem } from '$lib/api/receipts';
+    import { page } from '$app/stores';
 
-    let storeName = $state('Walmart');
-    let date = $state('12/09/2025');
-    let totalPrice = $state('$21.27');
-    let userId = '5a9e584a-69a4-476d-8c23-d8d403b87bec';
-
-    let items = $state([
-        { id: 1, itemName: 'Milk', category: 'Dairy', quantity: 1, price: 3.29 },
-        { id: 2, itemName: 'Bread', category: 'Wheat', quantity: 1, price: 2.98 },
-        { id: 3, itemName: 'Eggs', category: 'Protein', quantity: 1, price: 4.50 },
-        { id: 4, itemName: 'Paper Towels', category: 'Misc', quantity: 1, price: 8.97 }
-    ]);
+    let navState = $page.state || {};
+    let storeName = $state(navState.storeName || 'Unknown Store');
+    let date = $state(navState.date || new Date().toLocaleDateString());
+    let totalPrice = $state(navState.total ? `$${navState.total.toFixed(2)}` : '$0.00');
+    let items = $state(navState.items || []);
 
     let modalOpen = $state(false);
     let modalTitle = $state('Add New Item');
