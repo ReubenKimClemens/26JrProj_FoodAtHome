@@ -1,11 +1,14 @@
 <script>
+    import { getCategoryColor } from '$lib/categoryColors.js';
+
     let {
       categories = [
         'All', 'Produce', 'Protein', 'Wheat', 'Dairy', 
         'Drinks', 'Snacks', 'Pantry', 'Sauces', 'Spices',
-        'Leftover', 'Frozen', 'Misc', 'Dessert'
+        'Leftover', 'Frozen', 'Misc'
       ],
-      activeCategory = $bindable('All')
+      activeCategory = $bindable('All'),
+      wrap = false
     } = $props();
     
     // 🖼️Icon names for each category
@@ -23,27 +26,9 @@
       'Leftover': 'category_leftover',
       'Frozen': 'category_frozen',
       'Misc': 'category_misc',
-      'Dessert': 'category_dessert'
     };
     
     // 🎨Background colors for each category when NOT selected
-    const categoryBgColors = {
-      'All': '#E6FAF7',
-      'Produce': '#FFE1CC',
-      'Protein': '#FCE9E9',
-      'Wheat': '#FFEFB0',
-      'Dairy': '#EAEAFC',
-      'Drinks': '#E6F3FF',
-      'Snacks': '#E6F9FD',
-      'Pantry': '#EFEEFE',
-      'Sauces': '#FAEAFC',
-      'Spices': '#FFE5E5',
-      'Leftover': '#E6FAF7',
-      'Frozen': '#B0DAFF',
-      'Misc': '#DADBDD',
-      'Dessert': '#FDEDF5'
-    };
-    
     // 🖱️When user clicks a category icon, update to its active color
     function handleCategoryClick(category) {
       activeCategory = category;
@@ -60,12 +45,12 @@
 </script>
 
 <!-- 📱Scrollable container of category icons -->
-<div class="category-icons-container">
+<div class="category-icons-container" class:wrap>
     {#each categories as category}
       <button 
         class="category-icon"
         class:active={activeCategory === category}
-        style="--bg-color: {activeCategory === category ? '#0FA376' : categoryBgColors[category]}"
+        style="--bg-color: {activeCategory === category ? getCategoryColor(category).dark : getCategoryColor(category).light}"
         onclick={() => handleCategoryClick(category)}
         aria-label={category}
         aria-pressed={activeCategory === category}
@@ -126,5 +111,15 @@
   
     .category-icon.active .label {
       font-weight: 700;
+    }
+
+    .category-icons-container.wrap {
+      display: flex;
+      justify-content: center;
+      height: 100%;
+      flex-wrap: wrap;
+      overflow: visible;
+      gap: 8px;
+      padding: 0;
     }
 </style>

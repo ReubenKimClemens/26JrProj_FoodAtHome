@@ -133,6 +133,8 @@ export async function updateReceiptItem(receiptItemId, receiptItemField, receipt
 
 /* add new receipt item */
 export async function addReceiptItem(userId, itemData) {
+  const price = itemData.price ?? null;
+
   const { data, error } = await supabase
     .from('receipt_items')
     .insert({
@@ -140,9 +142,9 @@ export async function addReceiptItem(userId, itemData) {
       item_name: itemData.itemName,
       quantity: itemData.quantity,
       unit_name: itemData.unit,
-      unit_price: itemData.price ? parseFloat(itemData.price.replace(/[$,]/g, '')) : null,
-      total_price: itemData.price && itemData.quantity 
-        ? parseFloat(itemData.price.replace(/[$,]/g, '')) * itemData.quantity 
+      unit_price: price,
+      total_price: price !== null && itemData.quantity
+        ? price * itemData.quantity 
         : null,
       category: itemData.category,
       created_at: itemData.date || new Date().toISOString()
@@ -155,15 +157,17 @@ export async function addReceiptItem(userId, itemData) {
 }
 /* edit receipt item */
 export async function editReceiptItem(itemData) {
+  const price = itemData.price ?? null;
+
   const { data, error } = await supabase
     .from('receipt_items')
     .update({
       item_name: itemData.itemName,
       quantity: itemData.quantity,
       unit_name: itemData.unit,
-      unit_price: itemData.price ? parseFloat(itemData.price.replace(/[$,]/g, '')) : null,
-      total_price: itemData.price && itemData.quantity 
-        ? parseFloat(itemData.price.replace(/[$,]/g, '')) * itemData.quantity 
+      unit_price: price,
+      total_price: price !== null && itemData.quantity
+        ? price * itemData.quantity 
         : null,
       category: itemData.category
     })

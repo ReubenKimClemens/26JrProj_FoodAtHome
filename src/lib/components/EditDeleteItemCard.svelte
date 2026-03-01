@@ -1,5 +1,5 @@
 <script>
-    import { getCategoryColor } from '$lib/config/categoryColors.js';
+    import { getCategoryColor } from '$lib/categoryColors.js';
     import deleteIcon from '$lib/assets/delete.svg';
     import editIcon from '$lib/assets/edit.svg';
     
@@ -11,8 +11,9 @@
         onDelete = () => {},
         onEdit = () => {}
     } = $props();
-  
-    let categoryColor = getCategoryColor(category);
+
+
+    let categoryColor = $derived(getCategoryColor(category));
 </script>
   
 <div class="item-card">

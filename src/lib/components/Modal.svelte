@@ -1,6 +1,9 @@
 <script>
-  import { fade, scale } from 'svelte/transition';
+  import { fade, fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
+  import { getCategoryColor } from '$lib/categoryColors.js';
+  import { X } from 'lucide-svelte';
+  import CategoryIcon from '$lib/components/CategoryIcon.svelte';
 
 
   let {
@@ -13,12 +16,20 @@
   } = $props();
 
   let itemName = $state('');
-  let price = $state('');
+  let price = $state(null);
+  let priceInput = $state('');
   let selectedCategory = $state('');
   let quantity = $state(1);
   let unit = $state('');
   let date = $state('');
   let note = $state('');
+
+  const currencyFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
 
   import categoryAll from '$lib/assets/category_all_inactive.svg';
   import categoryProduce from '$lib/assets/category_produce_inactive.svg';
@@ -36,20 +47,33 @@
   import categoryDessert from '$lib/assets/category_dessert_inactive.svg';
 
   const categories = [
-    { id: 'All', label: 'All', icon: categoryAll, color: '#E6FAF7' },
-    { id: 'Produce', label: 'Produce', icon: categoryProduce, color: '#FFE1CC' },
-    { id: 'Protein', label: 'Protein', icon: categoryProtein, color: '#FCE9E9' },
-    { id: 'Wheat', label: 'Wheat', icon: categoryWheat, color: '#FFEFB0' },
-    { id: 'Dairy', label: 'Dairy', icon: categoryDairy, color: '#EAEAFC' },
-    { id: 'Drinks', label: 'Drinks', icon: categoryDrinks, color: '#E6F3FF' },
-    { id: 'Snacks', label: 'Snacks', icon: categorySnacks, color: '#E6F9FD' },
-    { id: 'Pantry', label: 'Pantry', icon: categoryPantry, color: '#EFEEFE' },
-    { id: 'Sauces', label: 'Sauces', icon: categorySauces, color: '#FAEAFC' },
-    { id: 'Spices', label: 'Spices', icon: categorySpices, color: '#FFE5E5' },
-    { id: 'Leftover', label: 'Leftover', icon: categoryLeftover, color: '#E6FAF7' },
-    { id: 'Frozen', label: 'Frozen', icon: categoryFrozen, color: '#B0DAFF' },
-    { id: 'Misc', label: 'Misc', icon: categoryMisc, color: '#DADBDD' },
-    { id: 'Dessert', label: 'Dessert', icon: categoryDessert, color: '#FDEDF5' }
+    { id: 'Produce', label: 'Produce', icon: categoryProduce, color: getCategoryColor('Produce').light },
+    { id: 'Protein', label: 'Protein', icon: categoryProtein, color: getCategoryColor('Protein').light },
+    { id: 'Wheat', label: 'Wheat', icon: categoryWheat, color: getCategoryColor('Wheat').light },
+    { id: 'Dairy', label: 'Dairy', icon: categoryDairy, color: getCategoryColor('Dairy').light },
+    { id: 'Drinks', label: 'Drinks', icon: categoryDrinks, color: getCategoryColor('Drinks').light },
+    { id: 'Snacks', label: 'Snacks', icon: categorySnacks, color: getCategoryColor('Snacks').light },
+    { id: 'Pantry', label: 'Pantry', icon: categoryPantry, color: getCategoryColor('Pantry').light },
+    { id: 'Sauces', label: 'Sauces', icon: categorySauces, color: getCategoryColor('Sauces').light },
+    { id: 'Spices', label: 'Spices', icon: categorySpices, color: getCategoryColor('Spices').light },
+    { id: 'Leftover', label: 'Leftover', icon: categoryLeftover, color: getCategoryColor('Leftover').light },
+    { id: 'Frozen', label: 'Frozen', icon: categoryFrozen, color: getCategoryColor('Frozen').light },
+    { id: 'Misc', label: 'Misc', icon: categoryMisc, color: getCategoryColor('Misc').light },
+  ];
+
+  const itemCategories = [
+    'Produce',
+    'Protein',
+    'Wheat',
+    'Dairy',
+    'Drinks',
+    'Snacks',
+    'Pantry',
+    'Sauces',
+    'Spices',
+    'Leftover',
+    'Frozen',
+    'Misc'
   ];
 
   // ❌Close modal when clicking outside (on backdrop)
@@ -79,6 +103,16 @@
       alert('Please select a category');
       return;
     }
+    if (price === null || price === '') {
+      alert('Please enter a price');
+      return;
+    }
+
+    if (price !== null && price !== '' && !Number.isFinite(Number(price))) {
+      alert('Please enter a valid price');
+      return;
+    }
+
     onAdd({
       itemName,
       price,
@@ -94,7 +128,8 @@
 
   function handleReset() {
     itemName = '';
-    price = '';
+    price = null;
+    priceInput = '';
     selectedCategory = '';
     quantity = 1;
     unit = '';
@@ -113,11 +148,42 @@
     }
   }
 
+  function formatPrice(value) {
+    return value === null || Number.isNaN(value) ? '' : currencyFormatter.format(value);
+  }
+
+  function normalizePriceInput(value) {
+    const digitsAndDotOnly = value.replace(/[^\d.]/g, '');
+    const [whole = '', ...fractionParts] = digitsAndDotOnly.split('.');
+
+    if (fractionParts.length === 0) {
+      return whole;
+    }
+
+    return `${whole}.${fractionParts.join('').slice(0, 2)}`;
+  }
+
+  function handlePriceInput(event) {
+    const normalized = normalizePriceInput(event.currentTarget.value);
+    priceInput = normalized;
+    price = normalized === '' ? null : Number(normalized);
+  }
+
+  function handlePriceFocus() {
+    priceInput = price === null || Number.isNaN(price) ? '' : price.toFixed(2);
+  }
+
+  function handlePriceBlur() {
+    priceInput = formatPrice(price);
+  }
+
   // ← ⛽️Pre-fill form when modal opens with initialData
   $effect(() => {
     if (open && initialData) {
+      const initialPrice = initialData.unit_price ?? null;
       itemName = initialData.item_name || '';
-      price = initialData.unit_price ? `$${initialData.unit_price}` : '';
+      price = initialPrice;
+      priceInput = formatPrice(initialPrice);
       selectedCategory = initialData.category || '';
       quantity = initialData.quantity || 1;
       unit = initialData.unit_name || '';
@@ -153,7 +219,7 @@
   <!-- 📦Main modal container -->
   <div 
     class="modal"
-    transition:scale={{ duration: 300, easing: quintOut, start: 0.95 }}
+    transition:fly={{ y: 500, duration: 300, easing: quintOut }}
     role="dialog"
     aria-modal="true"
     aria-labelledby="modal-title"
@@ -161,22 +227,36 @@
 
     <!-- 📌Modal header with drag handle and title -->
     <div class="modal-header">
-      <div 
+      <!-- <div 
         class="handle" 
         onclick={handleClose}
         onkeydown={(e) => e.key === 'Enter' && handleClose()}
         role="button"
         tabindex="0"
         aria-label="Close modal"
-      ></div>
-      <h2 id="modal-title" class="modal-title">{title}</h2>
+      ></div> -->
+
+      <h2 id="modal-title" class="title-lg">{title}</h2>
+      
+      <button 
+        class="close-btn"
+        aria-label="close button" 
+        tabindex="0"
+        onclick={handleClose}
+        onkeydown={(e) => e.key === 'Enter' && handleClose()}
+        >
+
+        <X size={36} strokeWidth={1.2} />
+      </button>
     </div>
 
     <!-- 📝Form content area -->
     <div class="modal-content">
-      <div class="form-row">
+
+      <div class="first-row">
+
         <div class="form-group">
-          <label for="item-name">Item Name</label>
+          <label for="item-name" class="title-sm">Item Name</label>
           <input 
             id="item-name"
             type="text" 
@@ -184,22 +264,29 @@
             class="input"
           />
         </div>
+
         <div class="form-group">
-          <label for="price">Price</label>
+          <label for="price" class="title-sm">Price</label>
           <input 
             id="price"
-            type="text" 
-            bind:value={price}
+            type="text"
+            inputmode="decimal"
+            value={priceInput}
+            oninput={handlePriceInput}
+            onfocus={handlePriceFocus}
+            onblur={handlePriceBlur}
             placeholder="$0.00"
             class="input"
           />
         </div>
+
       </div>
 
       <!-- 🗂️Category Selection Grid -->
       <div class="form-group">
-        <div class="category-label">Category</div>
-        <div class="category-grid">
+        <span class="title-sm">Category</span>
+
+        <!-- <div class="category-grid">
           {#each categories as category}
             <button
               type="button"
@@ -212,17 +299,28 @@
               <span class="category-label">{category.label}</span>
             </button>
           {/each}
-        </div>
+        </div> -->
+
+        <CategoryIcon
+        wrap
+        categories={itemCategories}
+        bind:activeCategory={selectedCategory} />
+
       </div>
 
+
+
+
       <!-- 🔢Quantity & Unit Row -->
-      <div class="form-row">
+      <div class="quantity-row">
+
         <div class="quantity-group">
           <button 
             type="button" 
             class="qty-btn" 
             onclick={decrementQuantity}
           >−</button>
+
           <input 
             type="number" 
             bind:value={quantity}
@@ -237,6 +335,7 @@
             aria-label="Increase Quantity"  
           >+</button>
         </div>
+        
         <div class="form-group flex-grow">
           <input 
             type="text" 
@@ -246,11 +345,12 @@
             aria-label="Unit"
           />
         </div>
+
       </div>
 
       <!-- 📅Date Picker -->
       <div class="form-group">
-        <label for="date">Date</label>
+        <label for="date" class="title-sm">Date</label>
         <div class="date-input-wrapper">
           <input 
             id="date"
@@ -263,7 +363,7 @@
 
       <!-- 📝Notes Textarea -->
       <div class="form-group">
-        <label for="note">Note</label>
+        <label for="note" class="title-sm">Note</label>
         <textarea 
           id="note"
           bind:value={note}
@@ -300,11 +400,12 @@
     z-index: 1000;
   }
 
+  /* general modal style */
   .modal {
     display: flex;
     width: 100%;
-    max-width: 420px;
-    padding: 16px;
+    max-width: 402px;
+    padding: 32px 16px;
     flex-direction: column;
     justify-content: center;
 
@@ -315,30 +416,23 @@
     overflow-y: auto;
   }
 
+  /* header */
   .modal-header {
     display: flex;
-    flex-direction: column;
+    justify-content: center;  
+    position: relative;
     align-items: center;
-    gap: 12px;
   }
 
-  .handle {
-    width: 36px;
-    height: 4px;
-    background: #d1d5db;
-    padding: .1rem;
-    border-radius: 2px;
+  .close-btn {
+    background: transparent;
+    border: transparent;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
   }
 
-  .modal-title {
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 1.4;
-    color: #000;
-    margin: 0;
-    font-family: 'Quicksand', sans-serif;
-  }
-
+  /* form */
   .modal-content {
     display: flex;
     flex-direction: column;
@@ -346,9 +440,11 @@
     width: 100%;
   }
 
-  .form-row {
-    display: flex;
+  .first-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(120px, 160px);
     gap: 12px;
+    width: 100%;
   }
 
   .form-group {
@@ -356,35 +452,18 @@
     flex-direction: column;
     width: 100%;
     gap: 8px;
-    flex: 1;
   }
 
-  .flex-grow {
-    flex: 1;
-  }
-
-  label {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-default, #444955);
-    font-family: 'Nunito', sans-serif;
-  }
-
-  .category-label {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-default, #444955);
-    font-family: 'Nunito', sans-serif;
-  }
 
   .input {
+    box-sizing: border-box;
+    width: 100%;
     padding: 12px 16px;
     border: 1px solid #e5e7eb;
     border-radius: 12px;
     font-size: 14px;
     color: #000;
     background: #fff;
-    width: 75%;
     font-family: 'Nunito', sans-serif;
     transition: border-color 0.2s ease;
   }
@@ -398,13 +477,13 @@
     border-color: #10b981;
   }
 
-  .category-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
+  .categories-wrapper {
+    display: flex;
+    flex-wrap: wrap;
     gap: 8px;
   }
 
-  .category-btn {
+  /* .category-btn {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -432,7 +511,7 @@
     text-align: center;
     font-family: 'Nunito', sans-serif;
     line-height: 1.2;
-  }
+  } */
 
   .quantity-group {
     display: flex;

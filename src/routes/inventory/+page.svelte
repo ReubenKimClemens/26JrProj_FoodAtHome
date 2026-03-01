@@ -58,12 +58,14 @@
             await updateReceiptItem(editingItem.id, 'quantity', itemData.quantity);
             await updateReceiptItem(editingItem.id, 'unit_name', itemData.unit);
             await updateReceiptItem(editingItem.id, 'category', itemData.category);
-            
-            if (itemData.price) {
-                const price = parseFloat(itemData.price.replace(/[$,]/g, ''));
-                await updateReceiptItem(editingItem.id, 'unit_price', price);
-                await updateReceiptItem(editingItem.id, 'total_price', price * itemData.quantity);
-            }
+            await updateReceiptItem(editingItem.id, 'unit_price', itemData.price ?? null);
+            await updateReceiptItem(
+                editingItem.id,
+                'total_price',
+                itemData.price !== null && itemData.price !== undefined && itemData.price !== ''
+                    ? itemData.price * itemData.quantity
+                    : null
+            );
 
             allItems = allItems.map(item => 
                 item.id === editingItem.id 
@@ -73,7 +75,7 @@
                         quantity: itemData.quantity,
                         unit_name: itemData.unit,
                         category: itemData.category,
-                        unit_price: itemData.price ? parseFloat(itemData.price.replace(/[$,]/g, '')) : null
+                        unit_price: itemData.price ?? null
                     }
                     : item
             );
@@ -158,15 +160,13 @@
 
 <style>
     .inventory-screen {
-        font-family: var(--font-family-title);
-        padding-bottom: 7rem;
+        padding-bottom: 1rem;
     }
 
     .title-and-add {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 1.5rem;
     }
 
     .filters {

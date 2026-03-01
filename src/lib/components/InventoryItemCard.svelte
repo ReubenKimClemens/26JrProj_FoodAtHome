@@ -1,5 +1,5 @@
 <script>
-    import { getCategoryColor } from '$lib/config/categoryColors.js';
+    import { getCategoryColor } from '$lib/categoryColors.js';
   
     let {
         itemName = '2% Milk',
@@ -8,7 +8,7 @@
         addedDaysAgo = 2
     } = $props();
     
-    let categoryColor = getCategoryColor(category);
+    let categoryColor = $derived(getCategoryColor(category));
 
 
     function calculateDate(num) {
@@ -20,17 +20,17 @@
   
 <div class="item-card">
     <div class="item-header">
-        <h3 class="item-name">{itemName}</h3>
-        <span class="quantity">Qty: {quantity}</span>
+        <h3 class="title-sm">{itemName}</h3>
+        <span class="title-sm">Qty: {quantity}</span>
     </div>
     
     <div class="item-footer">
       <span 
-        class="category-badge"
+        class="category-badge body-sm-bold"
         style="background: {categoryColor.light}; color: {categoryColor.dark};">
         {category}
         </span>
-        <span class="timestamp">Added {calculateDate(addedDaysAgo)}</span>
+        <span class="timestamp body-sm">Added {calculateDate(addedDaysAgo)}</span>
     </div>
 </div>
   
@@ -51,17 +51,6 @@
         margin-bottom: 12px;
     }
   
-    .item-name {
-        font-size: 20px;
-        font-weight: bold;
-        margin: 0;
-    }
-  
-    .quantity {
-        font-size: 16px;
-        font-weight: bold;
-    }
-  
     .item-footer {
         display: flex;
         justify-content: space-between;
@@ -69,14 +58,11 @@
     }
   
     .category-badge {
-        padding: 4px 12px;
-        border-radius: 6px;
-        font-size: var(--font-body-sm-size);
+        padding: 4px 8px;
+        border-radius: var(--radius-full);
     }
-  
+
     .timestamp {
-        font-size: 14px;
-        font-weight: 400;
         color: var(--text-secondary);
     }
 </style>

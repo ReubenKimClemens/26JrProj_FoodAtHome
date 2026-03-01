@@ -20,7 +20,7 @@
             {items} items
         </div>
     </div>
-    <span class="price title-sm">${price}</span>
+    <span class="price title-sm">${price.toFixed(2)}</span>
 </div>
   
 <style>

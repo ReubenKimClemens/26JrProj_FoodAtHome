@@ -26,33 +26,6 @@
 
 <header class="page-header">
   <div class="header-content">
-    <h1 class="header-title">{greeting()}</h1>
+    <h1 class="title-lg">{greeting()}</h1>
   </div>
 </header>
-
-<style>
-  .page-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .header-content {
-    height: 48px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin: 24px 0 0;
-  }
-
-  .header-title {
-    color: var(--text-default, #444955);
-    font-size: 24px;
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 700;
-    text-transform: capitalize;
-    line-height: 32px;
-    margin: 0;
-  }
-</style>
