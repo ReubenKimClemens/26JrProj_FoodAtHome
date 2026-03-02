@@ -41,7 +41,7 @@
         border-radius: var(--radius-minimal);
 
         align-items: center;
-        display: flex;
+        display: flex;  
       justify-content: center;
     }
 
