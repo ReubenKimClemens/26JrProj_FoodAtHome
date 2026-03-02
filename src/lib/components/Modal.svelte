@@ -15,10 +15,16 @@
     initialData = null
   } = $props();
 
+  const isEditMode = $derived(!!initialData);
+
   let itemName = $state('');
+  let itemNameError = $state('');
   let price = $state(null);
   let priceInput = $state('');
+  let priceError = $state('');
   let selectedCategory = $state('');
+  let categoryError = $state('');
+  let formError = $state('');
   let quantity = $state(1);
   let unit = $state('');
   let date = $state('');
@@ -95,23 +101,12 @@
 
 
   function handleAdd() {
-    if (!itemName.trim()) {
-      alert('Please enter an item name');
-      return;
-    }
-    if (!selectedCategory) {
-      alert('Please select a category');
-      return;
-    }
-    if (price === null || price === '') {
-      alert('Please enter a price');
+    if (!validateForm(true)) {
+      formError = 'Please fill out all required fields.';
       return;
     }
 
-    if (price !== null && price !== '' && !Number.isFinite(Number(price))) {
-      alert('Please enter a valid price');
-      return;
-    }
+    formError = '';
 
     onAdd({
       itemName,
@@ -128,9 +123,13 @@
 
   function handleReset() {
     itemName = '';
+    itemNameError = '';
     price = null;
     priceInput = '';
+    priceError = '';
     selectedCategory = '';
+    categoryError = '';
+    formError = '';
     quantity = 1;
     unit = '';
     date = '';
@@ -141,6 +140,67 @@
   function incrementQuantity() {
     quantity += 1;
   }
+
+  function validateForm(showRequired = false) {
+    const isItemNameValid = validateItemName(showRequired);
+    const isCategoryValid = validateCategory(showRequired);
+    const isPriceValid = validatePrice(showRequired);
+
+    return isItemNameValid && isCategoryValid && isPriceValid;
+  }
+
+  function validateItemName(showRequired = false) {
+    const normalizedName = itemName.trim();
+
+    if (!normalizedName) {
+      itemNameError = showRequired ? 'Item name is required.' : '';
+      return false;
+    }
+
+    itemNameError = '';
+    itemName = normalizedName;
+    return true;
+  }
+
+
+  function handleItemNameInput() {
+    if (itemNameError) {
+      validateItemName(true);
+    }
+  }
+
+  function handleItemNameBlur() {
+    validateItemName(true);
+  }
+
+  function validateCategory(showRequired = false) {
+    if (!selectedCategory) {
+      categoryError = showRequired ? 'Category is required.' : '';
+      return false;
+    }
+
+    categoryError = '';
+    return true;
+  }
+
+  function validatePrice(showRequired = false) {
+  if (priceError === 'Enter a valid price.') {
+    return false;
+  }
+
+  if (price === null || price === '') {
+    priceError = showRequired ? 'Price is required.' : '';
+    return false;
+  }
+
+  if (!Number.isFinite(Number(price)) || Number(price) < 0) {
+    priceError = 'Enter a valid price.';
+    return false;
+  }
+
+  priceError = '';
+  return true;
+}
 
   function decrementQuantity() {
     if (quantity > 1) {
@@ -164,9 +224,23 @@
   }
 
   function handlePriceInput(event) {
-    const normalized = normalizePriceInput(event.currentTarget.value);
+    const rawValue = event.currentTarget.value;
+    const hasInvalidChars = /[^\d.$]/.test(rawValue);
+
+    if (hasInvalidChars) {
+      priceInput = rawValue;
+      price = null;
+      priceError = 'Enter a valid price.';
+      return;
+    }
+
+    const normalized = normalizePriceInput(rawValue);
     priceInput = normalized;
     price = normalized === '' ? null : Number(normalized);
+
+    if (priceError) {
+      validatePrice(true);
+    }
   }
 
   function handlePriceFocus() {
@@ -175,6 +249,7 @@
 
   function handlePriceBlur() {
     priceInput = formatPrice(price);
+    validatePrice(true);
   }
 
   // ← ⛽️Pre-fill form when modal opens with initialData
@@ -195,6 +270,18 @@
   });
 
   $effect(() => {
+    if (categoryError && selectedCategory) {
+      validateCategory(true);
+    }
+  });
+
+  $effect(() => {
+    if (formError && validateForm(false)) {
+      formError = '';
+    }
+  });
+
+  $effect(() => {
     if (open) {
       document.addEventListener('keydown', handleKeydown);
       document.body.style.overflow = 'hidden';
@@ -205,6 +292,8 @@
       };
     }
   });
+
+
 </script>
 
 {#if open}
@@ -227,14 +316,6 @@
 
     <!-- 📌Modal header with drag handle and title -->
     <div class="modal-header">
-      <!-- <div 
-        class="handle" 
-        onclick={handleClose}
-        onkeydown={(e) => e.key === 'Enter' && handleClose()}
-        role="button"
-        tabindex="0"
-        aria-label="Close modal"
-      ></div> -->
 
       <h2 id="modal-title" class="title-lg">{title}</h2>
       
@@ -256,17 +337,37 @@
       <div class="first-row">
 
         <div class="form-group">
-          <label for="item-name" class="title-sm">Item Name</label>
+
+          <div class="label-wrapper">
+
+            <label for="item-name" class="title-sm">Item Name</label>
+            <span class="required">*</span>
+          </div>
+
           <input 
             id="item-name"
             type="text" 
+            required
             bind:value={itemName}
             class="input"
+            class:input-error={!!itemNameError}
+            aria-invalid={itemNameError ? 'true' : 'false'}
+            aria-describedby="item-name-error"
+            oninput={handleItemNameInput}
+            onblur={handleItemNameBlur}
           />
+        <span class="error-message" id="item-name-error" role="alert">{itemNameError}</span>
+
         </div>
 
         <div class="form-group">
-          <label for="price" class="title-sm">Price</label>
+
+          <div class="label-wrapper">
+
+            <label for="price" class="title-sm">Price</label>
+            <span class="required">*</span>
+          </div>
+
           <input 
             id="price"
             type="text"
@@ -277,38 +378,32 @@
             onblur={handlePriceBlur}
             placeholder="$0.00"
             class="input"
+            class:input-error={!!priceError}
+            aria-invalid={priceError ? 'true' : 'false'}
+            aria-describedby="price-error"
           />
+          <span class="error-message" id="price-error" role="alert">{priceError}</span>
         </div>
 
       </div>
 
       <!-- 🗂️Category Selection Grid -->
       <div class="form-group">
-        <span class="title-sm">Category</span>
 
-        <!-- <div class="category-grid">
-          {#each categories as category}
-            <button
-              type="button"
-              class="category-btn"
-              class:selected={selectedCategory === category.id}
-              style="background-color: {category.color}"
-              onclick={() => selectedCategory = category.id}
-            >
-              <img src={category.icon} alt={category.label} class="category-icon" />
-              <span class="category-label">{category.label}</span>
-            </button>
-          {/each}
-        </div> -->
+        <div class="label-wrapper">
+
+          <span class="title-sm">Category</span>
+          <span class="required">*</span>
+          <span class="error-message" id="category-error" role="alert">{categoryError}</span>
+        </div>
 
         <CategoryIcon
         wrap
         categories={itemCategories}
         bind:activeCategory={selectedCategory} />
+        
 
       </div>
-
-
 
 
       <!-- 🔢Quantity & Unit Row -->
@@ -374,12 +469,18 @@
     </div>
 
     <!-- 🔁Button text changes based on mode -->
+    {#if formError}
+      <p class="form-error body-sm" role="alert">{formError}</p>
+    {/if}
+
     <div class="modal-actions">
-      <button class="btn btn-reset" onclick={handleReset}>
-        Reset
-      </button>
+      {#if !isEditMode}
+        <button class="btn btn-reset" onclick={handleReset}>
+          Reset
+        </button>
+      {/if}
       <button class="btn btn-add" onclick={handleAdd}>
-        {initialData ? 'Save' : 'Add'}
+        {isEditMode ? 'Save' : 'Add'}
       </button>
     </div>
   </div>
@@ -412,7 +513,7 @@
     gap: 16px;
     border-radius: 32px 32px 0 0;
     background: #fff;
-    max-height: 90vh;
+    /* max-height: 95vh; */
     overflow-y: auto;
   }
 
@@ -477,36 +578,30 @@
     border-color: var(--text-brand-primary);
   }
 
-
-  /* .category-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: 8px 4px;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: border-color 0.2s, transform 0.2s;
+  .input-error {
+    border: 1.5px solid var(--text-danger);
+    background-color: var(--bg-danger);
   }
 
-  .category-btn.selected {
-    border-color: #10b981;
+  .error-message {
+    font-family: "Nunito", sans-serif;
+    min-height: 18px;
+    color: var(--text-danger);
+    font-size: 12px;
+    line-height: 1.4;
   }
 
-  .category-icon {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-  }
-
-  .category-label {
-    font-size: 9px;
-    color: #000;
+  .form-error {
+    margin: 0;
+    color: var(--text-danger);
     text-align: center;
-    font-family: 'Nunito', sans-serif;
-    line-height: 1.2;
-  } */
+
+  }
+
+  .required {
+    color: var(--text-danger);
+  }
+
 
   .quantity-row {
     display: flex;
