@@ -5,10 +5,15 @@
     import GroceryListCard from '$lib/components/StoreCard.svelte';
     import MetricData from '$lib/components/MetricData.svelte';
     import TopCategories from '$lib/components/TopCategories.svelte';
+    import { getCategoryColor } from '$lib/categoryColors.js';
     import BarGraphDaily from '$lib/assets/FAH_Alpha_Metricsscreen_Daily.webp';
     import BarGraphWeekly from '$lib/assets/FAH_Alpha_Metricsscreen_Weekly.webp';
     import BarGraphMonthly from '$lib/assets/FAH_Alpha_Metricsscreen_Monthly.webp';
     import BarGraphYearly from '$lib/assets/FAH_Alpha_Metricsscreen_Yearly.webp';
+
+    import MonthlyChart from '$lib/assets/FAH-monthly-budget.svg';
+    import BudgetHistory from '$lib/assets/FAH-budget-history.svg';
+    
 
     import { MoveLeft } from 'lucide-svelte';
     import { MoveRight } from 'lucide-svelte';
@@ -49,8 +54,9 @@
 
     let metrics = $state([
         // daily view only has these 2 info
-        {title: "Number of Items", count: data.numberOfItems},
-        {title: "Number of Receipts", count: data.numberOfReceipts},
+
+        {title: "Total Items", count: data.numberOfItems},
+        {title: "Total Receipts", count: data.numberOfReceipts},
 
         // for weekly, monthly & yearly
         {title: "Avg per day", amount: avgPerDay},
@@ -60,27 +66,24 @@
     ]);
 
     let categories= $state([
-        { name: 'Produce', amount: 50.76, percentage: 32, color: '#EF4444' },
-        { name: 'Protein', amount: 39.65, percentage: 25, color: '#EF4444' },
-        { name: 'Dairy', amount: 35.00, percentage: 22, color: '#10B981' }
+        { name: 'Produce', amount: 50.76, percentage: 32, color: getCategoryColor('Produce').dark },
+        { name: 'Protein', amount: 39.65, percentage: 25, color: getCategoryColor('Protein').dark },
+        { name: 'Dairy', amount: 35.00, percentage: 22, color: getCategoryColor('Dairy').dark }
     ]);
 </script>
 <div class="metric-screen">
     <PageHeader title="Metrics" />
-    <Dropdown bind:value={selectedCategory} 
+
+    <!-- <Dropdown bind:value={selectedCategory} 
         options={['Today', 'Yesterday', 'This Week', 'This Month', 'This Year']}
-        placeholder="Daily" />
-    <PageHeader title="December 03 - December 09" />
-
-    <img src={currentGraph} alt="Bar Graph Showing {selectedCategory} Metrics" />
-
+        placeholder="Daily" /> -->
         
     <div class="data">
         <div class="date">
             <button>
                 <ChevronLeft/>
             </button>
-            <span class="title-md">Dec 03 - Dec 09</span>
+            <span class="title-lg">December</span>
             <button>
                 <ChevronRight/>
             </button>
@@ -88,8 +91,7 @@
         
         <section class="summary">
             <span class="title-md">Summary</span>
-            <span class="time body-sm">December 2025</span>
-    
+
             <BudgetCheck 
             budgetId={data.activeBudget?.id} 
             showTitle={false}
@@ -105,12 +107,12 @@
                 {/each}
             </div>
     
-            <img src={currentGraph} alt="Bar Graph Showing {selectedCategory} Metrics" />
+            <img src={MonthlyChart} alt="Bar Graph Showing {MonthlyChart} Metrics" />
         </section>
     
         <section class="budget-history">
             <span class="title-md">Budget History</span>
-            <img src={currentGraph} alt="Bar Graph Showing {selectedCategory} Metrics" />
+            <img src={BudgetHistory} alt="Bar Graph Showing {BudgetHistory} Metrics" />
         </section>
     
         <section class="store-visit">
@@ -133,27 +135,15 @@
             <TopCategories categories={categories} />
         </section>
     </div>
-    <PageHeader title="Store Visits" />
-    <div class="store-list">
-        {#each stores as store}
-            <GroceryListCard 
-                storeName={store.name}
-                items={store.items}
-                date={store.date}
-                price={store.price}
-        />{/each}
-    </div>
 
-    <PageHeader title="Top Categories" />
-    <TopCategories categories={categories} />
+
 </div>
 
 <style>
     .metric-screen {
-        font-family: var(--font-family-title);
         display: flex;
         flex-direction: column;
-        padding-bottom: 4rem;
+        padding-bottom: 1rem;
         align-self: center;
         gap: 24px;
     }

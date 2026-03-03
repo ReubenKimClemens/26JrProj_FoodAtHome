@@ -5,6 +5,7 @@
 @import '$lib/styles/size/index.css';
 
 
+
 html {
   color: var(--text-default);
   background-color: #dddddd;
@@ -41,7 +42,7 @@ html {
 }
 
 .title-sm {
-  font-family: Quicksand;
+  font-family: Nunito;
   font-size: 1.125rem; /* 18px */
   font-weight: 700; 
   text-transform: capitalize;
