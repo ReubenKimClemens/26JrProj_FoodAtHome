@@ -2,7 +2,8 @@
   import {updateBudgetAmount} from '$lib/api/receipts.js';
   import { fade, fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
-  import BudgetIcon from '$lib/assets/icon_budgetcheck.svg';
+  import BudgetIcon from '$lib/assets/icon_budgetcheck_green.svg';
+  import BudgetIconOrange from '$lib/assets/icon_budgetcheck_orange.svg';
   import ProgressBar from '$lib/components/ProgressBar.svelte';
   import InputField from '$lib/components/InputField.svelte';
   import Button from '$lib/components/Button.svelte';
@@ -16,6 +17,8 @@
     remaining = $bindable(budget - spent), 
     percentage = $bindable(Math.round((spent / budget) * 100))
   } = $props();
+  
+  let isOverBudget = $derived(spent > budget);
   
   function openModal() {
     budgetInput = budget.toString();
@@ -69,18 +72,18 @@
     <h2 class="section-title">Budget Check</h2>
   {/if}
 
-  <div class="budget-content">
-    <div class="spending-row">
+  <div class="budget-content" style="background: {isOverBudget ? '#FFF0E5' : '#E7F6F1'}">    <div class="spending-row">
       <div class="status-icon">
-        <img src={BudgetIcon} alt="" />
+        <img src={isOverBudget ? BudgetIconOrange : BudgetIcon} alt="" />      
       </div>
 
       <div class="spending-info">
         <div class="amount-spent-container">
           <!-- <div class="comparison-text">{comparison}</div> -->
-          <div class="spent-amount">${spent.toFixed(2)} spent</div>
+          <div class="spent-amount" style="color: {isOverBudget ? '#FF9040' : '#0FA376'}">
+            ${spent.toFixed(2)} spent
+          </div>
         </div>
-
         <div class="budget-total">
           <div class="total-amount">${budget.toFixed(0)}</div>
           <div class="budget-label">Budget</div>
@@ -90,14 +93,11 @@
 
     <div class="status-bar">
       
-      <!-- <div class="percentage-text">{percentage}%</div> -->
       <div class="progress-wrapper">
-
         <div class="remaining-text body-md-bold">
           ${remaining.toFixed(2)} left to spend
         </div>
         <ProgressBar value={spent} max={budget} color="#0FA376" />
-        <!-- <div class="remaining-text">${remaining.toFixed(2)} remaining</div> -->
 
         <div class="spent-text body-xsm">
           <p>${spent.toFixed(2)} spent</p>
@@ -150,7 +150,6 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    /* margin-bottom: 24px; */
   }
 
   .section-title {
@@ -166,6 +165,7 @@
 
   .budget-content {
     padding: 24px;
+    margin-bottom: 24px;
     background: var(--Color-Green-50, #E7F6F1);
     box-shadow: 0px 1px 4px rgba(12, 12, 13, 0.05), 0px 1px 4px rgba(12, 12, 13, 0.10);
     border-radius: 8px;
@@ -210,7 +210,6 @@
     position: absolute;
     left: 0;
     top: 0;
-    color: var(--text-brand-primary, #0FA376);
     font-size: 18px;
     font-family: 'Quicksand', sans-serif;
     font-weight: 700;
@@ -263,13 +262,6 @@
     flex-direction: column;
     gap: 8px;
   }
-
-  /* .percentage-text {
-    color: var(--text-secondary, #737780);
-    font-size: 14px;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 500;
-  } */
 
   .set-budget-link {
     background: none;

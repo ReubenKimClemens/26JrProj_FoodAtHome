@@ -240,8 +240,13 @@
 		border: 1.5px solid #0FA376;
 		border-radius: 0.75rem;
 		cursor: pointer;
-		transition: background-color 0.2s ease, transform 0.1s ease;
+		transition: background-color 0.15s ease, transform 0.1s ease;
 		font-family: Nunito;
+	}
+
+	.guest-btn:active {
+		transform: scale(0.97);
+		background-color: rgba(15, 163, 118, 0.1);
 	}
 
 	.toggle-text {

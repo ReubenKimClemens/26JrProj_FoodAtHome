@@ -8,6 +8,7 @@
     import GridViewCard from '$lib/components/GridViewCard.svelte';
     import Modal from '$lib/components/Modal.svelte';
     import PlusIcon from '$lib/assets/plus.svg';
+    import SearchBar from '$lib/components/SearchBar.svelte';
     import { getDaysSinceAdded, deleteReceiptItem } from '$lib/api/receipts.js';
 
     let { data } = $props();
@@ -19,11 +20,21 @@
     let addModalOpen = $state(false);
     let editModalOpen = $state(false);
     let editingItem = $state(null);
+    let searchQuery = $state('');
 
     let filteredAndSortedItems = $derived.by(() => {
         let items = selectedCategory === 'All' 
             ? allItems 
             : allItems.filter(item => item.category === selectedCategory);
+
+        // 🔍Filter by search query
+        if (searchQuery.trim()) {
+            const q = searchQuery.toLowerCase();
+            items = items.filter(item => 
+                item.item_name?.toLowerCase().includes(q) ||
+                item.category?.toLowerCase().includes(q)
+            );
+        }
         
         return sortOrder === 'Newest First'
             ? items.toSorted((a, b) => new Date(b.created_at) - new Date(a.created_at))
@@ -101,15 +112,17 @@
         </button>
     </header>
 
+    <SearchBar bind:value={searchQuery} placeholder="Search" />
+
     <CategoryIcon bind:activeCategory={selectedCategory} />
 
     <div class="filters">
         <div class="filter-dropdown">
             <Dropdown 
-            bind:value={sortOrder} 
-            options={['Newest First', 'Oldest First']}
-            placeholder="Newest First" 
-        />
+                bind:value={sortOrder} 
+                options={['Newest First', 'Oldest First']}
+                placeholder="Newest First" 
+            />
         </div>
         
         <ListGridToggle bind:view />
@@ -175,6 +188,7 @@
         margin-bottom: 1rem;
         justify-content: space-between;
     }
+
     .filter-dropdown {
         width: fit-content;
     }
