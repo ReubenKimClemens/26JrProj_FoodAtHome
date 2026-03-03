@@ -263,7 +263,7 @@
       quantity = initialData.quantity || 1;
       unit = initialData.unit_name || '';
       date = initialData.created_at ? new Date(initialData.created_at).toISOString().split('T')[0] : '';
-      note = '';
+      note = initialData.notes || '';
     } else if (open && !initialData) {
       handleReset();
     }

@@ -69,6 +69,7 @@
             await updateReceiptItem(editingItem.id, 'quantity', itemData.quantity);
             await updateReceiptItem(editingItem.id, 'unit_name', itemData.unit);
             await updateReceiptItem(editingItem.id, 'category', itemData.category);
+            await updateReceiptItem(editingItem.id, 'notes', itemData.note || null);
             await updateReceiptItem(editingItem.id, 'unit_price', itemData.price ?? null);
             await updateReceiptItem(
                 editingItem.id,
@@ -86,7 +87,8 @@
                         quantity: itemData.quantity,
                         unit_name: itemData.unit,
                         category: itemData.category,
-                        unit_price: itemData.price ?? null
+                        unit_price: itemData.price ?? null,
+                        notes: itemData.note || null
                     }
                     : item
             );

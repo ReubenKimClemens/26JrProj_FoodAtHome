@@ -147,6 +147,7 @@ export async function addReceiptItem(userId, itemData) {
         ? price * itemData.quantity 
         : null,
       category: itemData.category,
+      notes: itemData.note || null,
       created_at: itemData.date || new Date().toISOString()
     })
     .select()
