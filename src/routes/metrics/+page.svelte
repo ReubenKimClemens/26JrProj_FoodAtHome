@@ -65,6 +65,7 @@
         { name: 'Dairy', amount: 35.00, percentage: 22, color: '#10B981' }
     ]);
 </script>
+
 <div class="metric-screen">
     <PageHeader title="Metrics" />
     <Dropdown bind:value={selectedCategory} 
@@ -133,19 +134,6 @@
             <TopCategories categories={categories} />
         </section>
     </div>
-    <PageHeader title="Store Visits" />
-    <div class="store-list">
-        {#each stores as store}
-            <GroceryListCard 
-                storeName={store.name}
-                items={store.items}
-                date={store.date}
-                price={store.price}
-        />{/each}
-    </div>
-
-    <PageHeader title="Top Categories" />
-    <TopCategories categories={categories} />
 </div>
 
 <style>
