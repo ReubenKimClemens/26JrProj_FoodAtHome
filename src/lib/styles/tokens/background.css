@@ -6,6 +6,7 @@
     --bg-brand-secondary: var(--color-violet-500);
     --bg-page-primary: var(--color-beige-ish);
     --bg-page-secondary: var(--color-white);
+    --bg-danger: var(--color-red-50);
     --bg-accent-1: var(--color-orange-50);
     --bg-accent-2: var(--color-mint-50);
     --bg-accent-3: var(--color-light-blue-50);

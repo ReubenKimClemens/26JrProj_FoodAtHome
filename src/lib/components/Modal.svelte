@@ -1,6 +1,9 @@
 <script>
-  import { fade, scale } from 'svelte/transition';
+  import { fade, fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
+  import { getCategoryColor } from '$lib/categoryColors.js';
+  import { X } from 'lucide-svelte';
+  import CategoryIcon from '$lib/components/CategoryIcon.svelte';
 
 
   let {
@@ -12,13 +15,27 @@
     initialData = null
   } = $props();
 
+  const isEditMode = $derived(!!initialData);
+
   let itemName = $state('');
-  let price = $state('');
+  let itemNameError = $state('');
+  let price = $state(null);
+  let priceInput = $state('');
+  let priceError = $state('');
   let selectedCategory = $state('');
+  let categoryError = $state('');
+  let formError = $state('');
   let quantity = $state(1);
   let unit = $state('');
   let date = $state('');
   let note = $state('');
+
+  const currencyFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
 
   import categoryAll from '$lib/assets/category_all_inactive.svg';
   import categoryProduce from '$lib/assets/category_produce_inactive.svg';
@@ -36,20 +53,33 @@
   import categoryDessert from '$lib/assets/category_dessert_inactive.svg';
 
   const categories = [
-    { id: 'All', label: 'All', icon: categoryAll, color: '#E6FAF7' },
-    { id: 'Produce', label: 'Produce', icon: categoryProduce, color: '#FFE1CC' },
-    { id: 'Protein', label: 'Protein', icon: categoryProtein, color: '#FCE9E9' },
-    { id: 'Wheat', label: 'Wheat', icon: categoryWheat, color: '#FFEFB0' },
-    { id: 'Dairy', label: 'Dairy', icon: categoryDairy, color: '#EAEAFC' },
-    { id: 'Drinks', label: 'Drinks', icon: categoryDrinks, color: '#E6F3FF' },
-    { id: 'Snacks', label: 'Snacks', icon: categorySnacks, color: '#E6F9FD' },
-    { id: 'Pantry', label: 'Pantry', icon: categoryPantry, color: '#EFEEFE' },
-    { id: 'Sauces', label: 'Sauces', icon: categorySauces, color: '#FAEAFC' },
-    { id: 'Spices', label: 'Spices', icon: categorySpices, color: '#FFE5E5' },
-    { id: 'Leftover', label: 'Leftover', icon: categoryLeftover, color: '#E6FAF7' },
-    { id: 'Frozen', label: 'Frozen', icon: categoryFrozen, color: '#B0DAFF' },
-    { id: 'Misc', label: 'Misc', icon: categoryMisc, color: '#DADBDD' },
-    { id: 'Dessert', label: 'Dessert', icon: categoryDessert, color: '#FDEDF5' }
+    { id: 'Produce', label: 'Produce', icon: categoryProduce, color: getCategoryColor('Produce').light },
+    { id: 'Protein', label: 'Protein', icon: categoryProtein, color: getCategoryColor('Protein').light },
+    { id: 'Wheat', label: 'Wheat', icon: categoryWheat, color: getCategoryColor('Wheat').light },
+    { id: 'Dairy', label: 'Dairy', icon: categoryDairy, color: getCategoryColor('Dairy').light },
+    { id: 'Drinks', label: 'Drinks', icon: categoryDrinks, color: getCategoryColor('Drinks').light },
+    { id: 'Snacks', label: 'Snacks', icon: categorySnacks, color: getCategoryColor('Snacks').light },
+    { id: 'Pantry', label: 'Pantry', icon: categoryPantry, color: getCategoryColor('Pantry').light },
+    { id: 'Sauces', label: 'Sauces', icon: categorySauces, color: getCategoryColor('Sauces').light },
+    { id: 'Spices', label: 'Spices', icon: categorySpices, color: getCategoryColor('Spices').light },
+    { id: 'Leftover', label: 'Leftover', icon: categoryLeftover, color: getCategoryColor('Leftover').light },
+    { id: 'Frozen', label: 'Frozen', icon: categoryFrozen, color: getCategoryColor('Frozen').light },
+    { id: 'Misc', label: 'Misc', icon: categoryMisc, color: getCategoryColor('Misc').light },
+  ];
+
+  const itemCategories = [
+    'Produce',
+    'Protein',
+    'Wheat',
+    'Dairy',
+    'Drinks',
+    'Snacks',
+    'Pantry',
+    'Sauces',
+    'Spices',
+    'Leftover',
+    'Frozen',
+    'Misc'
   ];
 
   // ❌Close modal when clicking outside (on backdrop)
@@ -71,14 +101,13 @@
 
 
   function handleAdd() {
-    if (!itemName.trim()) {
-      alert('Please enter an item name');
+    if (!validateForm(true)) {
+      formError = 'Please fill out all required fields.';
       return;
     }
-    if (!selectedCategory) {
-      alert('Please select a category');
-      return;
-    }
+
+    formError = '';
+
     onAdd({
       itemName,
       price,
@@ -94,8 +123,13 @@
 
   function handleReset() {
     itemName = '';
-    price = '';
+    itemNameError = '';
+    price = null;
+    priceInput = '';
+    priceError = '';
     selectedCategory = '';
+    categoryError = '';
+    formError = '';
     quantity = 1;
     unit = '';
     date = '';
@@ -107,17 +141,124 @@
     quantity += 1;
   }
 
+  function validateForm(showRequired = false) {
+    const isItemNameValid = validateItemName(showRequired);
+    const isCategoryValid = validateCategory(showRequired);
+    const isPriceValid = validatePrice(showRequired);
+
+    return isItemNameValid && isCategoryValid && isPriceValid;
+  }
+
+  function validateItemName(showRequired = false) {
+    const normalizedName = itemName.trim();
+
+    if (!normalizedName) {
+      itemNameError = showRequired ? 'Item name is required.' : '';
+      return false;
+    }
+
+    itemNameError = '';
+    itemName = normalizedName;
+    return true;
+  }
+
+
+  function handleItemNameInput() {
+    if (itemNameError) {
+      validateItemName(true);
+    }
+  }
+
+  function handleItemNameBlur() {
+    validateItemName(true);
+  }
+
+  function validateCategory(showRequired = false) {
+    if (!selectedCategory) {
+      categoryError = showRequired ? 'Category is required.' : '';
+      return false;
+    }
+
+    categoryError = '';
+    return true;
+  }
+
+  function validatePrice(showRequired = false) {
+  if (priceError === 'Enter a valid price.') {
+    return false;
+  }
+
+  if (price === null || price === '') {
+    priceError = showRequired ? 'Price is required.' : '';
+    return false;
+  }
+
+  if (!Number.isFinite(Number(price)) || Number(price) < 0) {
+    priceError = 'Enter a valid price.';
+    return false;
+  }
+
+  priceError = '';
+  return true;
+}
+
   function decrementQuantity() {
     if (quantity > 1) {
       quantity -= 1;
     }
   }
 
+  function formatPrice(value) {
+    return value === null || Number.isNaN(value) ? '' : currencyFormatter.format(value);
+  }
+
+  function normalizePriceInput(value) {
+    const digitsAndDotOnly = value.replace(/[^\d.]/g, '');
+    const [whole = '', ...fractionParts] = digitsAndDotOnly.split('.');
+
+    if (fractionParts.length === 0) {
+      return whole;
+    }
+
+    return `${whole}.${fractionParts.join('').slice(0, 2)}`;
+  }
+
+  function handlePriceInput(event) {
+    const rawValue = event.currentTarget.value;
+    const hasInvalidChars = /[^\d.$]/.test(rawValue);
+
+    if (hasInvalidChars) {
+      priceInput = rawValue;
+      price = null;
+      priceError = 'Enter a valid price.';
+      return;
+    }
+
+    const normalized = normalizePriceInput(rawValue);
+    priceInput = normalized;
+    price = normalized === '' ? null : Number(normalized);
+
+    if (priceError) {
+      validatePrice(true);
+    }
+  }
+
+  function handlePriceFocus() {
+    priceInput = price === null || Number.isNaN(price) ? '' : price.toFixed(2);
+  }
+
+  function handlePriceBlur() {
+    priceInput = formatPrice(price);
+    validatePrice(true);
+  }
+
   // ← ⛽️Pre-fill form when modal opens with initialData
   $effect(() => {
     if (open && initialData) {
+      const initialPrice = initialData.unit_price ?? null;
       itemName = initialData.item_name || '';
-      price = initialData.unit_price ? `$${initialData.unit_price}` : '';
+      price = initialPrice;
+      priceInput = formatPrice(initialPrice);
       selectedCategory = initialData.category || '';
       quantity = initialData.quantity || 1;
       unit = initialData.unit_name || '';
@@ -125,6 +266,18 @@
       note = '';
     } else if (open && !initialData) {
       handleReset();
+    }
+  });
+
+  $effect(() => {
+    if (categoryError && selectedCategory) {
+      validateCategory(true);
+    }
+  });
+
+  $effect(() => {
+    if (formError && validateForm(false)) {
+      formError = '';
     }
   });
 
@@ -139,6 +292,8 @@
       };
     }
   });
+
+
 </script>
 
 {#if open}
@@ -153,7 +308,7 @@
   <!-- 📦Main modal container -->
   <div 
     class="modal"
-    transition:scale={{ duration: 300, easing: quintOut, start: 0.95 }}
+    transition:fly={{ y: 500, duration: 300, easing: quintOut }}
     role="dialog"
     aria-modal="true"
     aria-labelledby="modal-title"
@@ -161,68 +316,106 @@
 
     <!-- 📌Modal header with drag handle and title -->
     <div class="modal-header">
-      <div 
-        class="handle" 
+
+      <h2 id="modal-title" class="title-lg">{title}</h2>
+      
+      <button 
+        class="close-btn"
+        aria-label="close button" 
+        tabindex="0"
         onclick={handleClose}
         onkeydown={(e) => e.key === 'Enter' && handleClose()}
-        role="button"
-        tabindex="0"
-        aria-label="Close modal"
-      ></div>
-      <h2 id="modal-title" class="modal-title">{title}</h2>
+        >
+
+        <X size={36} strokeWidth={1.2} />
+      </button>
     </div>
 
     <!-- 📝Form content area -->
     <div class="modal-content">
-      <div class="form-row">
+
+      <div class="first-row">
+
         <div class="form-group">
-          <label for="item-name">Item Name</label>
+
+          <div class="label-wrapper">
+
+            <label for="item-name" class="title-sm">Item Name</label>
+            <span class="required">*</span>
+          </div>
+
           <input 
             id="item-name"
             type="text" 
+            required
             bind:value={itemName}
             class="input"
+            class:input-error={!!itemNameError}
+            aria-invalid={itemNameError ? 'true' : 'false'}
+            aria-describedby="item-name-error"
+            oninput={handleItemNameInput}
+            onblur={handleItemNameBlur}
           />
+        <span class="error-message" id="item-name-error" role="alert">{itemNameError}</span>
+
         </div>
+
         <div class="form-group">
-          <label for="price">Price</label>
+
+          <div class="label-wrapper">
+
+            <label for="price" class="title-sm">Price</label>
+            <span class="required">*</span>
+          </div>
+
           <input 
             id="price"
-            type="text" 
-            bind:value={price}
+            type="text"
+            inputmode="decimal"
+            value={priceInput}
+            oninput={handlePriceInput}
+            onfocus={handlePriceFocus}
+            onblur={handlePriceBlur}
             placeholder="$0.00"
             class="input"
+            class:input-error={!!priceError}
+            aria-invalid={priceError ? 'true' : 'false'}
+            aria-describedby="price-error"
           />
+          <span class="error-message" id="price-error" role="alert">{priceError}</span>
         </div>
+
       </div>
 
       <!-- 🗂️Category Selection Grid -->
       <div class="form-group">
-        <div class="category-label">Category</div>
-        <div class="category-grid">
-          {#each categories as category}
-            <button
-              type="button"
-              class="category-btn"
-              class:selected={selectedCategory === category.id}
-              style="background-color: {category.color}"
-              onclick={() => selectedCategory = category.id}
-            >
-              <img src={category.icon} alt={category.label} class="category-icon" />
-              <span class="category-label">{category.label}</span>
-            </button>
-          {/each}
+
+        <div class="label-wrapper">
+
+          <span class="title-sm">Category</span>
+          <span class="required">*</span>
+          <span class="error-message" id="category-error" role="alert">{categoryError}</span>
         </div>
+
+        <CategoryIcon
+        wrap
+        categories={itemCategories}
+        bind:activeCategory={selectedCategory} />
+        
+
       </div>
 
+
       <!-- 🔢Quantity & Unit Row -->
-      <div class="form-row">
+      <div class="quantity-row">
+
         <div class="quantity-group">
           <button 
             type="button" 
             class="qty-btn" 
             onclick={decrementQuantity}
           >−</button>
+
           <input 
             type="number" 
             bind:value={quantity}
@@ -237,6 +430,7 @@
             aria-label="Increase Quantity"  
           >+</button>
         </div>
+
         <div class="form-group flex-grow">
           <input 
             type="text" 
@@ -246,11 +440,12 @@
             aria-label="Unit"
           />
         </div>
+
       </div>
 
       <!-- 📅Date Picker -->
       <div class="form-group">
-        <label for="date">Date</label>
+        <label for="date" class="title-sm">Date</label>
         <div class="date-input-wrapper">
           <input 
             id="date"
@@ -263,23 +458,29 @@
 
       <!-- 📝Notes Textarea -->
       <div class="form-group">
-        <label for="note">Note</label>
+        <label for="note" class="title-sm">Note</label>
         <textarea 
           id="note"
           bind:value={note}
-          class="textarea"
-          rows="3"
+          class="textarea body-md"
+          rows="4"
         ></textarea>
       </div>
     </div>
 
     <!-- 🔁Button text changes based on mode -->
+    {#if formError}
+      <p class="form-error body-sm" role="alert">{formError}</p>
+    {/if}
+
     <div class="modal-actions">
-      <button class="btn btn-reset" onclick={handleReset}>
-        Reset
-      </button>
+      {#if !isEditMode}
+        <button class="btn btn-reset" onclick={handleReset}>
+          Reset
+        </button>
+      {/if}
       <button class="btn btn-add" onclick={handleAdd}>
-        {initialData ? 'Save' : 'Add'}
+        {isEditMode ? 'Save' : 'Add'}
       </button>
     </div>
   </div>
@@ -300,45 +501,39 @@
     z-index: 1000;
   }
 
+  /* general modal style */
   .modal {
     display: flex;
     width: 100%;
-    max-width: 420px;
-    padding: 16px;
+    max-width: 402px;
+    padding: 32px 16px;
     flex-direction: column;
     justify-content: center;
 
     gap: 16px;
     border-radius: 32px 32px 0 0;
     background: #fff;
-    max-height: 90vh;
+    /* max-height: 95vh; */
     overflow-y: auto;
   }
 
+  /* header */
   .modal-header {
     display: flex;
-    flex-direction: column;
+    justify-content: center;  
+    position: relative;
     align-items: center;
-    gap: 12px;
   }
 
-  .handle {
-    width: 36px;
-    height: 4px;
-    background: #d1d5db;
-    padding: .1rem;
-    border-radius: 2px;
+  .close-btn {
+    background: transparent;
+    border: transparent;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
   }
 
-  .modal-title {
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 1.4;
-    color: #000;
-    margin: 0;
-    font-family: 'Quicksand', sans-serif;
-  }
-
+  /* form */
   .modal-content {
     display: flex;
     flex-direction: column;
@@ -346,9 +541,11 @@
     width: 100%;
   }
 
-  .form-row {
-    display: flex;
+  .first-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(120px, 160px);
     gap: 12px;
+    width: 100%;
   }
 
   .form-group {
@@ -356,35 +553,18 @@
     flex-direction: column;
     width: 100%;
     gap: 8px;
-    flex: 1;
   }
 
-  .flex-grow {
-    flex: 1;
-  }
-
-  label {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-default, #444955);
-    font-family: 'Nunito', sans-serif;
-  }
-
-  .category-label {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-default, #444955);
-    font-family: 'Nunito', sans-serif;
-  }
 
   .input {
+    box-sizing: border-box;
+    width: 100%;
     padding: 12px 16px;
     border: 1px solid #e5e7eb;
     border-radius: 12px;
     font-size: 14px;
     color: #000;
     background: #fff;
-    width: 75%;
     font-family: 'Nunito', sans-serif;
     transition: border-color 0.2s ease;
   }
@@ -395,43 +575,37 @@
 
   .input:focus {
     outline: none;
-    border-color: #10b981;
+    border-color: var(--text-brand-primary);
   }
 
-  .category-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
+  .input-error {
+    border: 1.5px solid var(--text-danger);
+    background-color: var(--bg-danger);
   }
 
-  .category-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: 8px 4px;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: border-color 0.2s, transform 0.2s;
+  .error-message {
+    font-family: "Nunito", sans-serif;
+    min-height: 18px;
+    color: var(--text-danger);
+    font-size: 12px;
+    line-height: 1.4;
   }
 
-  .category-btn.selected {
-    border-color: #10b981;
-  }
-
-  .category-icon {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-  }
-
-  .category-label {
-    font-size: 9px;
-    color: #000;
+  .form-error {
+    margin: 0;
+    color: var(--text-danger);
     text-align: center;
-    font-family: 'Nunito', sans-serif;
-    line-height: 1.2;
+
+  }
+
+  .required {
+    color: var(--text-danger);
+  }
+
+
+  .quantity-row {
+    display: flex;
+    gap: 8px;
   }
 
   .quantity-group {
@@ -454,11 +628,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #000;
+    color: var(--text-default);
   }
 
   .qty-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.8);
   }
 
   .qty-input {
@@ -481,14 +655,12 @@
 
   .textarea {
     border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    font-size: 14px;
-    color: #000;
+    padding: 1rem;
+    border-radius: 8px;
+    color: var(--text-default);
     background: #fff;
     width: 100%;
     resize: vertical;
-    font-family: inherit;
-    font-family: 'Nunito', sans-serif;
   }
 
   .textarea::placeholder {

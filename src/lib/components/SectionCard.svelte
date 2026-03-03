@@ -54,7 +54,7 @@
 .content-wrapper {
     align-self: stretch;
     padding: 24px 32px;
-    margin-bottom: 24px;
+    /* margin-bottom: 24px; */
     background: var(--background-default-page-secondary, white);
     box-shadow: 0px 1px 4px rgba(12, 12, 13, 0.05), 0px 1px 4px rgba(12, 12, 13, 0.10);
     overflow: hidden;
