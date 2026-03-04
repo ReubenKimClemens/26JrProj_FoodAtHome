@@ -1,5 +1,7 @@
 <script>
     import ProgressBar from '$lib/components/ProgressBar.svelte';
+    import ButtonGroup from '$lib/components/ButtonGroup.svelte';
+    import { getCategoryColor } from '$lib/categoryColors.js';
     
     let { categories = [
         { name: 'Produce', amount: 50.76, percentage: 32, color: '#EF4444' },
@@ -109,15 +111,26 @@
                     </div>
                 {/each}
             </div>
-
-            <div class="progress-row">
-                <ProgressBar value={category.amount} max={total} color={category.color} />
-                <span class="percent body-md">{category.percentage}%</span>
-            </div>
+        </div>
+    {/if}
+    
+    {#if viewMode === 'progress'}
+        <div class="list">
+            {#each categories as category}
+                <div class="row">
+                    <div class="header">
+                        <span class="name">{category.name}</span>
+                        <span class="amount">${category.amount.toFixed(2)}</span>
+                    </div>
+                    <div class="progress-row">
+                        <ProgressBar value={category.percentage} color={category.color} />
+                        <span class="percent">{category.percentage}%</span>
+                    </div>
+                </div>
+            {/each}
         </div>
     {/if}
 </div>
-
 <style>
     .container {
         display: flex;
@@ -217,11 +230,9 @@
         background-color: white;
         flex-direction: column;
         gap: 16px;
-        padding: 24px 32px;
         background: white;
         border-radius: var(--radius-rounded);
         font-family: var(--font-body);
-        box-shadow: var(--box-shadow);
     }
 
     .row {
