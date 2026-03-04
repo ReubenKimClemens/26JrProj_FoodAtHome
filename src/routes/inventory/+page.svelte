@@ -7,7 +7,7 @@
     import SwipeableItem from '$lib/components/SwipeableItem.svelte';
     import GridViewCard from '$lib/components/GridViewCard.svelte';
     import Modal from '$lib/components/Modal.svelte';
-    import PlusIcon from '$lib/assets/plus.svg';
+    import PlusIcon from '$lib/assets/icon_plus.svg';
     import SearchBar from '$lib/components/SearchBar.svelte';
     import { getDaysSinceAdded, deleteReceiptItem } from '$lib/api/receipts.js';
 

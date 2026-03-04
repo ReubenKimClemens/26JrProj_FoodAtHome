@@ -1,7 +1,7 @@
 <script>
     import InventoryItemCard from '$lib/components/InventoryItemCard.svelte';
-    import tossIcon from '$lib/assets/toss.svg';
-    import chompIcon from '$lib/assets/chomp.svg';
+    import tossIcon from '$lib/assets/icon_trash_white.svg';
+    import chompIcon from '$lib/assets/icon_chomp.svg';
     
     let { 
         itemName = '2% Milk', 

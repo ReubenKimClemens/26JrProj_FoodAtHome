@@ -5,7 +5,7 @@
     import SectionCard from '$lib/components/SectionCard.svelte';
     import ProgressBar from '$lib/components/ProgressBar.svelte';
     import Divider from '$lib/components/Divider.svelte';
-    import ChevronRight from '$lib/assets/chevron-right.svg'
+    import ChevronRight from '$lib/assets/chevron_right.svg'
 
     let { data } = $props();
 

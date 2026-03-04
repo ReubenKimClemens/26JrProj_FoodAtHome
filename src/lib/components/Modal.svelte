@@ -50,7 +50,6 @@
   import categoryLeftover from '$lib/assets/category_leftover_inactive.png';
   import categoryFrozen from '$lib/assets/category_frozen_inactive.svg';
   import categoryMisc from '$lib/assets/category_misc_inactive.svg';
-  import categoryDessert from '$lib/assets/category_dessert_inactive.svg';
 
   const categories = [
     { id: 'Produce', label: 'Produce', icon: categoryProduce, color: getCategoryColor('Produce').light },
