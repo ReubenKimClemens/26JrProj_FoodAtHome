@@ -1,84 +1,77 @@
 <script>
-    import CategoryIcon from '$lib/components/CategoryIcon.svelte';
+  import CategoryIcon from '$lib/components/CategoryIcon.svelte';
 
-    let { 
-      category = 'Protein',
-      name = 'Chicken Thighs',
-      daysAgo = 2,
-      count = 1
-    } = $props();
-    
-    let timeText = $derived(
-      daysAgo === 0 ? 'Added Today' :
-      daysAgo === 1 ? 'Added Yesterday' :
-      `Added ${daysAgo} Days Ago`
-    );
+  let { 
+    category = 'Protein',
+    name = 'Chicken Thighs',
+    daysAgo = 2,
+    count = 1
+  } = $props();
+  
+  let timeText = $derived(
+    daysAgo === 0 ? 'Added Today' :
+    daysAgo === 1 ? 'Added Yesterday' :
+    `Added ${daysAgo} Days Ago`
+  );
 </script>
 
 <div class="food-card">
-    <div class="count-badge">{count}</div>      
-    <div class="icon-circle">
-        <CategoryIcon categories={[category]} />
-    </div>
-      
-    <h3 class="food-name">{name}</h3>
-    <div class="timestamp">{timeText}</div>
+  <div class="count-badge"><span>{count}</span></div>      
+  <CategoryIcon categories={[category]} activeCategory="" />
+  <h3 class="food-name">{name}</h3>
+  <p class="timestamp">{timeText}</p>
 </div>
-    
-    <style>
-    .food-card {
+  
+<style>
+  .food-card {
       position: relative;
-      background: white;
-      border-radius: 16px;
-      padding: 24px 20px;
+      background: var(--background-default-page-secondary, white);
+      border-radius: 8px;
+      padding: 16px 32px;
       text-align: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-      width: 150px;
-      font-family: var(--font-body);
-      pointer-events: none;
-    }
-    
+      box-shadow: 0px 1px 4px rgba(12, 12, 13, 0.05), 0px 1px 4px rgba(12, 12, 13, 0.10);
+      font-family: 'Nunito', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+  }
+  
     .count-badge {
       position: absolute;
       top: 12px;
       right: 12px;
-      background: #e8e8e8;
-      color: #666;
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
+      padding: 4px;
+      background: var(--background-inverted-brand-secondary, #F6F2FB);
       border-radius: 50%;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+  }
+
+  .count-badge span {
+      color: var(--text-brand-secondary, #A07AD9);
       font-size: 14px;
-      font-weight: 500;
-    }
-    
-    .icon-circle {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .icon {
-      font-size: 32px;
-    }
-    
-    .category {
-      color: #888;
-      font-size: 13px;
-      margin-bottom: 4px;
-    }
-    
-    .food-name {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      line-height: 24px;
+  }
+  
+  .food-name {
       font-size: 18px;
-      font-weight: 600;
-      color: #333;
-      margin: 0 0 8px 0;
-    }
-    
-    .timestamp {
-      color: #aaa;
-      font-size: 13px;
-    }
-    </style>
+      font-weight: 700;
+      color: var(--text-default, #444955);
+      margin: 0;
+      text-transform: capitalize;
+  }
+  
+  .timestamp {
+      color: var(--text-secondary, #737780);
+      font-size: 14px;
+      font-weight: 400;
+      margin: 0;
+      text-transform: capitalize;
+  }
+</style>

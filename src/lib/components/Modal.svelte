@@ -11,7 +11,7 @@
     title = 'Add New Item',
     onAdd = () => {},
     onReset = () => {},
-    // ⛽️Pre-filling when edits are made
+    // Pre-filling when edits are made
     initialData = null
   } = $props();
 
@@ -81,7 +81,7 @@
     'Misc'
   ];
 
-  // ❌Close modal when clicking outside (on backdrop)
+  // Close modal when clicking outside (on backdrop)
   function handleBackdropClick(e) {
     if (e.target === e.currentTarget) {
       handleClose();
@@ -91,7 +91,7 @@
     open = false;
   }
 
-  // ⌨️Accessible keyboard navigation
+  // Accessible keyboard navigation
   function handleKeydown(e) {
     if (e.key === 'Escape') {
       open = false;
@@ -117,7 +117,7 @@
       note
     });
     open = false;
-    handleReset();  //🧼Clear form after adding
+    handleReset();  
   }
 
   function handleReset() {
@@ -251,7 +251,7 @@
     validatePrice(true);
   }
 
-  // ← ⛽️Pre-fill form when modal opens with initialData
+  // Pre-fill form when modal opens with initialData
   $effect(() => {
     if (open && initialData) {
       const initialPrice = initialData.unit_price ?? null;
@@ -296,7 +296,7 @@
 </script>
 
 {#if open}
-  <!-- 🌑Semi-transparent backdrop -->
+  <!-- Semi-transparent backdrop -->
   <div 
     class="modal-backdrop" 
     transition:fade={{ duration: 200 }}
@@ -304,7 +304,7 @@
     role="presentation"
   >
 
-  <!-- 📦Main modal container -->
+  <!-- Main modal container -->
   <div 
     class="modal"
     transition:fly={{ y: 500, duration: 300, easing: quintOut }}
@@ -313,7 +313,7 @@
     aria-labelledby="modal-title"
   >
 
-    <!-- 📌Modal header with drag handle and title -->
+    <!-- Modal header with drag handle and title -->
     <div class="modal-header">
 
       <h2 id="modal-title" class="title-lg">{title}</h2>
@@ -330,7 +330,7 @@
       </button>
     </div>
 
-    <!-- 📝Form content area -->
+    <!-- Form content area -->
     <div class="modal-content">
 
       <div class="first-row">
@@ -386,7 +386,7 @@
 
       </div>
 
-      <!-- 🗂️Category Selection Grid -->
+      <!-- Category Selection Grid -->
       <div class="form-group">
 
         <div class="label-wrapper">
@@ -405,7 +405,7 @@
       </div>
 
 
-      <!-- 🔢Quantity & Unit Row -->
+      <!-- Quantity & Unit Row -->
       <div class="quantity-row">
 
         <div class="quantity-group">
@@ -442,9 +442,9 @@
 
       </div>
 
-      <!-- 📅Date Picker -->
+      <!-- Date Picker -->
       <div class="form-group">
-        <label for="date" class="title-sm">Date</label>
+        <label for="date" class="title-sm">Date Added</label>
         <div class="date-input-wrapper">
           <input 
             id="date"
@@ -455,7 +455,7 @@
         </div>
       </div>
 
-      <!-- 📝Notes Textarea -->
+      <!-- Notes Textarea -->
       <div class="form-group">
         <label for="note" class="title-sm">Note</label>
         <textarea 
@@ -467,7 +467,7 @@
       </div>
     </div>
 
-    <!-- 🔁Button text changes based on mode -->
+    <!-- Button text changes based on mode -->
     {#if formError}
       <p class="form-error body-sm" role="alert">{formError}</p>
     {/if}
@@ -500,7 +500,6 @@
     z-index: 1000;
   }
 
-  /* general modal style */
   .modal {
     display: flex;
     width: 100%;
@@ -512,11 +511,9 @@
     gap: 16px;
     border-radius: 32px 32px 0 0;
     background: #fff;
-    /* max-height: 95vh; */
     overflow-y: auto;
   }
 
-  /* header */
   .modal-header {
     display: flex;
     justify-content: center;  
@@ -532,7 +529,6 @@
     right: 0;
   }
 
-  /* form */
   .modal-content {
     display: flex;
     flex-direction: column;

@@ -1,6 +1,5 @@
 <script>
     import BudgetCheck from '$lib/components/BudgetCard.svelte';
-    import Dropdown from '$lib/components/Dropdown.svelte';
     import PageHeader from '$lib/components/PageHeader.svelte';
     import GroceryListCard from '$lib/components/StoreCard.svelte';
     import MetricData from '$lib/components/MetricData.svelte';
@@ -73,12 +72,7 @@
 </script>
 
 <div class="metric-screen">
-    <PageHeader title="Metrics" />
-
-    <!-- <Dropdown bind:value={selectedCategory} 
-        options={['Today', 'Yesterday', 'This Week', 'This Month', 'This Year']}
-        placeholder="Daily" /> -->
-        
+    <PageHeader title="Metrics" />        
     <div class="data">
         <div class="date">
             <button>

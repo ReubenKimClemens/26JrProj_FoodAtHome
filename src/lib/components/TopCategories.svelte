@@ -12,7 +12,7 @@
     
     const total = $derived(categories.reduce((sum, cat) => sum + cat.amount, 0));
     
-    let viewMode = $state('pie'); // 'pie' or 'progress'
+    let viewMode = $state('pie'); 
     
     // Calculate pie chart segments
     const pieSegments = $derived.by(() => {
@@ -88,7 +88,7 @@
                     <span class="total-amount title-lg">${total.toFixed(2)}</span>
                 </div>
                 
-                <!-- Labels (on top of lines) -->
+                <!-- Labels -->
                 {#each pieSegments as segment, i}
                     {@const midPercent = (segment.startPercent + segment.endPercent) / 2}
                     {@const angle = (midPercent / 100) * 360 - 90}
@@ -152,7 +152,6 @@
         width: 100%;
     }
 
-    /* Pie Chart Styles */
     .pie-view {
         display: flex;
         flex-direction: column;
@@ -208,10 +207,6 @@
         border-radius: 4px;
     }
 
-    /* .connector-line {
-        z-index: 0;
-    } */
-
     .label-name {
         color: var(--text-default, #444955);
         font-family: 'Nunito', sans-serif;
@@ -230,7 +225,6 @@
         color: var(--text-secondary, #737780);
     }
 
-    /* Progress Bar Styles */
     .list {
         display: flex;
         flex-direction: column;

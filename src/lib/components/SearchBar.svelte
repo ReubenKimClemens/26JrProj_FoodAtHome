@@ -25,7 +25,7 @@
 <style>
     .search-bar {
         display: flex;
-        width: 370px;
+        width: 100%;
         height: 40px;
         min-width: 120px;
         padding: 8px 16px;
@@ -35,6 +35,7 @@
         border: 1px solid var(--border-default, #DADBDD);
         background: var(--bg-page-secondary, #FFFFFF);
         box-sizing: border-box;
+        margin-top: 24px;
     }
 
     .search-icon {

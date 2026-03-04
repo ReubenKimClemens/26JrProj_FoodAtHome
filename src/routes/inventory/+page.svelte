@@ -213,4 +213,18 @@
     .add-button:hover {
         background-color: rgba(0, 0, 0, 0.05);
     }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .grid-item {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        display: flex;
+    }
 </style>
