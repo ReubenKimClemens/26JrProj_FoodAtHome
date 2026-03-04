@@ -85,7 +85,7 @@
                         unit_name: itemData.unit,
                         category: itemData.category,
                         unit_price: itemData.price ?? null,
-                        notes: itemData.note || null,
+                        notes: itemData.note || null
                     }
                     : item
             );

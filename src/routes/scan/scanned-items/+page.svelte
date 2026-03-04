@@ -8,6 +8,7 @@
     import { page } from '$app/stores';
 
     let navState = $page.state || {};
+    const userId = '5a9e584a-69a4-476d-8c23-d8d403b87bec';
     let storeName = $state(navState.storeName || 'Unknown Store');
     let date = $state(navState.date || new Date().toLocaleDateString());
     let totalPrice = $state(navState.total ? `$${navState.total.toFixed(2)}` : '$0.00');

@@ -70,7 +70,6 @@
         { name: 'Dairy', amount: 35.00, percentage: 22, color: getCategoryColor('Dairy').dark }
     ]);
 </script>
-
 <div class="metric-screen">
     <PageHeader title="Metrics" />        
     <div class="data">
@@ -130,6 +129,8 @@
             <TopCategories categories={categories} />
         </section>
     </div>
+
+
 </div>
 
 <style>

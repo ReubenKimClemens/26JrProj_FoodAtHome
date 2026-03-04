@@ -369,7 +369,7 @@
     gap: 16px;
     border-radius: 32px 32px 0 0;
     background: #fff;
-    overflow-y: auto;
+    max-height: 95vh;
   }
 
   .modal-header {
@@ -392,6 +392,8 @@
     flex-direction: column;
     gap: 16px;
     width: 100%;
+    overflow-y: auto;
+
   }
 
   .first-row {
