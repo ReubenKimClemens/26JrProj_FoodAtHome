@@ -40,14 +40,13 @@
     });
 
     async function handleDelete(itemId) {
-    try {
-        await softDeleteReceiptItem(itemId);
-        allItems = allItems.filter(item => item.id !== itemId);
-    } catch (error) {
-        console.error('Failed to delete:', error);
-        alert('Failed to delete item');
-    } 
-}
+        try {
+            await deleteReceiptItem(itemId);
+            allItems = allItems.filter(item => item.id !== itemId);
+        } catch (error) {
+            console.error('Failed to delete:', error);
+        } 
+    }
     
     async function handleAdd(itemData) {
         try {
@@ -130,8 +129,6 @@
     
     {#if view === 'list'}
         <p class="swipe-tip body-sm">Swipe right to TOSS | Swipe left to CHOMP | Tap to EDIT</p>
-        <a href="/inventory/recently-deleted" class="recently-deleted-link">Recently Deleted</a>
-
         {#each filteredAndSortedItems as item (item.id)}
             <SwipeableItem 
                 itemName={item.item_name}
@@ -169,6 +166,7 @@
     bind:open={editModalOpen}
     title="Edit Item"
     onAdd={handleEdit}
+    onDelete={() => handleDelete(editingItem.id)}
     initialData={editingItem}
 />
 
@@ -181,17 +179,6 @@
         display: flex;
         align-items: center;
         gap: 8px;
-    }
-
-    .recently-deleted-link {
-        display: block;
-        font-size: 0.8rem;
-        font-family: 'Nunito', sans-serif;
-        color: var(--text-brand-secondary, #A07AD9);
-        text-decoration: none;
-        font-weight: 600;
-        margin: 0.7rem;
-        width: fit-content;
     }
 
     .title-and-add {
@@ -216,6 +203,7 @@
         color: var(--color-text-secondary);
         text-align: center;
         font-family: 'Nunito', sans-serif;
+        margin: 0 0 1rem 0;
     }
 
     .add-button {
