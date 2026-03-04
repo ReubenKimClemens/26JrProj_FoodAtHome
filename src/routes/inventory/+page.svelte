@@ -13,7 +13,6 @@
 
     let { data } = $props();
     let view = $state('list');
-        
     let selectedCategory = $state('All');
     let sortOrder = $state('Newest First');
     let allItems = $state([...data.allItems]);
@@ -21,13 +20,12 @@
     let editModalOpen = $state(false);
     let editingItem = $state(null);
     let searchQuery = $state('');
-
     let filteredAndSortedItems = $derived.by(() => {
         let items = selectedCategory === 'All' 
             ? allItems 
             : allItems.filter(item => item.category === selectedCategory);
 
-        // 🔍Filter by search query
+        // Filter by search query
         if (searchQuery.trim()) {
             const q = searchQuery.toLowerCase();
             items = items.filter(item => 
@@ -42,14 +40,14 @@
     });
 
     async function handleDelete(itemId) {
-        try {
-            await deleteReceiptItem(itemId);
-            allItems = allItems.filter(item => item.id !== itemId);
-        } catch (error) {
-            console.error('Failed to delete:', error);
-            alert('Failed to delete item');
-        }
-    }
+    try {
+        await softDeleteReceiptItem(itemId);
+        allItems = allItems.filter(item => item.id !== itemId);
+    } catch (error) {
+        console.error('Failed to delete:', error);
+        alert('Failed to delete item');
+    } 
+}
     
     async function handleAdd(itemData) {
         try {
@@ -107,9 +105,11 @@
 <div class="inventory-screen">
     <header class="title-and-add">
         <PageHeader title="Inventory" />
-        <button onclick={() => addModalOpen = true} class="add-button" aria-label="Add new item">
-            <img src={PlusIcon} alt="" />
-        </button>
+        <div class="header-actions">
+            <button onclick={() => addModalOpen = true} class="add-button" aria-label="Add new item">
+                <img src={PlusIcon} alt="" />
+            </button>
+        </div>
     </header>
 
     <SearchBar bind:value={searchQuery} placeholder="Search" />
@@ -130,7 +130,8 @@
     
     {#if view === 'list'}
         <p class="swipe-tip body-sm">Swipe right to TOSS | Swipe left to CHOMP | Tap to EDIT</p>
-        
+        <a href="/inventory/recently-deleted" class="recently-deleted-link">Recently Deleted</a>
+
         {#each filteredAndSortedItems as item (item.id)}
             <SwipeableItem 
                 itemName={item.item_name}
@@ -176,6 +177,23 @@
         padding-bottom: 1rem;
     }
 
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .recently-deleted-link {
+        display: block;
+        font-size: 0.8rem;
+        font-family: 'Nunito', sans-serif;
+        color: var(--text-brand-secondary, #A07AD9);
+        text-decoration: none;
+        font-weight: 600;
+        margin: 0.7rem;
+        width: fit-content;
+    }
+
     .title-and-add {
         display: flex;
         justify-content: space-between;
@@ -196,7 +214,6 @@
     .swipe-tip {
         font-size: 0.8rem;
         color: var(--color-text-secondary);
-        margin-bottom: 1rem;
         text-align: center;
         font-family: 'Nunito', sans-serif;
     }
@@ -208,10 +225,6 @@
         padding: 0.5rem;
         border-radius: 50%;
         transition: background-color 0.2s;
-    }
-
-    .add-button:hover {
-        background-color: rgba(0, 0, 0, 0.05);
     }
 
     .grid {

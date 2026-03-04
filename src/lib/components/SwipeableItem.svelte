@@ -75,12 +75,14 @@
 <svelte:window onpointermove={onPointerMove} onpointerup={onPointerUp} />
 
 <div class="container">
-    <div class="action-panel left">
-        <button class="toss-btn">
-            <img src={tossIcon} alt="" />
-            Toss
-        </button>
-    </div>
+    {#if isDragging && offsetX > 0}
+        <div class="action-panel left">
+            <button class="toss-btn">
+                <img src={tossIcon} alt="" />
+                Toss
+            </button>
+        </div>
+    {/if}
 
     <div 
         class="content"
@@ -93,12 +95,14 @@
         <InventoryItemCard {itemName} {quantity} {category} {addedDaysAgo} />
     </div>
 
-    <div class="action-panel right">
-        <button class="chomp-btn">
-            <img src={chompIcon} alt="" />
-            Chomp
-        </button>
-    </div>
+    {#if isDragging && offsetX < 0}
+        <div class="action-panel right">
+            <button class="chomp-btn">
+                <img src={chompIcon} alt="" />
+                Chomp
+            </button>
+        </div>
+    {/if}
 </div>
 
 <style>
