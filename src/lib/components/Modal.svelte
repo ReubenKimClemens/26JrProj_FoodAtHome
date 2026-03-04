@@ -184,7 +184,7 @@
       quantity = initialData.quantity || 1;
       unit = initialData.unit_name || '';
       date = initialData.created_at ? new Date(initialData.created_at).toISOString().split('T')[0] : '';
-      note = '';
+      note = initialData.notes || '';
     } else if (open && !initialData) {
       handleReset();
     }
@@ -362,9 +362,10 @@
     display: flex;
     width: 100%;
     max-width: 402px;
+    max-height: 90vh;
     padding: 32px 16px;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 16px;
     border-radius: 32px 32px 0 0;
     background: #fff;

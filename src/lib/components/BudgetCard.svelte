@@ -5,8 +5,8 @@
   import BudgetIcon from '$lib/assets/icon_budgetcheck_green.svg';
   import BudgetIconOrange from '$lib/assets/icon_budgetcheck_orange.svg';
   import ProgressBar from '$lib/components/ProgressBar.svelte';
-  import InputField from '$lib/components/InputField.svelte';
   import Button from '$lib/components/Button.svelte';
+  import InputField from '$lib/components/InputField.svelte';
 
   let showModal = $state(false);
   let budgetInput = $state('400');
