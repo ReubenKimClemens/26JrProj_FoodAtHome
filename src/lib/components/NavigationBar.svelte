@@ -91,7 +91,7 @@
     transform: translateX(-50%);
     display: flex;
     width: 100%;
-    max-width: 402px;
+    max-width: 430px;
     height: 96px;
     padding: var(--spacing-s) var(--spacing-lg);
     justify-content: space-between;
@@ -126,8 +126,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: 50px;
     transition: all 0.2s ease;
   }
 

@@ -30,13 +30,6 @@
   let date = $state('');
   let note = $state('');
 
-  const currencyFormatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
-
   import categoryAll from '$lib/assets/category_all_inactive.svg';
   import categoryProduce from '$lib/assets/category_produce_inactive.svg';
   import categoryProtein from '$lib/assets/category_protein_inactive.svg';
@@ -81,6 +74,13 @@
     'Frozen',
     'Misc'
   ];
+
+    const currencyFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
 
   // ❌Close modal when clicking outside (on backdrop)
   function handleBackdropClick(e) {
@@ -184,23 +184,19 @@
   }
 
   function validatePrice(showRequired = false) {
-  if (priceError === 'Enter a valid price.') {
-    return false;
-  }
+    if (price === null || price === '') {
+      priceError = showRequired ? 'Price is required.' : '';
+      return false;
+    }
 
-  if (price === null || price === '') {
-    priceError = showRequired ? 'Price is required.' : '';
-    return false;
-  }
+    if (!Number.isFinite(Number(price)) || Number(price) < 0) {
+      priceError = 'Enter a valid price.';
+      return false;
+    }
 
-  if (!Number.isFinite(Number(price)) || Number(price) < 0) {
-    priceError = 'Enter a valid price.';
-    return false;
+    priceError = '';
+    return true;
   }
-
-  priceError = '';
-  return true;
-}
 
   function decrementQuantity() {
     if (quantity > 1) {
@@ -505,7 +501,7 @@
   .modal {
     display: flex;
     width: 100%;
-    max-width: 402px;
+    max-width: 430px;
     padding: 32px 16px;
     flex-direction: column;
     justify-content: center;

@@ -292,7 +292,7 @@
 
   .modal {
     width: 100%;
-    max-width: 402px;
+    max-width: 430px;
     padding: 32px 16px;
     background: white;
     border-radius: 32px 32px 0 0;
