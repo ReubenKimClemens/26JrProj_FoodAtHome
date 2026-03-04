@@ -127,7 +127,6 @@
   }
 
   function validatePrice(showRequired = false) {
-    if (priceError === 'Enter a valid price.') return false;
     if (price === null || price === '') {
       priceError = showRequired ? 'Price is required.' : '';
       return false;
