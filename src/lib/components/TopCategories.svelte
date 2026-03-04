@@ -115,7 +115,7 @@
                 <span class="percent body-md">{category.percentage}%</span>
             </div>
         </div>
-    {/each}
+    {/if}
 </div>
 
 <style>
