@@ -513,8 +513,7 @@
     gap: 16px;
     border-radius: 32px 32px 0 0;
     background: #fff;
-    /* max-height: 95vh; */
-    overflow-y: auto;
+    max-height: 95vh;
   }
 
   /* header */
@@ -539,6 +538,8 @@
     flex-direction: column;
     gap: 16px;
     width: 100%;
+    overflow-y: auto;
+
   }
 
   .first-row {
