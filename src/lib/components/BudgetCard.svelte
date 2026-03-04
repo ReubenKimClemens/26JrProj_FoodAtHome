@@ -165,7 +165,6 @@
 
   .budget-content {
     padding: 24px;
-    margin-bottom: 24px;
     background: var(--Color-Green-50, #E7F6F1);
     box-shadow: 0px 1px 4px rgba(12, 12, 13, 0.05), 0px 1px 4px rgba(12, 12, 13, 0.10);
     border-radius: 8px;
