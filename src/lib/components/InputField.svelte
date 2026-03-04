@@ -76,7 +76,7 @@
       color: var(--text-secondary, #737780);
     }
   
-    /* 🎯Focus state when user taps into the input */
+    /* Focus state when user taps into the input */
     .input:focus {
       outline: 2px solid var(--icons-default-brand-primary, #0FA376);
       outline-offset: 0;

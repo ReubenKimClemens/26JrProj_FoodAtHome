@@ -21,24 +21,24 @@
         opacity: .5;
     }
 
-.title {
-    color: var(--text-default);
-    font-size: 16px;
-    font-family: var(--font-body);
-    font-weight: 700;
-    text-align: center;
-}
+    .title {
+        color: var(--text-default);
+        font-size: 16px;
+        font-family: var(--font-body);
+        font-weight: 700;
+        text-align: center;
+    }
 
-.img {
-    width: 110px;
-    height: 110px;
-}
+    .img {
+        width: 110px;
+        height: 110px;
+    }
 
-.achievement-item {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 8px;
-    display: flex;
-}
+    .achievement-item {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 8px;
+        display: flex;
+    }
 </style>

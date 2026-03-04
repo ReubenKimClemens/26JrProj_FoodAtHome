@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
   
-  // 🟢 Active States
+  // Active States
   import homeActive from '$lib/assets/nav_home_active.svg';
   import homeInactive from '$lib/assets/nav_home_inactive.svg';
   import inventoryActive from '$lib/assets/nav_inventory_active.svg';

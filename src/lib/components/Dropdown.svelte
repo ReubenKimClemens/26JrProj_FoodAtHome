@@ -22,7 +22,7 @@
       )
     );
     
-    // 📝Displayed text in the dropdown button
+    // Displayed text in the dropdown button
     const displayText = $derived(() => {
       if (!selectedOption) return placeholder;
       return typeof selectedOption === 'object' 
@@ -30,27 +30,27 @@
         : selectedOption;
     });
     
-    // 🖱️Open or close the dropdown when clicked
+    // Open or close the dropdown when clicked
     function toggleDropdown() {
       if (!disabled) {
         isOpen = !isOpen;
       }
     }
     
-    // ✅When user selects an option, update the value and close menu
+    // When user selects an option, update the value and close menu
     function selectOption(option) {
       value = typeof option === 'object' ? option.value : option;
       isOpen = false;
     }
     
-    // 👆Close dropdown when clicking outside of it
+    // Close dropdown when clicking outside of it
     function handleClickOutside(event) {
       if (dropdownRef && !dropdownRef.contains(event.target)) {
         isOpen = false;
       }
     }
     
-    // ⌨️Accessible keyboard navigation
+    // ⌨Accessible keyboard navigation
     function handleKeydown(event) {
       if (disabled) return;
       

@@ -14,6 +14,7 @@
     class="button-wrapper"
     class:primary={variant === 'primary'}
     class:secondary={variant === 'secondary'}
+    class:danger={variant === 'danger'}
     class:lg={size === 'Lg'}
     class:md={size === 'Md'}
     {onclick}
@@ -76,5 +77,18 @@
   
     .button-wrapper.secondary .button-text {
       color: var(--background-default-brand-primary, #0FA376);
+    }
+
+    .button-wrapper.danger {
+      background: transparent;
+      border: 2px solid var(--text-danger, #FF0000);
+    }
+
+    .button-wrapper.danger:active:not(:disabled) {
+      background: rgba(255, 0, 0, 0.1);
+    }
+
+    .button-wrapper.danger .button-text {
+      color: var(--text-danger, #FF0000);
     }
 </style>

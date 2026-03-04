@@ -1,8 +1,7 @@
 <script >
     import Buttons from '$lib/components/Buttons.svelte'
 
-    export let layout = "2-column"; // "2-column" | "stack"    
-
+    export let layout = "2-column";
     export let defaults = {
     size: "md",
     type: "button",
@@ -32,7 +31,6 @@
 </div>
 
 <style>
-
     .btn-group {
         box-sizing: border-box;
         min-width: 370px;

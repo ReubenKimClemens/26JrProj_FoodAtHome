@@ -7,13 +7,12 @@
     import SwipeableItem from '$lib/components/SwipeableItem.svelte';
     import GridViewCard from '$lib/components/GridViewCard.svelte';
     import Modal from '$lib/components/Modal.svelte';
-    import PlusIcon from '$lib/assets/plus.svg';
+    import PlusIcon from '$lib/assets/icon_plus.svg';
     import SearchBar from '$lib/components/SearchBar.svelte';
     import { getDaysSinceAdded, deleteReceiptItem } from '$lib/api/receipts.js';
 
     let { data } = $props();
     let view = $state('list');
-        
     let selectedCategory = $state('All');
     let sortOrder = $state('Newest First');
     let allItems = $state([...data.allItems]);
@@ -21,13 +20,12 @@
     let editModalOpen = $state(false);
     let editingItem = $state(null);
     let searchQuery = $state('');
-
     let filteredAndSortedItems = $derived.by(() => {
         let items = selectedCategory === 'All' 
             ? allItems 
             : allItems.filter(item => item.category === selectedCategory);
 
-        // 🔍Filter by search query
+        // Filter by search query
         if (searchQuery.trim()) {
             const q = searchQuery.toLowerCase();
             items = items.filter(item => 
@@ -47,8 +45,7 @@
             allItems = allItems.filter(item => item.id !== itemId);
         } catch (error) {
             console.error('Failed to delete:', error);
-            alert('Failed to delete item');
-        }
+        } 
     }
     
     async function handleAdd(itemData) {
@@ -69,6 +66,7 @@
             await updateReceiptItem(editingItem.id, 'quantity', itemData.quantity);
             await updateReceiptItem(editingItem.id, 'unit_name', itemData.unit);
             await updateReceiptItem(editingItem.id, 'category', itemData.category);
+            await updateReceiptItem(editingItem.id, 'notes', itemData.note || null);
             await updateReceiptItem(editingItem.id, 'unit_price', itemData.price ?? null);
             await updateReceiptItem(
                 editingItem.id,
@@ -86,7 +84,8 @@
                         quantity: itemData.quantity,
                         unit_name: itemData.unit,
                         category: itemData.category,
-                        unit_price: itemData.price ?? null
+                        unit_price: itemData.price ?? null,
+                        notes: itemData.note || null
                     }
                     : item
             );
@@ -107,9 +106,11 @@
 <div class="inventory-screen">
     <header class="title-and-add">
         <PageHeader title="Inventory" />
-        <button onclick={() => addModalOpen = true} class="add-button" aria-label="Add new item">
-            <img src={PlusIcon} alt="" />
-        </button>
+        <div class="header-actions">
+            <button onclick={() => addModalOpen = true} class="add-button" aria-label="Add new item">
+                <img src={PlusIcon} alt="" />
+            </button>
+        </div>
     </header>
 
     <SearchBar bind:value={searchQuery} placeholder="Search" />
@@ -130,7 +131,6 @@
     
     {#if view === 'list'}
         <p class="swipe-tip body-sm">Swipe right to TOSS | Swipe left to CHOMP | Tap to EDIT</p>
-        
         {#each filteredAndSortedItems as item (item.id)}
             <SwipeableItem 
                 itemName={item.item_name}
@@ -168,12 +168,19 @@
     bind:open={editModalOpen}
     title="Edit Item"
     onAdd={handleEdit}
+    onDelete={() => handleDelete(editingItem.id)}
     initialData={editingItem}
 />
 
 <style>
     .inventory-screen {
         padding-bottom: 1rem;
+    }
+
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     .title-and-add {
@@ -196,9 +203,9 @@
     .swipe-tip {
         font-size: 0.8rem;
         color: var(--color-text-secondary);
-        margin-bottom: 1rem;
         text-align: center;
         font-family: 'Nunito', sans-serif;
+        margin: 0 0 1rem 0;
     }
 
     .add-button {
@@ -210,7 +217,17 @@
         transition: background-color 0.2s;
     }
 
-    .add-button:hover {
-        background-color: rgba(0, 0, 0, 0.05);
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .grid-item {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        display: flex;
     }
 </style>

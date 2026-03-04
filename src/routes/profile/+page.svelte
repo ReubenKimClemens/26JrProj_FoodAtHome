@@ -18,18 +18,20 @@
 <PageHeader title="Profile" />
 
 <!-- Achievements -->
-<SectionCard title="Achievements" linkText="View All" linkHref="/achievements">
-    {#snippet content()}
-        <div class="achievements-content">
-            {#each achievements as achievement}
-                <div class="achievement-item">
-                    <img src={achievement.icon} alt={achievement.label} class="achievement-icon" />
-                    <span class="achievement-label">{achievement.label}</span>
-                </div>
-            {/each}
-        </div>
-    {/snippet}
-</SectionCard>
+ <div class="section-header">
+    <SectionCard title="Achievements" linkText="View All" linkHref="/achievements">
+        {#snippet content()}
+            <div class="achievements-content">
+                {#each achievements as achievement}
+                    <div class="achievement-item">
+                        <img src={achievement.icon} alt={achievement.label} class="achievement-icon" />
+                        <span class="achievement-label">{achievement.label}</span>
+                    </div>
+                {/each}
+            </div>
+        {/snippet}
+    </SectionCard>
+ </div>
 
 <HowToUse />
 <Settings />
@@ -62,5 +64,9 @@
     font-family: Nunito;
     font-weight: 600;
     text-align: center;
+}
+
+.section-header {
+    margin-top: 24px;
 }
 </style>

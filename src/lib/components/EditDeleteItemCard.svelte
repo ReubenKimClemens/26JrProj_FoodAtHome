@@ -1,7 +1,7 @@
 <script>
     import { getCategoryColor } from '$lib/categoryColors.js';
-    import deleteIcon from '$lib/assets/delete.svg';
-    import editIcon from '$lib/assets/edit.svg';
+    import deleteIcon from '$lib/assets/icon_trash_black.svg';
+    import editIcon from '$lib/assets/icon_edit.svg';
     
     let {
         itemName = '2% Milk',

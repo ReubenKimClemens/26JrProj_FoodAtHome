@@ -11,7 +11,7 @@
       wrap = false
     } = $props();
     
-    // 🖼️Icon names for each category
+    // Icon names for each category
     const categoryIcons = {
       'All': 'category_all',
       'Produce': 'category_produce',
@@ -28,8 +28,7 @@
       'Misc': 'category_misc',
     };
     
-    // 🎨Background colors for each category when NOT selected
-    // 🖱️When user clicks a category icon, update to its active color
+    // When user clicks a category icon, update to its active color
     function handleCategoryClick(category) {
       activeCategory = category;
     }
@@ -44,7 +43,7 @@
     }
 </script>
 
-<!-- 📱Scrollable container of category icons -->
+<!-- Scrollable container of category icons -->
 <div class="category-icons-container" class:wrap>
     {#each categories as category}
       <button 
