@@ -1,18 +1,17 @@
 <script>
-    import BudgetCheck from '$lib/components/BudgetCheck.svelte';
-    import Dropdown from '$lib/components/Dropdown.svelte';
+    import BudgetCheck from '$lib/components/BudgetCard.svelte';
     import PageHeader from '$lib/components/PageHeader.svelte';
     import GroceryListCard from '$lib/components/StoreCard.svelte';
     import MetricData from '$lib/components/MetricData.svelte';
     import TopCategories from '$lib/components/TopCategories.svelte';
     import { getCategoryColor } from '$lib/categoryColors.js';
-    import BarGraphDaily from '$lib/assets/FAH_Alpha_Metricsscreen_Daily.webp';
-    import BarGraphWeekly from '$lib/assets/FAH_Alpha_Metricsscreen_Weekly.webp';
-    import BarGraphMonthly from '$lib/assets/FAH_Alpha_Metricsscreen_Monthly.webp';
-    import BarGraphYearly from '$lib/assets/FAH_Alpha_Metricsscreen_Yearly.webp';
+    import BarGraphDaily from '$lib/assets/alpha_metrics_daily.webp';
+    import BarGraphWeekly from '$lib/assets/alpha_metrics_weekly.webp';
+    import BarGraphMonthly from '$lib/assets/alpha_metrics_monthly.webp';
+    import BarGraphYearly from '$lib/assets/alpha_metrics_yearly.webp';
 
-    import MonthlyChart from '$lib/assets/FAH-monthly-budget.svg';
-    import BudgetHistory from '$lib/assets/FAH-budget-history.svg';
+    import MonthlyChart from '$lib/assets/metrics_monthly_budget.svg';
+    import BudgetHistory from '$lib/assets/metrics_budget_history.svg';
     
 
     import { MoveLeft } from 'lucide-svelte';
@@ -72,12 +71,7 @@
     ]);
 </script>
 <div class="metric-screen">
-    <PageHeader title="Metrics" />
-
-    <!-- <Dropdown bind:value={selectedCategory} 
-        options={['Today', 'Yesterday', 'This Week', 'This Month', 'This Year']}
-        placeholder="Daily" /> -->
-        
+    <PageHeader title="Metrics" />        
     <div class="data">
         <div class="date">
             <button>
@@ -182,9 +176,5 @@
         display: flex;
         flex-direction: column;
         gap: 8px;
-
-        .time {
-            color: var(--text-secondary);
-        }
     }
 </style>

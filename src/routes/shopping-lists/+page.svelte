@@ -1,7 +1,7 @@
 <script>
     import SectionCard from '$lib/components/SectionCard.svelte';
     import Divider from '$lib/components/Divider.svelte';
-    import ChevronRight from '$lib/assets/chevron-right.svg'
+    import ChevronRight from '$lib/assets/chevron_right.svg'
     import IconArrowBack from '$lib/assets/icon_arrow_back.svg';
     import IconPlus from '$lib/assets/icon_plus.svg';
 </script>

@@ -5,7 +5,7 @@
     import LogoutIcon from '$lib/assets/icon_logout.svg';
     import ChevronRight from '$lib/assets/chevron_right.svg';
     import Divider from '$lib/components/Divider.svelte';
-    import trash from '$lib/assets/trash.svg'
+    import trash from '$lib/assets/icon_trash_black.svg'
 
     let {
       onSignOut = () => {}

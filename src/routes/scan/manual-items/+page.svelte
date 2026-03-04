@@ -6,7 +6,6 @@
     import EditDeleteItemCard from '$lib/components/EditDeleteItemCard.svelte';
     import Modal from '$lib/components/Modal.svelte';
     import { addReceiptItem } from '$lib/api/receipts';
-    import InputField from '$lib/components/InputField.svelte';
     import { page } from '$app/stores';
 
     let storeName = $state('Walmart');

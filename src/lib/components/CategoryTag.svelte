@@ -10,13 +10,13 @@
       activeCategory = $bindable('All')
     } = $props();
 
-    // 🖱️When user clicks a category icon, update to its active color
+    // When user clicks a category icon, update to its active color
     function handleCategoryClick(category) {
     activeCategory = category;
     }
 </script>
 
-<!-- 📱Scrollable container of category icons -->
+<!-- Scrollable container of category icons -->
 <div class="category-tags-container">
     {#each categories as category}
       <button
