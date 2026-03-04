@@ -1,8 +1,9 @@
 <script>
     import AchievementItem from '$lib/components/AchievementItem.svelte';
-    
-    let { achievements = []} = $props();
+    import PageHeader from './PageHeader.svelte';
+    import NavigationBar from './NavigationBar.svelte';
 
+    let { achievements = []} = $props();
     /*
     This is what an example achievement object looks like:
     {
@@ -14,19 +15,21 @@
     array of achievement objects to display in the grid.
 
     let allAchievements = [{img: Bag, name: 'Do you have FAH?', state: 'active'}, {img: Orange, name: 'Wise Head', state: 'inactive'}, {img: Star, name: 'Getting Started', state: 'active'},{img: Tomato, name: 'First Item', state: 'active'},{img: Receipt, name: 'Receipt Warrior', state: 'active'},{img: Broccoli, name: 'Chomp Machine', state: 'active'}];
-
     */
 </script>
 
-<div class="achievement-grid">
-    {#each achievements as achievement}
-        <AchievementItem 
-            achievementImage={achievement.img}
-            achievementName={achievement.id}
-            achievementState={achievement.state}
-        />
-    {/each}
+<div class="page">
+    <div class="achievement-grid">
+        {#each achievements as achievement}
+            <AchievementItem 
+                achievementImage={achievement.img}
+                achievementName={achievement.name}
+                achievementState={achievement.state}
+            />
+        {/each}
+    </div>
 </div>
+<NavigationBar />
 
 <style>
     .achievement-grid {

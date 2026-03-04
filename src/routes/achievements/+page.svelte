@@ -35,8 +35,6 @@
 <style>
     .content {
         height: calc(100vh - 96px);
-        padding: var(--spacing-s);
-        margin-top: var(--spacing-md);
         display: flex;
         flex-direction: column;
         align-items: center;
