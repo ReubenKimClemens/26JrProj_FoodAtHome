@@ -1,5 +1,5 @@
 <script>
-    import BudgetCheck from '$lib/components/BudgetCheck.svelte';
+    import BudgetCheck from '$lib/components/BudgetCard.svelte';
     import Dropdown from '$lib/components/Dropdown.svelte';
     import PageHeader from '$lib/components/PageHeader.svelte';
     import GroceryListCard from '$lib/components/StoreCard.svelte';

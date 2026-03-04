@@ -11,12 +11,15 @@
   let showModal = $state(false);
   let budgetInput = $state('400');
 
-  let {budgetId = null, spent = 42.18, 
+  let {
+    budgetId = null,
+    spent = 42.18,
     showTitle = true,
-    budget = $bindable(400), 
-    remaining = $bindable(budget - spent), 
-    percentage = $bindable(Math.round((spent / budget) * 100))
+    budget = $bindable(400)
   } = $props();
+
+  let remaining = $derived(budget - spent);
+  let percentage = $derived(Math.round((spent / budget) * 100));
   
   let isOverBudget = $derived(spent > budget);
   
@@ -38,17 +41,15 @@
   async function handleConfirm() {
     const newAmount = parseFloat(budgetInput.replace(/[$,]/g, ''));
   
-  if (isNaN(newAmount) || newAmount <= 0) {
-    alert('Please enter a valid budget amount');
-    return;
-  }
+    if (isNaN(newAmount) || newAmount <= 0) {
+      alert('Please enter a valid budget amount');
+      return;
+    }
 
     if (budgetId !== null) {
       try {
         await updateBudgetAmount(budgetId, budgetInput);
         budget = newAmount;
-        remaining = newAmount - spent;
-        percentage = Math.round((spent / newAmount) * 100);
       } catch (error) {
         console.error('Error updating budget amount:', error);
         alert('There was an error updating your budget. Please try again.');      
@@ -72,16 +73,19 @@
     <h2 class="section-title">Budget Check</h2>
   {/if}
 
-  <div class="budget-content" style="background: {isOverBudget ? '#FFF0E5' : '#E7F6F1'}">    <div class="spending-row">
+  <div class="budget-content" style="background: {isOverBudget ? '#FFF0E5' : '#E7F6F1'}">
+    <div class="spending-row">
       <div class="status-icon">
         <img src={isOverBudget ? BudgetIconOrange : BudgetIcon} alt="" />      
       </div>
 
       <div class="spending-info">
         <div class="amount-spent-container">
-          <!-- <div class="comparison-text">{comparison}</div> -->
           <div class="spent-amount" style="color: {isOverBudget ? '#FF9040' : '#0FA376'}">
             ${spent.toFixed(2)} spent
+          </div>
+          <div class="percentage-text" style="color: {isOverBudget ? '#FF9040' : '#0FA376'}">
+            {percentage}%
           </div>
         </div>
         <div class="budget-total">
@@ -92,11 +96,7 @@
     </div>
 
     <div class="status-bar">
-      
       <div class="progress-wrapper">
-        <div class="remaining-text body-md-bold">
-          ${remaining.toFixed(2)} left to spend
-        </div>
         <ProgressBar value={spent} max={budget} color="#0FA376" />
 
         <div class="spent-text body-xsm">
@@ -205,7 +205,6 @@
     position: relative;
   }
 
-
   .spent-amount {
     position: absolute;
     left: 0;
@@ -235,12 +234,15 @@
     text-align: right;
   }
 
-  .remaining-text {
-    color: var(--text-default);
-    text-align: left;
-    width: 100%;
+  .percentage-text {
+    position: absolute;
+    left: 0;
+    top: 24px;
+    font-size: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    line-height: 16px;
   }
-
 
   .spent-text {
     color: var(--text-secondary);
@@ -254,7 +256,6 @@
     padding: 0;
     margin: 0;
   }
-
 
   .progress-wrapper {
     display: flex;
