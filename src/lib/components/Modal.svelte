@@ -42,6 +42,20 @@
   let date = $state('');
   let note = $state('');
 
+  const categories = [
+    { id: 'Produce', label: 'Produce', icon: categoryProduce, color: getCategoryColor('Produce').light },
+    { id: 'Protein', label: 'Protein', icon: categoryProtein, color: getCategoryColor('Protein').light },
+    { id: 'Wheat', label: 'Wheat', icon: categoryWheat, color: getCategoryColor('Wheat').light },
+    { id: 'Dairy', label: 'Dairy', icon: categoryDairy, color: getCategoryColor('Dairy').light },
+    { id: 'Drinks', label: 'Drinks', icon: categoryDrinks, color: getCategoryColor('Drinks').light },
+    { id: 'Snacks', label: 'Snacks', icon: categorySnacks, color: getCategoryColor('Snacks').light },
+    { id: 'Pantry', label: 'Pantry', icon: categoryPantry, color: getCategoryColor('Pantry').light },
+    { id: 'Sauces', label: 'Sauces', icon: categorySauces, color: getCategoryColor('Sauces').light },
+    { id: 'Spices', label: 'Spices', icon: categorySpices, color: getCategoryColor('Spices').light },
+    { id: 'Leftover', label: 'Leftover', icon: categoryLeftover, color: getCategoryColor('Leftover').light },
+    { id: 'Frozen', label: 'Frozen', icon: categoryFrozen, color: getCategoryColor('Frozen').light },
+    { id: 'Misc', label: 'Misc', icon: categoryMisc, color: getCategoryColor('Misc').light },
+  ];
   const currencyFormatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -54,6 +68,7 @@
     'Pantry', 'Sauces', 'Spices', 'Leftover', 'Frozen', 'Misc'
   ];
 
+  // ❌Close modal when clicking outside (on backdrop)
   function handleBackdropClick(e) {
     if (e.target === e.currentTarget) handleClose();
   }
@@ -360,7 +375,7 @@
   .modal {
     display: flex;
     width: 100%;
-    max-width: 402px;
+    max-width: 430px;
     max-height: 90vh;
     padding: 32px 16px;
     flex-direction: column;
