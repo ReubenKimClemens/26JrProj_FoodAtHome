@@ -18,7 +18,7 @@
 
 <div class="content">
     <div class="top-nav">
-        <button class="icon-btn" onclick={() => goto('/profile')}>
+        <button class="icon-btn" onclick={() => goto('/inventory')}>
             <MoveLeft/>
         </button>
 

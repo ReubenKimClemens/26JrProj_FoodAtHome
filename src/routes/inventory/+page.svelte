@@ -7,6 +7,7 @@
     import SwipeableItem from '$lib/components/SwipeableItem.svelte';
     import GridViewCard from '$lib/components/GridViewCard.svelte';
     import Modal from '$lib/components/Modal.svelte';
+    import TrashIcon from '$lib/assets/icon_trash_black.svg';
     import PlusIcon from '$lib/assets/icon_plus.svg';
     import SearchBar from '$lib/components/SearchBar.svelte';
     import { getDaysSinceAdded, deleteReceiptItem } from '$lib/api/receipts.js';
@@ -107,6 +108,9 @@
     <header class="title-and-add">
         <PageHeader title="Inventory" />
         <div class="header-actions">
+            <a href="/profile/recently-deleted" class="add-button" aria-label="Recently deleted items">
+                <img src={TrashIcon} alt="" />
+            </a>
             <button onclick={() => addModalOpen = true} class="add-button" aria-label="Add new item">
                 <img src={PlusIcon} alt="" />
             </button>
