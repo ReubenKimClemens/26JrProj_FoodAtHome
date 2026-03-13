@@ -370,6 +370,7 @@
     align-items: flex-end;
     justify-content: center;
     z-index: 1000;
+    overflow: hidden;
   }
 
   .modal {
@@ -407,7 +408,8 @@
     gap: 16px;
     width: 100%;
     overflow-y: auto;
-
+    overflow-x: hidden;
+    overscroll-behavior: contain;
   }
 
   .first-row {
