@@ -17,6 +17,7 @@
     let modalOpen = $state(false);
     let modalTitle = $state('Add New Item');
     let editingItem = $state(null);
+    let saveError = $state('');
 
     function handleDelete(id) {
         items = items.filter(item => item.id !== id);
@@ -60,18 +61,20 @@
     }
 
     async function handleConfirm() {
+        saveError = '';
         try {
             for (const item of items) {
                 await addReceiptItem(userId, {
                     itemName: item.itemName,
                     quantity: item.quantity,
-                    price: `$${item.price}`,
+                    price: item.price,
                     category: item.category
                 });
             }
             goto('/inventory');
         } catch (error) {
             console.error('Error saving:', error);
+            saveError = 'Failed to save items. Please try again.';
         }
     }
 </script>
@@ -104,6 +107,10 @@
             />
         {/each}
     </main>
+
+    {#if saveError}
+        <p class="save-error">{saveError}</p>
+    {/if}
 
     <footer>
         <ButtonGroup
@@ -174,5 +181,12 @@
         display: flex;
         gap: var(--spacing-s);
         padding-top: var(--spacing-s);
+    }
+
+    .save-error {
+        color: red;
+        font-size: 0.875rem;
+        text-align: center;
+        padding: var(--spacing-xs) 0;
     }
 </style>

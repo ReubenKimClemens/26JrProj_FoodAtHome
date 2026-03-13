@@ -12,6 +12,7 @@
 
     import MonthlyChart from '$lib/assets/metrics_monthly_budget.svg';
     import BudgetHistory from '$lib/assets/metrics_budget_history.svg';
+    import AmountSpentPerDay from '$lib/assets/amount_spent_per_day_graph.svg'
     
 
     import { MoveLeft } from 'lucide-svelte';
@@ -101,7 +102,12 @@
                 {/each}
             </div>
     
-            <img src={MonthlyChart} alt="Bar Graph Showing {MonthlyChart} Metrics" />
+            <!-- <img src={MonthlyChart} alt="Bar Graph Showing {MonthlyChart} Metrics" /> -->
+        </section>
+
+        <section class="budget-history">
+            <span class="title-md">Amount Spent Per Day</span>
+            <img src="{AmountSpentPerDay}" alt="Amount spent per day graph">
         </section>
     
         <section class="budget-history">
