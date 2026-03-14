@@ -12,6 +12,13 @@
     import SearchBar from '$lib/components/SearchBar.svelte';
     import Toast from '$lib/components/Toast.svelte';
     import { getDaysSinceAdded, deleteReceiptItem } from '$lib/api/receipts.js';
+    import { page } from '$app/stores';
+
+    $effect(() => {
+        if ($page.state?.showToast) {
+            toastShow = true;
+        }
+    });
 
     let toastShow = $state(false);
     let lastAddedItem = $state(null);
