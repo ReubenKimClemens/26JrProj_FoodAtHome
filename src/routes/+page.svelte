@@ -52,7 +52,7 @@
         </SectionCard>
     
         <!-- Shopping Lists -->
-        <SectionCard title="shopping lists" linkText="View all" linkHref="/shopping-lists">
+        <!-- <SectionCard title="shopping lists" linkText="View all" linkHref="/shopping-lists">
         {#snippet content()}
             <div class="shopping-lists-content">
                 {#each data.topShoppingLists as list, index}
@@ -72,7 +72,7 @@
                 {/each}
             </div>
         {/snippet}
-        </SectionCard>
+        </SectionCard> -->
     </section>
 
 <style>

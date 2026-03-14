@@ -97,7 +97,7 @@
 
     <div class="status-bar">
       <div class="progress-wrapper">
-        <ProgressBar value={spent} max={budget} color="#0FA376" />
+        <ProgressBar value={spent} max={budget} color={isOverBudget ? '#FF9040' : '#0FA376'} />
 
         <div class="spent-text body-xsm">
           <p>${spent.toFixed(2)} spent</p>

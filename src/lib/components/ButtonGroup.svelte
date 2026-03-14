@@ -33,8 +33,9 @@
 <style>
     .btn-group {
         box-sizing: border-box;
-        min-width: 370px;
+        width: 100%;
     }
+
     .btn-group-2-column {
         display: flex;
         gap: var(--spacing-xs);

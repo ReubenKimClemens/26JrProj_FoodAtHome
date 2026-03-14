@@ -67,16 +67,13 @@
 <div class="content">
 
     <div class="top-nav">
-        <button on:click={() => goto('/')} class="back-btn">
+        <button onclick={() => history.back()} class="back-btn">
             <X size={30}/>
         </button>
-
-        <button class="help-btn" on:click={() => goto('/scan/scanning-tips')}>
-
+        
+        <button class="help-btn" onclick={() => goto('/scan/scanning-tips')}>
             <img src={QuestionMark} alt="help button">
         </button>
-        
-
     </div>
     
 
@@ -101,7 +98,7 @@
         type="file"
         accept="image/*"
         bind:this={fileInput}
-        on:change={handleImageUpload}
+        onchange={handleImageUpload}
         style="display: none;"
     />
 

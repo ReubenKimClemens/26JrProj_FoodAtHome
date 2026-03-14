@@ -61,21 +61,19 @@
     }
 
     async function handleConfirm() {
-        saveError = '';
-        try {
-            for (const item of items) {
-                await addReceiptItem(userId, {
-                    itemName: item.itemName,
-                    quantity: item.quantity,
-                    price: item.price,
-                    category: item.category
-                });
-            }
-            goto('/inventory');
-        } catch (error) {
-            console.error('Error saving:', error);
-            saveError = 'Failed to save items. Please try again.';
-        }
+    saveError = '';
+    try {
+        await Promise.all(items.map(item => addReceiptItem(userId, {
+            itemName: item.itemName,
+            quantity: item.quantity,
+            price: item.price,
+            category: item.category
+        })));
+        goto('/inventory');
+    } catch (error) {
+        console.error('Error saving:', error);
+        saveError = 'Failed to save items. Please try again.';
+    }
     }
 </script>
 
@@ -138,6 +136,7 @@
         flex-direction: column;
         padding: var(--spacing-s);
         font-family: var(--font-body);
+        box-sizing: border-box;
     }
 
     header {
@@ -178,9 +177,11 @@
     }
 
     footer {
-        display: flex;
-        gap: var(--spacing-s);
-        padding-top: var(--spacing-s);
+    display: flex;
+    gap: var(--spacing-s);
+    padding-top: var(--spacing-s);
+    width: 100%;
+    box-sizing: border-box;
     }
 
     .save-error {

@@ -18,8 +18,10 @@
     let isDragging = $state(false);
     let hasMoved = $state(false);
     let offsetX = $state(0);
+    let swipedDirection = $state(null);
 
     const SWIPE_THRESHOLD = 60;
+    const SNAP_OFFSET = 120;
     const LOCK_AXIS_THRESHOLD = 10;
     let axisLocked = $state(null);
     
@@ -29,7 +31,6 @@
         axisLocked = null;
         startX = e.clientX;
         startY = e.clientY;
-        offsetX = 0;
     }
     
     function onPointerMove(e) {
@@ -46,7 +47,9 @@
         if (axisLocked === 'x') {
             hasMoved = true;
             e.preventDefault();
-            offsetX = Math.max(-150, Math.min(150, dx));
+            const base = swipedDirection === 'toss' ? SNAP_OFFSET 
+                       : swipedDirection === 'chomp' ? -SNAP_OFFSET : 0;
+            offsetX = Math.max(-SNAP_OFFSET, Math.min(SNAP_OFFSET, base + dx));
         }
     }
     
@@ -56,87 +59,91 @@
 
         if (axisLocked === 'x') {
             if (offsetX > SWIPE_THRESHOLD) {
-                onToss();
+                swipedDirection = 'toss';
+                offsetX = SNAP_OFFSET;
             } else if (offsetX < -SWIPE_THRESHOLD) {
-                onChomp();
+                swipedDirection = 'chomp';
+                offsetX = -SNAP_OFFSET;
+            } else {
+                swipedDirection = null;
+                offsetX = 0;
             }
         }
-
-        offsetX = 0;
     }
 
-    function handleTap() {
-        if (!hasMoved && onTap) {
+    function handleCardTap() {
+        if (!hasMoved && swipedDirection) {
+            swipedDirection = null;
+            offsetX = 0;
+        } else if (!hasMoved && onTap) {
             onTap();
         }
+    }
+
+    function handleToss() {
+        swipedDirection = null;
+        offsetX = 0;
+        onToss();
+    }
+
+    function handleChomp() {
+        swipedDirection = null;
+        offsetX = 0;
+        onChomp();
     }
 </script>
 
 <svelte:window onpointermove={onPointerMove} onpointerup={onPointerUp} />
 
-<div class="container">
-    {#if isDragging && offsetX > 0}
-        <div class="action-panel left">
-            <button class="toss-btn">
-                <img src={tossIcon} alt="" />
-                Toss
-            </button>
-        </div>
-    {/if}
+<div class="clip-wrapper">
+    <div class="swipe-row" style="transform: translateX({offsetX}px); transition: {isDragging ? 'none' : 'transform 0.3s ease'};">
+        <button class="toss-btn action-btn" onclick={handleToss}>
+            <img src={tossIcon} alt="" />
+            Toss
+        </button>
 
-    <div 
-        class="content"
-        style="transform: translateX({offsetX}px); transition: {isDragging ? 'none' : 'transform 0.3s ease'};"
-        onpointerdown={onPointerDown}
-        onclick={handleTap}
-        role="button"
-        tabindex="0"
-    >
-        <InventoryItemCard {itemName} {quantity} {category} {addedDaysAgo} />
+        <div 
+            class="content"
+            onpointerdown={onPointerDown}
+            onclick={handleCardTap}
+            role="button"
+            tabindex="0"
+        >
+            <InventoryItemCard {itemName} {quantity} {category} {addedDaysAgo} />
+        </div>
+
+        <button class="chomp-btn action-btn" onclick={handleChomp}>
+            <img src={chompIcon} alt="" />
+            Chomp
+        </button>
     </div>
-
-    {#if isDragging && offsetX < 0}
-        <div class="action-panel right">
-            <button class="chomp-btn">
-                <img src={chompIcon} alt="" />
-                Chomp
-            </button>
-        </div>
-    {/if}
 </div>
 
 <style>
-    .container {
-        position: relative;
-        margin-bottom: 12px;
+    .clip-wrapper {
         overflow: hidden;
+        margin-bottom: 12px;
         border-radius: var(--radius-rounded);
         box-shadow: 0px 1px 4px rgba(12, 12, 13, 0.05), 0px 1px 4px rgba(12, 12, 13, 0.10);
     }
 
+    .swipe-row {
+        display: flex;
+        align-items: stretch;
+    }
+
     .content {
-        position: relative;
+        flex: 1;
         cursor: grab;
-        z-index: 2;
         touch-action: pan-y;
+        min-width: 0;
     }
 
     .content:active { cursor: grabbing; }
 
-    .action-panel {
-        position: absolute;
-        top: 0;
-        height: 100%;
-        width: 150px;
-        z-index: 1;
-    }
-
-    .action-panel.left  { left: 0; }
-    .action-panel.right { right: 0; }
-
-    button {
-        width: 100%;
-        height: 100%;
+    .action-btn {
+        width: 120px;
+        flex-shrink: 0;
         border: none;
         color: white;
         font-weight: 700;
@@ -152,11 +159,14 @@
     .toss-btn {
         background: #FF4040;
         border-radius: var(--radius-rounded) 0 0 var(--radius-rounded);
+        margin-left: -120px;
+        order: -1;
     }
 
     .chomp-btn {
         background: #FF9040;
         border-radius: 0 var(--radius-rounded) var(--radius-rounded) 0;
+        margin-right: -120px;
     }
 
     img { width: 24px; height: 24px; }

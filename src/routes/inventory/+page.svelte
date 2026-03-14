@@ -7,10 +7,22 @@
     import SwipeableItem from '$lib/components/SwipeableItem.svelte';
     import GridViewCard from '$lib/components/GridViewCard.svelte';
     import Modal from '$lib/components/Modal.svelte';
+    import TrashIcon from '$lib/assets/icon_trash_black.svg';
     import PlusIcon from '$lib/assets/icon_plus.svg';
     import SearchBar from '$lib/components/SearchBar.svelte';
+    import Toast from '$lib/components/Toast.svelte';
     import { getDaysSinceAdded, deleteReceiptItem } from '$lib/api/receipts.js';
+    import { page } from '$app/stores';
 
+    $effect(() => {
+        if ($page.state?.showToast) {
+            toastShow = true;
+        }
+    });
+
+    let toastShow = $state(false);
+    let lastAddedItem = $state(null);
+    
     let { data } = $props();
     let view = $state('list');
     let selectedCategory = $state('All');
@@ -49,15 +61,27 @@
     }
     
     async function handleAdd(itemData) {
-        try {
-            const userId = '5a9e584a-69a4-476d-8c23-d8d403b87bec';
-            const newItem = await addReceiptItem(userId, itemData);
-            allItems = [...allItems, newItem];
-            console.log('Item added successfully!');
-        } catch (error) {
-            console.error('Failed to add item:', error);
-            alert('Failed to add item. Please try again.');
-        }
+    try {
+        const userId = '5a9e584a-69a4-476d-8c23-d8d403b87bec';
+        const newItem = await addReceiptItem(userId, itemData);
+        allItems = [...allItems, newItem];
+        lastAddedItem = newItem;
+        toastShow = true;
+    } catch (error) {
+        console.error('Failed to add item:', error);
+        alert('Failed to add item. Please try again.');
+    }
+    }
+
+    async function handleUndoAdd() {
+    if (!lastAddedItem) return;
+    try {
+        await deleteReceiptItem(lastAddedItem.id);
+        allItems = allItems.filter(item => item.id !== lastAddedItem.id);
+        lastAddedItem = null;
+    } catch (error) {
+        console.error('Failed to undo:', error);
+    }
     }
 
     async function handleEdit(itemData) {
@@ -107,6 +131,9 @@
     <header class="title-and-add">
         <PageHeader title="Inventory" />
         <div class="header-actions">
+            <a href="/profile/recently-deleted" class="add-button" aria-label="Recently deleted items">
+                <img src={TrashIcon} alt="" />
+            </a>
             <button onclick={() => addModalOpen = true} class="add-button" aria-label="Add new item">
                 <img src={PlusIcon} alt="" />
             </button>
@@ -156,6 +183,12 @@
             {/each}
         </div>
     {/if}
+    
+    <Toast
+    message="Item has been added!"
+    bind:show={toastShow}
+    onUndo={handleUndoAdd}
+    />
 </div>
 
 <Modal 
