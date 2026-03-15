@@ -32,10 +32,10 @@
         <span>${price}</span>
         <div class="actions">
             <button class="icon-btn" onclick={onDelete}>
-                <img src={deleteIcon} alt="Delete" class="icon" />
+                <img src={deleteIcon} alt="Delete button" class="icon" />
             </button>
             <button class="icon-btn" onclick={onEdit}>
-                <img src={editIcon} alt="Edit" class="icon" />
+                <img src={editIcon} alt="Edit button" class="icon" />
             </button>
         </div>
     </div>

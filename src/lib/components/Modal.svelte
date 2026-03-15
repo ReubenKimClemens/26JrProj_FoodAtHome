@@ -337,7 +337,7 @@
 
         <div class="form-group">
           <label for="note" class="title-sm">Note</label>
-          <textarea id="note" bind:value={note} class="textarea body-md" rows="4"></textarea>
+          <textarea id="note" bind:value={note} class="textarea body-md" rows="1"></textarea>
         </div>
       </div>
 
@@ -353,7 +353,7 @@
       </div>
       
       {#if isEditMode && onDelete}
-        <Button text="Delete" variant="danger" onclick={() => { open = false; onDelete(); }} />      {/if}
+        <Button text="Toss Item" variant="danger" onclick={() => { open = false; onDelete(); }} />      {/if}
     </div>
   </div>
 {/if}
@@ -410,6 +410,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     overscroll-behavior: contain;
+
   }
 
   .first-row {

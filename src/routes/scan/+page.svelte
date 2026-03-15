@@ -138,9 +138,10 @@
     }
 
     .content {
-        height: calc(100vh - 96px);
+        height: calc(100vh - 74px);
+
         padding: var(--spacing-s);
-        margin-top: var(--spacing-md);
+        /* margin-top: var(--spacing-md); */
         display: flex;
         flex-direction: column;
         justify-content: space-between;

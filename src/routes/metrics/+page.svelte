@@ -79,7 +79,7 @@
                 <ChevronLeft/>
             </button>
             <span class="title-lg">December</span>
-            <button>
+            <button style="opacity: 0;">
                 <ChevronRight/>
             </button>
         </div>
@@ -107,12 +107,26 @@
 
         <section class="budget-history">
             <span class="title-md">Amount Spent Per Day</span>
-            <img src="{AmountSpentPerDay}" alt="Amount spent per day graph">
+            <img
+                src={AmountSpentPerDay}
+                alt="Amount spent per day graph"
+                class="chart-image"
+                width="100%"
+                loading="lazy"
+                decoding="async"
+            />
         </section>
     
         <section class="budget-history">
             <span class="title-md">Budget History</span>
-            <img src={BudgetHistory} alt="Bar Graph Showing {BudgetHistory} Metrics" />
+            <img
+                src={BudgetHistory}
+                alt="Budget history chart"
+                class="chart-image"
+                width="100%"
+                loading="lazy"
+                decoding="async"
+            />
         </section>
     
         <section class="store-visit">
@@ -182,5 +196,11 @@
         display: flex;
         flex-direction: column;
         gap: 8px;
+    }
+
+    .chart-image {
+        display: block;
+        width: 100%;
+        height: auto;
     }
 </style>

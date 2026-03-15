@@ -6,7 +6,7 @@
 
 	let { children } = $props();
 
-	const noNavBar = ['/loading', '/login', '/scan', '/achievements'];
+	const noNavBar = ['/loading', '/login', '/scan', '/achievements', '/scan/scanning-tips'];
 </script>
 
 <svelte:head>
@@ -35,7 +35,8 @@
 	}
 
 	.content-wrapper {
-	padding-bottom: 120px;
+	/* padding-bottom: 120px; */
+	margin-bottom: 120px;
 	padding-left: 1.5rem;
 	padding-right: 1.5rem;
 	}
