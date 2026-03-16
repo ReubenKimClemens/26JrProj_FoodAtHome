@@ -116,7 +116,7 @@
                 layout="2-column"
                 defaults={{ size: "md", block: true }}
                 buttons={[
-                { label: "Add Items Manually", variant: "outline", onClick: () => handleAdd() },
+                { label: "Add Manually", variant: "outline", onClick: () => handleAdd() },
                 { label: "Upload Receipt", variant: "primary", onClick: triggerFileInput }
                 ]}
             />
@@ -139,9 +139,6 @@
 
     .content {
         height: calc(100vh - 200px);
-
-        /* padding: var(--spacing-s); */
-        /* margin-top: var(--spacing-md); */
         display: flex;
         flex-direction: column;
         justify-content: space-between;

@@ -9,12 +9,9 @@
     import BarGraphWeekly from '$lib/assets/alpha_metrics_weekly.webp';
     import BarGraphMonthly from '$lib/assets/alpha_metrics_monthly.webp';
     import BarGraphYearly from '$lib/assets/alpha_metrics_yearly.webp';
-
     import MonthlyChart from '$lib/assets/metrics_monthly_budget.svg';
     import BudgetHistory from '$lib/assets/metrics_budget_history.svg';
     import AmountSpentPerDay from '$lib/assets/amount_spent_per_day_graph.svg'
-    
-
     import { MoveLeft } from 'lucide-svelte';
     import { MoveRight } from 'lucide-svelte';
     import { ChevronLeft } from 'lucide-svelte';
@@ -32,10 +29,8 @@
 
     // budget card
     let { data } = $props();
-
     let avgPerDay = data.totalSpent / 30;
     let avgPerReceipt = data.totalSpent / data.numberOfReceipts;
-
     let budget = $state(data.activeBudget?.budget_amount ?? 400);
     let spent = $state(data.activeBudget?.total_spent ?? 0);
     let remaining = $state(budget - spent);
@@ -54,7 +49,6 @@
 
     let metrics = $state([
         // daily view only has these 2 info
-
         {title: "Total Items", count: data.numberOfItems},
         {title: "Total Receipts", count: data.numberOfReceipts},
 
@@ -74,6 +68,7 @@
         { name: 'Protein', amount: 39.65, percentage: 25, color: getCategoryColor('Protein').dark },
         { name: 'Dairy', amount: 35.00, percentage: 22, color: getCategoryColor('Dairy').dark }
     ]);
+
 </script>
 <div class="metric-screen">
     <PageHeader title="Metrics" />        
@@ -107,7 +102,6 @@
                     <MetricData label={metric.title} amount={metric.amount} count={metric.count} date={metric.date} />
                 {/each}
             </div>
-    
             <!-- <img src={MonthlyChart} alt="Bar Graph Showing {MonthlyChart} Metrics" /> -->
         </section>
 
@@ -155,8 +149,6 @@
             <TopCategories categories={data.topCategories} />
         </section>
     </div>
-
-
 </div>
 
 <style>

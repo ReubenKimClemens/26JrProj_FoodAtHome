@@ -34,7 +34,7 @@
 <!-- Good Morning/Afternoon/Evening Cronch! -->
 <PageHeader userName="Cronch" />
 
-    <!-- content wrapper -->
+    <!-- Content Wrapper -->
     <section class="content">
         
         <!-- Budget Check Component -->
@@ -51,13 +51,14 @@
         {#snippet content()}
             <div class="inventory-content">
                 {#each inventoryRows as row}
-                    <div class="inventory-row body-md{row.count === 'totalCount' ? '-bold' : ''}">
-                        <span class="{row.count === 'totalCount' ? 'total-label' : 'item-label'}">{row.label}</span>
-                        <span class="{row.count === 'totalCount' ? 'total-value' : 'item-value'}">{data[row.count]}</span>
-                    </div>
-                    <div class="line"></div>
+                    {#if row.count === 'totalCount' || data[row.count] > 0}
+                        <div class="inventory-row body-md{row.count === 'totalCount' ? '-bold' : ''}">
+                            <span class="{row.count === 'totalCount' ? 'total-label' : 'item-label'}">{row.label}</span>
+                            <span class="{row.count === 'totalCount' ? 'total-value' : 'item-value'}">{data[row.count]}</span>
+                        </div>
+                    {/if}
                 {/each}
-                </div>
+            </div>
         {/snippet}
         </SectionCard>
     
@@ -86,41 +87,36 @@
     </section>
 
 <style>
-.content {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-/* Inventory */
-.inventory-content {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
     }
 
-.inventory-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    }
-
-.total-label, .total-value {
-    color: var(--text-brand-secondary, #A07AD9);
-    text-transform: capitalize;
-    }
-
-.item-label, .item-value {
-    color: var(--text-secondary, #737780);
-    text-transform: capitalize;
-    }
-
-    .line {
-        height: 1px;
-        margin: 3px 0;
-        background: var(--text-secondary);
+    /* Inventory */
+    .inventory-content {
         width: 100%;
-    }
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        }
+
+    .inventory-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        }
+
+    .total-label, .total-value {
+        color: var(--text-brand-secondary, #A07AD9);
+        text-transform: capitalize;
+        }
+
+    .item-label, .item-value {
+        color: var(--text-secondary, #737780);
+        text-transform: capitalize;
+        }
+
 /* .more {
     justify-content: center;
     color: var(--text-brand-secondary);   
@@ -128,71 +124,71 @@
     a:visited {
         color: var(--text-brand-secondary);
     }
-} */
-/* Shopping Lists */
-/* .shopping-lists-content {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
+} 
 
-.shopping-list-item {
-    width: 100%;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 4px;
-    text-decoration: none;
-}
+    .shopping-lists-content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
 
-.list-info {
-    flex: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    .shopping-list-item {
+        width: 100%;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 4px;
+        text-decoration: none;
+    }
 
-.list-name {
-    color: var(--text-default, #444955);
-    font-size: 18px;
-    font-family: Quicksand;
-    font-weight: 700;
-    text-transform: capitalize;
-    line-height: 24px;
-}
+    .list-info {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-.item-count-tag {
-    padding: 4px 8px;
-    background: var(--background-inverted-brand-secondary, #F6F2FB);
-    border-radius: 360px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2px;
-}
+    .list-name {
+        color: var(--text-default, #444955);
+        font-size: 18px;
+        font-family: Quicksand;
+        font-weight: 700;
+        text-transform: capitalize;
+        line-height: 24px;
+    }
 
-.count-number {
-    color: var(--text-brand-secondary, #A07AD9);
-    font-size: 12px;
-    font-family: Nunito;
-    font-weight: 700;
-    line-height: 16px;
-    text-align: center;
-}
+    .item-count-tag {
+        padding: 4px 8px;
+        background: var(--background-inverted-brand-secondary, #F6F2FB);
+        border-radius: 360px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2px;
+    }
 
-.count-text {
-    color: var(--text-brand-secondary, #A07AD9);
-    font-size: 12px;
-    font-family: Nunito;
-    font-weight: 700;
-    line-height: 16px;
-    text-align: center;
-}
+    .count-number {
+        color: var(--text-brand-secondary, #A07AD9);
+        font-size: 12px;
+        font-family: Nunito;
+        font-weight: 700;
+        line-height: 16px;
+        text-align: center;
+    }
 
-.chevron-icon {
-    width: 24px;
-    height: 24px;
-} */
+    .count-text {
+        color: var(--text-brand-secondary, #A07AD9);
+        font-size: 12px;
+        font-family: Nunito;
+        font-weight: 700;
+        line-height: 16px;
+        text-align: center;
+    }
+
+    .chevron-icon {
+        width: 24px;
+        height: 24px;
+    } */
 </style>
