@@ -62,7 +62,12 @@
         {title: "Avg per day", amount: avgPerDay},
         {title: "Avg per Receipt", amount: avgPerReceipt},
         {title: "Highest Receipt", amount: data.highestReceiptCost, date: "12/04/2025"},
-        {title: "Lowest Receipt", amount: data.lowestReceiptCost, date: "12/08/2025"}
+        {title: "Lowest Receipt", amount: data.lowestReceiptCost, date: "12/08/2025"},
+
+        // amount toss and chomp
+        {title: "Total Toss", count: 10},
+        {title: "Total Chomp", count: 100}
+
     ]);
 
     let categories= $state([
@@ -73,16 +78,18 @@
 </script>
 <div class="metric-screen">
     <PageHeader title="Metrics" />        
+    
+    <div class="date">
+        <button>
+            <ChevronLeft/>
+        </button>
+        <span class="title-lg">December</span>
+        <button style="opacity: 0;">
+            <ChevronRight/>
+        </button>
+    </div>
+
     <div class="data">
-        <div class="date">
-            <button>
-                <ChevronLeft/>
-            </button>
-            <span class="title-lg">December</span>
-            <button style="opacity: 0;">
-                <ChevronRight/>
-            </button>
-        </div>
         
         <section class="summary">
             <span class="title-md">Summary</span>
@@ -159,10 +166,11 @@
         flex-direction: column;
         padding-bottom: 1rem;
         align-self: center;
-        gap: 24px;
+        gap: 0.8rem;
     }
 
     .date {
+        margin-top: 1rem;
         display: flex;
         justify-content: space-between;
     }

@@ -31,8 +31,9 @@
   
     /* sizes */
     .btn-md{ 
+      width: 100%;
       height: 40px; 
-      padding: var(--spacing-none) var(--spacing-s); 
+      /* padding: var(--spacing-none) var(--spacing-s);  */
     }
   
     .btn-lg{ 

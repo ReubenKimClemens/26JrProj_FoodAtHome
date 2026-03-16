@@ -38,6 +38,7 @@
 
     .btn-group-2-column {
         display: flex;
+        width: 100%;
         gap: var(--spacing-xs);
     }
 

@@ -106,7 +106,7 @@
     }
 
 /* Shopping Lists */
-.shopping-lists-content {
+/* .shopping-lists-content {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -170,5 +170,5 @@
 .chevron-icon {
     width: 24px;
     height: 24px;
-}
+} */
 </style>

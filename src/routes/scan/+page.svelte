@@ -138,9 +138,9 @@
     }
 
     .content {
-        height: calc(100vh - 74px);
+        height: calc(100vh - 200px);
 
-        padding: var(--spacing-s);
+        /* padding: var(--spacing-s); */
         /* margin-top: var(--spacing-md); */
         display: flex;
         flex-direction: column;
@@ -176,6 +176,7 @@
         display: flex;
         flex-direction: column;
         gap: var(--spacing-s);
+        width: 100%;
     }
 
     .scan-camera {
