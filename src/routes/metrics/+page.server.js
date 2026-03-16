@@ -6,7 +6,8 @@ import {
     NumberOfReceipts,
     TotalSpent,
     HighestReceiptCost,
-    LowestReceiptCost
+    LowestReceiptCost,
+    TopCategories
 } from '$lib/api/metric.js';
 import { supabase } from '$lib/supabaseClient';
 
@@ -19,8 +20,9 @@ export async function load({ locals }) {
     const totalSpent = await TotalSpent(userId);
     const highestReceiptCost = await HighestReceiptCost(userId);
     const lowestReceiptCost = await LowestReceiptCost(userId);
+    const topCategories = await TopCategories(userId);
     
     return {
-        activeBudget, numberOfItems, numberOfReceipts, totalSpent, highestReceiptCost, lowestReceiptCost
+        activeBudget, numberOfItems, numberOfReceipts, totalSpent, highestReceiptCost, lowestReceiptCost, topCategories
     };
 }

@@ -132,7 +132,7 @@
         <section class="top-categories">
     
             <span class="title-md">Top Categories</span>
-            <TopCategories categories={categories} />
+            <TopCategories categories={data.topCategories} />
         </section>
     </div>
 

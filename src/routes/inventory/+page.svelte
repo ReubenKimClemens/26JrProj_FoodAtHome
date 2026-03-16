@@ -12,7 +12,10 @@
     import SearchBar from '$lib/components/SearchBar.svelte';
     import Toast from '$lib/components/Toast.svelte';
     import { getDaysSinceAdded, deleteReceiptItem } from '$lib/api/receipts.js';
+    import { incrementChomped, incrementTossed } from '$lib/api/metric.js';
     import { page } from '$app/stores';
+
+    const userId = '5a9e584a-69a4-476d-8c23-d8d403b87bec';
 
     $effect(() => {
         if ($page.state?.showToast) {
@@ -57,12 +60,47 @@
             allItems = allItems.filter(item => item.id !== itemId);
         } catch (error) {
             console.error('Failed to delete:', error);
-        } 
+        }
     }
-    
+
+    async function handleToss(item) {
+        try {
+            if (item.quantity <= 1) {
+                await deleteReceiptItem(item.id);
+                allItems = allItems.filter(i => i.id !== item.id);
+            } else {
+                const newQty = item.quantity - 1;
+                await updateReceiptItem(item.id, 'quantity', newQty);
+                allItems = allItems.map(i =>
+                    i.id === item.id ? { ...i, quantity: newQty } : i
+                );
+            }
+            await incrementTossed(userId);
+        } catch (error) {
+            console.error('Failed to toss:', error);
+        }
+    }
+
+    async function handleChomp(item) {
+        try {
+            if (item.quantity <= 1) {
+                await deleteReceiptItem(item.id);
+                allItems = allItems.filter(i => i.id !== item.id);
+            } else {
+                const newQty = item.quantity - 1;
+                await updateReceiptItem(item.id, 'quantity', newQty);
+                allItems = allItems.map(i =>
+                    i.id === item.id ? { ...i, quantity: newQty } : i
+                );
+            }
+            await incrementChomped(userId);
+        } catch (error) {
+            console.error('Failed to chomp:', error);
+        }
+    }
+
     async function handleAdd(itemData) {
     try {
-        const userId = '5a9e584a-69a4-476d-8c23-d8d403b87bec';
         const newItem = await addReceiptItem(userId, itemData);
         allItems = [...allItems, newItem];
         lastAddedItem = newItem;
@@ -99,9 +137,12 @@
                     ? itemData.price * itemData.quantity
                     : null
             );
+            if (itemData.date) {
+                await updateReceiptItem(editingItem.id, 'created_at', new Date(itemData.date).toISOString());
+            }
 
-            allItems = allItems.map(item => 
-                item.id === editingItem.id 
+            allItems = allItems.map(item =>
+                item.id === editingItem.id
                     ? {
                         ...item,
                         item_name: itemData.itemName,
@@ -109,7 +150,11 @@
                         unit_name: itemData.unit,
                         category: itemData.category,
                         unit_price: itemData.price ?? null,
-                        notes: itemData.note || null
+                        total_price: itemData.price != null && itemData.quantity
+                            ? itemData.price * itemData.quantity
+                            : null,
+                        notes: itemData.note || null,
+                        created_at: itemData.date ? new Date(itemData.date).toISOString() : item.created_at
                     }
                     : item
             );
@@ -164,8 +209,8 @@
                 quantity={item.quantity}
                 category={item.category || 'Uncategorized'}
                 addedDaysAgo={getDaysSinceAdded(item.created_at)}
-                onToss={() => handleDelete(item.id)}
-                onChomp={() => handleDelete(item.id)}
+                onToss={() => handleToss(item)}
+                onChomp={() => handleChomp(item)}
                 onTap={() => openEditModal(item)}
             />
         {/each}

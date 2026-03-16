@@ -80,3 +80,36 @@ export async function LowestReceiptCost(userId) {
     }
     return data[0]?.total_amount || null;
 }
+
+// Get count and total price for each category
+export async function TopCategories(userId) {
+    const { data, error } = await supabase
+        .from('receipt_items')
+        .select('category, total_price')
+        .eq('user_id', userId);
+
+    if (error) {
+        console.error('Error fetching category breakdown:', error);
+        return null;
+    }
+
+    const categoryMap = {};
+    const totalItems = data.length;
+
+    data.forEach((item) => {
+        const name = item.category || 'Uncategorized';
+        if (!categoryMap[name]) {
+            categoryMap[name] = { name, count: 0, totalPrice: 0 };
+        }
+        categoryMap[name].count += 1;
+        categoryMap[name].totalPrice += item.total_price || 0;
+    });
+
+    return Object.values(categoryMap)
+        .map((cat) => ({
+            name: cat.name,
+            percentage: totalItems > 0 ? parseFloat(((cat.count / totalItems) * 100).toFixed(1)) : 0,
+            totalPrice: cat.totalPrice
+        }))
+        .sort((a, b) => b.totalPrice - a.totalPrice);
+}
