@@ -11,10 +11,10 @@
     ] } = $props();
     
     const total = $derived(categories.reduce((sum, cat) => sum + cat.amount, 0));
+    const useFloatingLabels = $derived(categories.length <= 5);
     
     let viewMode = $state('pie'); 
     
-    // Calculate pie chart segments
     const pieSegments = $derived.by(() => {
         let cumulativePercent = 0;
         return categories.map(cat => {
@@ -37,9 +37,7 @@
     function createPieSlice(startPercent, endPercent) {
         const [startX, startY] = getCoordinatesForPercent(startPercent / 100);
         const [endX, endY] = getCoordinatesForPercent(endPercent / 100);
-        
         const largeArcFlag = endPercent - startPercent > 50 ? 1 : 0;
-        
         return [
             `M 0 0`,
             `L ${startX} ${startY}`,
@@ -71,16 +69,17 @@
 
     {#if viewMode === 'pie'}
         <div class="pie-view">
-            <div class="donut-container">
+            <div class="donut-container" class:large={useFloatingLabels}>
                 <svg class="donut-chart" viewBox="-1.2 -1.2 2.4 2.4" style="transform: rotate(-90deg)">
                     {#each pieSegments as segment}
                         <path
                             d={createPieSlice(segment.startPercent, segment.endPercent)}
                             fill={segment.color}
+                            stroke={segment.color}
+                            stroke-width="0.01"
                             class="donut-slice"
                         />
                     {/each}
-                    <!-- Inner white circle to create donut effect -->
                     <circle cx="0" cy="0" r="0.6" fill="white" />
                 </svg>
                 
@@ -88,29 +87,43 @@
                     <span class="total-amount title-lg">${total.toFixed(2)}</span>
                 </div>
                 
-                <!-- Labels -->
-                {#each pieSegments as segment, i}
-                    {@const midPercent = (segment.startPercent + segment.endPercent) / 2}
-                    {@const angle = (midPercent / 100) * 360 - 90}
-                    {@const radians = (angle * Math.PI) / 180}
-                    {@const labelRadius = 140}
-                    {@const labelX = Math.cos(radians) * labelRadius}
-                    {@const labelY = Math.sin(radians) * labelRadius}
-                    
-                    <div 
-                        class="label-group" 
-                        style="
-                            left: calc(50% + {labelX}px);
-                            top: calc(50% + {labelY}px);
-                            transform: translate(-50%, -50%);
-                        "
-                    >
-                        <span class="label-name body-sm">{segment.name}</span>
-                        <span class="label-percent body-sm-bold" style="color: {segment.color}">{segment.percentage}%</span>
-                        <span class="label-amount body-sm text-secondary">${segment.amount.toFixed(2)}</span>
-                    </div>
-                {/each}
+                {#if useFloatingLabels}
+                    {#each pieSegments as segment, i}
+                        {@const midPercent = (segment.startPercent + segment.endPercent) / 2}
+                        {@const angle = (midPercent / 100) * 360 - 90}
+                        {@const radians = (angle * Math.PI) / 180}
+                        {@const labelRadius = 140}
+                        {@const labelX = Math.cos(radians) * labelRadius}
+                        {@const labelY = Math.sin(radians) * labelRadius}
+                        
+                        <div 
+                            class="label-group" 
+                            style="
+                                left: calc(50% + {labelX}px);
+                                top: calc(50% + {labelY}px);
+                                transform: translate(-50%, -50%);
+                            "
+                        >
+                            <span class="label-name body-sm">{segment.name}</span>
+                            <span class="label-percent body-sm-bold" style="color: {segment.color}">{segment.percentage}%</span>
+                            <span class="label-amount body-sm text-secondary">${segment.amount.toFixed(2)}</span>
+                        </div>
+                    {/each}
+                {/if}
             </div>
+
+            {#if !useFloatingLabels}
+                <div class="legend">
+                    {#each pieSegments as segment}
+                        <div class="legend-item">
+                            <span class="legend-dot" style="background: {segment.color}"></span>
+                            <span class="legend-name body-sm">{segment.name}</span>
+                            <span class="legend-percent body-sm-bold" style="color: {segment.color}">{segment.percentage}%</span>
+                            <span class="legend-amount body-sm">${segment.amount.toFixed(2)}</span>
+                        </div>
+                    {/each}
+                </div>
+            {/if}
         </div>
     {/if}
     
@@ -131,6 +144,7 @@
         </div>
     {/if}
 </div>
+
 <style>
     .container {
         display: flex;
@@ -156,22 +170,33 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 24px;
         padding: 20px 0;
     }
 
     .donut-container {
         position: relative;
-        width: 340px;
-        height: 340px;
+        width: 220px;
+        height: 220px;
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .donut-container.large {
+        width: 340px;
+        height: 340px;
     }
 
     .donut-chart {
         width: 240px;
         height: 240px;
         position: absolute;
+    }
+
+    .donut-container.large .donut-chart {
+        width: 240px;
+        height: 240px;
     }
 
     .donut-slice {
@@ -225,6 +250,47 @@
         color: var(--text-secondary, #737780);
     }
 
+    /* Legend */
+    .legend {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .legend-name {
+        flex: 1;
+        color: var(--text-default, #444955);
+        font-family: 'Nunito', sans-serif;
+    }
+
+    .legend-percent {
+        font-family: 'Nunito', sans-serif;
+        min-width: 40px;
+        text-align: right;
+    }
+
+    .legend-amount {
+        color: var(--text-secondary, #737780);
+        font-family: 'Nunito', sans-serif;
+        min-width: 56px;
+        text-align: right;
+    }
+
+    /* Progress bar view */
     .list {
         display: flex;
         background-color: white;

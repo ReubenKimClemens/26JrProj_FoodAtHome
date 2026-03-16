@@ -29,7 +29,6 @@
   let comparisonText = $derived(lastMonthSpent ? `${diffPercent.toFixed(1)}% ${diff > 0 ? 'more' : 'less'} than last month` : `${percentage}%`);
   
   let isOverBudget = $derived(spent > budget);
-
     const currencyFormatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -176,7 +175,7 @@
     </div>
 
     <button class="set-budget-link" onclick={openModal}>
-      Set new monthly budget
+      Set New Monthly Budget
     </button>
   </div>
 </section>
@@ -311,15 +310,6 @@
   }
 
   .percentage-text {
-    /* position: absolute;
-    left: 0;
-    top: 24px;
-    font-size: 12px;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 300;
-    line-height: 8px;
-    padding-top: 0.5rem; */
-
     position: absolute;
     top: 30px;
 
@@ -419,11 +409,6 @@
     text-align: left;
   }
 
-    .input-error {
-    border: 1.5px solid var(--text-danger);
-    background-color: var(--bg-danger);
-  }
-
   .error-message {
     font-family: "Nunito", sans-serif;
     min-height: 18px;
@@ -431,12 +416,4 @@
     font-size: 12px;
     line-height: 1.4;
   }
-
-  .form-error {
-    margin: 0;
-    color: var(--text-danger);
-    text-align: center;
-  }
-
-  .required { color: var(--text-danger); }
 </style>

@@ -17,14 +17,14 @@
 
     const userId = '5a9e584a-69a4-476d-8c23-d8d403b87bec';
 
-    $effect(() => {
+    let toastShow = $state(false);
+    let lastAddedItem = $state(null);
+
+        $effect(() => {
         if ($page.state?.showToast) {
             toastShow = true;
         }
     });
-
-    let toastShow = $state(false);
-    let lastAddedItem = $state(null);
     
     let { data } = $props();
     let view = $state('list');

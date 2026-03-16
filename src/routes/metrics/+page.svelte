@@ -57,19 +57,13 @@
         {title: "Total Chomp", count: 100},
 
         // for weekly, monthly & yearly
-        {title: "Avg per day", amount: avgPerDay},
+        {title: "Avg per Day", amount: avgPerDay},
         {title: "Avg per Receipt", amount: avgPerReceipt},
         {title: "Highest Receipt", amount: data.highestReceiptCost, date: "12/04/2025"},
         {title: "Lowest Receipt", amount: data.lowestReceiptCost, date: "12/08/2025"},
     ]);
-
-    let categories= $state([
-        { name: 'Produce', amount: 50.76, percentage: 32, color: getCategoryColor('Produce').dark },
-        { name: 'Protein', amount: 39.65, percentage: 25, color: getCategoryColor('Protein').dark },
-        { name: 'Dairy', amount: 35.00, percentage: 22, color: getCategoryColor('Dairy').dark }
-    ]);
-
 </script>
+
 <div class="metric-screen">
     <PageHeader title="Metrics" />        
     
