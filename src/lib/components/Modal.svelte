@@ -354,7 +354,7 @@
       </div>
       
       {#if isEditMode && onDelete}
-        <Button text="Toss Item" variant="danger" onclick={() => { open = false; onDelete(); }} />      {/if}
+        <Button text="Delete" variant="danger" onclick={() => { open = false; onDelete(); }} />      {/if}
     </div>
   </div>
 {/if}

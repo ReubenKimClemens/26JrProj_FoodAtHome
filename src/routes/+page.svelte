@@ -47,7 +47,7 @@
         />
     
         <!-- Inventory -->
-        <SectionCard title="inventory" linkText="View all" linkHref="/inventory">
+        <SectionCard title="inventory" linkText="View All" linkHref="/inventory">
         {#snippet content()}
             <div class="inventory-content">
                 {#each inventoryRows as row}
@@ -63,7 +63,7 @@
         </SectionCard>
     
         <!-- Shopping Lists -->
-        <!-- <SectionCard title="shopping lists" linkText="View all" linkHref="/shopping-lists">
+        <!-- <SectionCard title="shopping lists" linkText="View All" linkHref="/shopping-lists">
         {#snippet content()}
             <div class="shopping-lists-content">
                 {#each data.topShoppingLists as list, index}
