@@ -392,7 +392,7 @@ export async function getActiveBudget(userId) {
     .select('*')
     .eq('user_id', userId)
     .eq('active_budget', true)
-    .single();
+    .maybeSingle();
 
   if (error) throw new Error(error.message);
   return data || null;

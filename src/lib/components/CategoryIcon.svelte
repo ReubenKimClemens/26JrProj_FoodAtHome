@@ -113,12 +113,19 @@
     }
 
     .category-icons-container.wrap {
-      display: flex;
+      /* display: flex;
       justify-content: center;
+      align-items: center;
       height: 100%;
       flex-wrap: wrap;
       overflow: visible;
-      gap: 8px;
-      padding: 0;
+      gap: 1rem;
+      padding: 0; */
+
+      display: grid;
+      grid-template-columns: repeat(6, 1fr );
+      overflow: visible;
+
+      
     }
 </style>

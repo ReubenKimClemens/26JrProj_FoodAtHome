@@ -138,9 +138,10 @@
     }
 
     .content {
-        height: calc(100vh - 96px);
-        padding: var(--spacing-s);
-        margin-top: var(--spacing-md);
+        height: calc(100vh - 200px);
+
+        /* padding: var(--spacing-s); */
+        /* margin-top: var(--spacing-md); */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -175,6 +176,7 @@
         display: flex;
         flex-direction: column;
         gap: var(--spacing-s);
+        width: 100%;
     }
 
     .scan-camera {

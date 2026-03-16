@@ -13,6 +13,8 @@
     let date = $state('2025-12-09');
     let userId = '5a9e584a-69a4-476d-8c23-d8d403b87bec';
 
+    import { onMount } from 'svelte';
+
     let totalPrice = $derived(() => {
        const total = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
        return `$${total.toFixed(2)}`;

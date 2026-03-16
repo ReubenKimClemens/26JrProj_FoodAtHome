@@ -30,7 +30,7 @@
     },
     { 
       id: 'Scan', 
-      label: 'Scan', 
+      label: 'Receipt', 
       path: '/scan',
       icon: receipt 
     },
