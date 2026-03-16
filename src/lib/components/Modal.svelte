@@ -56,6 +56,7 @@
     { id: 'Frozen', label: 'Frozen', icon: categoryFrozen, color: getCategoryColor('Frozen').light },
     { id: 'Misc', label: 'Misc', icon: categoryMisc, color: getCategoryColor('Misc').light },
   ];
+  
   const currencyFormatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
