@@ -14,6 +14,21 @@
     let remaining = $state(budget - spent);
     let percentage = $state(Math.round((spent / budget) * 100));
 
+    const inventoryRows = [
+        { count: 'totalCount', label: 'Total Items', class: 'total-value' },
+        { count: 'proteinCount', label: 'Protein' },
+        { count: 'produceCount', label: 'Produce' },
+        { count: 'breadCount', label: 'Bread' },
+        { count: 'dairyCount', label: 'Dairy' },
+        { count: 'drinksCount', label: 'Drinks' },
+        { count: 'snacksCount', label: 'Snacks' },
+        { count: 'pantryCount', label: 'Pantry' },
+        { count: 'saucesCount', label: 'Sauces' },
+        { count: 'spicesCount', label: 'Spices' },
+        { count: 'leftoverCount', label: 'Leftover' },
+        { count: 'frozenCount', label: 'Frozen' },
+        { count: 'miscCount', label: 'Misc' },
+        ]
 </script>
 
 <!-- Good Morning/Afternoon/Evening Cronch! -->
@@ -35,19 +50,14 @@
         <SectionCard title="inventory" linkText="View all" linkHref="/inventory">
         {#snippet content()}
             <div class="inventory-content">
-                <div class="inventory-row body-md-bold">
-                    <span class="total-label">total Items</span>
-                    <span class="total-value">{data.totalCount}</span>
+                {#each inventoryRows as row}
+                    <div class="inventory-row body-md{row.count === 'totalCount' ? '-bold' : ''}">
+                        <span class="{row.count === 'totalCount' ? 'total-label' : 'item-label'}">{row.label}</span>
+                        <span class="{row.count === 'totalCount' ? 'total-value' : 'item-value'}">{data[row.count]}</span>
+                    </div>
+                    <div class="line"></div>
+                {/each}
                 </div>
-                <div class="inventory-row body-md">
-                    <span class="item-label">Protein</span>
-                    <span class="item-value">{data.proteinCount}</span>
-                </div>
-                <div class="inventory-row body-md">
-                    <span class="item-label">Miscellaneous</span>
-                    <span class="item-value">{data.otherCount}</span>
-                </div>
-            </div>
         {/snippet}
         </SectionCard>
     
@@ -105,6 +115,20 @@
     text-transform: capitalize;
     }
 
+    .line {
+        height: 1px;
+        margin: 3px 0;
+        background: var(--text-secondary);
+        width: 100%;
+    }
+/* .more {
+    justify-content: center;
+    color: var(--text-brand-secondary);   
+
+    a:visited {
+        color: var(--text-brand-secondary);
+    }
+} */
 /* Shopping Lists */
 /* .shopping-lists-content {
     width: 100%;

@@ -58,16 +58,15 @@
         {title: "Total Items", count: data.numberOfItems},
         {title: "Total Receipts", count: data.numberOfReceipts},
 
+        // amount toss and chomp
+        {title: "Total Toss", count: 10},
+        {title: "Total Chomp", count: 100},
+
         // for weekly, monthly & yearly
         {title: "Avg per day", amount: avgPerDay},
         {title: "Avg per Receipt", amount: avgPerReceipt},
         {title: "Highest Receipt", amount: data.highestReceiptCost, date: "12/04/2025"},
         {title: "Lowest Receipt", amount: data.lowestReceiptCost, date: "12/08/2025"},
-
-        // amount toss and chomp
-        {title: "Total Toss", count: 10},
-        {title: "Total Chomp", count: 100}
-
     ]);
 
     let categories= $state([

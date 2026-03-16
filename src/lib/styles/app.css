@@ -55,6 +55,15 @@ html {
   line-height: 24px;
 }
 
+.body-lg-bold {
+  font-family: Nunito;
+  font-size: 1.25rem; /* 20px */
+  font-weight: 700; 
+  line-height: 24px;
+}
+
+
+
 .body-md {
   font-family: Nunito;
   font-size: 1rem; /* 16px */
