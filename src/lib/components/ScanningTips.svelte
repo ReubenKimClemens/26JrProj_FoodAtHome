@@ -93,6 +93,7 @@
       text-transform: capitalize;
       line-height: 24px;
       margin: 0;
+      text-wrap: balance;
     }
   
     .tip-description {
@@ -102,5 +103,6 @@
       font-weight: 500;
       line-height: 16px;
       margin: 0;
+      text-wrap: pretty;
     }
 </style>

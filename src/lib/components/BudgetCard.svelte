@@ -7,24 +7,88 @@
   import ProgressBar from '$lib/components/ProgressBar.svelte';
   import Button from '$lib/components/Button.svelte';
   import InputField from '$lib/components/InputField.svelte';
+  import Page from '../../routes/+page.svelte';
 
   let showModal = $state(false);
   let budgetInput = $state('400');
+  let budgetError = $state('');  
+  let formError = $state('');
 
   let {
     budgetId = null,
     spent = 42.18,
     showTitle = true,
-    budget = $bindable(400)
+    budget = $bindable(400),
+    lastMonthSpent = 300
   } = $props();
 
   let remaining = $derived(budget - spent);
   let percentage = $derived(Math.round((spent / budget) * 100));
+  let diff = $derived(spent - lastMonthSpent);
+  let diffPercent = $derived(lastMonthSpent ? (Math.abs(diff) / lastMonthSpent) * 100 : 0);
+  let comparisonText = $derived(lastMonthSpent ? `${diffPercent.toFixed(1)}% ${diff > 0 ? 'more' : 'less'} than last month` : `${percentage}%`);
   
   let isOverBudget = $derived(spent > budget);
+
+    const currencyFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+
+  function validateBudget(showRequired = false) {
+    if (budget === null || budget === '') {
+      budgetError = showRequired ? 'Budget is required.' : '';
+      return false;
+    }
+
+    if (!Number.isFinite(Number(budget)) || Number(budget) < 0) {
+      budgetError = 'Please enter a valid budget.';
+      return false;
+    }
+
+    if (Number(budget) > 99999) {
+      budgetError = 'We only accept budget up to $99,999';
+      return false;
+    }
+
+    budgetError = '';
+    return true;
+  }
+
+  function formatBudget(value) {
+    return value === null || Number.isNaN(value) ? '' : currencyFormatter.format(value);
+  }
+
+  function normalizeBudgetInput(value) {
+    const digitsAndDotOnly = value.replace(/[^\d.]/g, '');
+    const [whole = '', ...fractionParts] = digitsAndDotOnly.split('.');
+    const limitedWhole = whole.slice(0, 8);
+    if (fractionParts.length === 0) return limitedWhole;
+    return `${limitedWhole}.${fractionParts.join('').slice(0, 2)}`;
+  }
+
+  function handleBudgetInput(event) {
+    const rawValue = event.currentTarget.value;
+    if (/[^\d.$]/.test(rawValue)) {
+      budgetInput = rawValue;
+      budget = null;
+      budgetError = 'Please enter a valid number.';
+      return;
+  }
+  const normalized = normalizeBudgetInput(rawValue);
+  budgetInput = normalized;
+  budget = normalized === '' ? null : Number(normalized);
+  if (budgetError) validateBudget(true);
+  }
+
+  function handleBudgetFocus() {
+    budgetInput = budget === null || Number.isNaN(budget) ? '' : budget.toFixed(2);
+  }
   
   function openModal() {
-    budgetInput = budget.toString();
+    budgetInput = formatBudget(budget);
     showModal = true;
   }
 
@@ -38,17 +102,22 @@
     }
   }
 
+  function validateForm(showRequired = false) {
+    return validateBudget(showRequired);
+  }
+
   async function handleConfirm() {
     const newAmount = parseFloat(budgetInput.replace(/[$,]/g, ''));
   
-    if (isNaN(newAmount) || newAmount <= 0) {
-      alert('Please enter a valid budget amount');
+    if (isNaN(newAmount) || newAmount <= 0 || !validateForm(true)) {
+      // alert('Please enter a valid budget amount');
+      formError = "Please enter a valid budget amount.";
       return;
     }
 
     if (budgetId !== null) {
       try {
-        await updateBudgetAmount(budgetId, budgetInput);
+        await updateBudgetAmount(budgetId, newAmount);
         budget = newAmount;
       } catch (error) {
         console.error('Error updating budget amount:', error);
@@ -84,8 +153,8 @@
           <div class="spent-amount" style="color: {isOverBudget ? '#FF9040' : '#0FA376'}">
             ${spent.toFixed(2)} spent
           </div>
-          <div class="percentage-text" style="color: {isOverBudget ? '#FF9040' : '#0FA376'}">
-            {percentage}%
+          <div class="percentage-text body-xsm" style="color: {isOverBudget ? '#FF9040' : '#0FA376'}">
+            {comparisonText}
           </div>
         </div>
         <div class="budget-total">
@@ -137,7 +206,15 @@
           bind:value={budgetInput}
           placeholder="$0.00"
           type="text"
+          inputmode="decimal"
+          oninput={handleBudgetInput}
+          onfocus={handleBudgetFocus}
+          class="input {budgetError ? 'input-error' : ''}"
+          aria-invalid={budgetError ? 'true' : 'false'}
+          aria-describedby="budget-error"
         />
+        <span class="error-message" id="budget-error" role="alert">{budgetError}</span>
+
       </div>
 
       <Button text="Confirm" onclick={handleConfirm} />
@@ -234,13 +311,18 @@
   }
 
   .percentage-text {
-    position: absolute;
+    /* position: absolute;
     left: 0;
     top: 24px;
-    font-size: 14px;
+    font-size: 12px;
     font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    line-height: 16px;
+    font-weight: 300;
+    line-height: 8px;
+    padding-top: 0.5rem; */
+
+    position: absolute;
+    top: 30px;
+
   }
 
   .spent-text {
@@ -336,4 +418,25 @@
     line-height: 16px;
     text-align: left;
   }
+
+    .input-error {
+    border: 1.5px solid var(--text-danger);
+    background-color: var(--bg-danger);
+  }
+
+  .error-message {
+    font-family: "Nunito", sans-serif;
+    min-height: 18px;
+    color: var(--text-danger);
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .form-error {
+    margin: 0;
+    color: var(--text-danger);
+    text-align: center;
+  }
+
+  .required { color: var(--text-danger); }
 </style>
