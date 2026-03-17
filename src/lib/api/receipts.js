@@ -410,3 +410,26 @@ export async function updateBudgetAmount(budgetId, newAmount) {
   if (error) throw new Error(error.message);
   return data;
 }
+
+export async function getUserTotalAmount(userId) {
+  const { data, error } = await supabase
+    .from('receipt_items')
+    .select('unit_price')
+    .eq('user_id', userId);
+
+  if (error) throw error;
+
+  const total = data.reduce((sum, item) => sum + item.unit_price, 0);
+  return total;
+}
+
+/* update spent amount */
+export async function updateBudgetSpent(userId) {
+  const totalSpent = await getUserTotalAmount(userId);
+  const { data, error } = await supabase
+    .from('budgets')
+    .update({ ['total_spent']: totalSpent })
+    .eq('active_budget', true)
+    .select()
+    .single();
+}

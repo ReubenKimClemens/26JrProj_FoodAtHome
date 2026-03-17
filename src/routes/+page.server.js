@@ -3,12 +3,15 @@ import {
     getOtherCategoriesCount, 
     getShoppingListCount,  
     getTopShoppingLists, 
-    getActiveBudget 
+    getActiveBudget,
+    updateBudgetSpent
 } from '$lib/api/receipts.js';
 import { supabase } from '$lib/supabaseClient';
 
 export async function load({ locals }) {
     const userId = locals.user?.id || '5a9e584a-69a4-476d-8c23-d8d403b87bec';
+
+    updateBudgetSpent(userId);
 
     // Get top 3 shopping lists
     const { data: topShopLists } = await supabase
@@ -33,6 +36,7 @@ export async function load({ locals }) {
         frozenCount,
         miscCount,
         activeBudget
+
     ] = await Promise.all([
         getItemCategoryCount(userId, 'Protein'),
         getItemCategoryCount(userId, 'Produce'),
