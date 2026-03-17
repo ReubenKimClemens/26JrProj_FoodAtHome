@@ -11,7 +11,9 @@
     import BarGraphYearly from '$lib/assets/alpha_metrics_yearly.webp';
     import MonthlyChart from '$lib/assets/metrics_monthly_budget.svg';
     import BudgetHistory from '$lib/assets/metrics_budget_history.svg';
-    import AmountSpentPerDay from '$lib/assets/amount_spent_per_day_graph_w1.svg'
+    import AmountSpentPerDay from '$lib/assets/amount_spent_per_day_graph_w1.svg';
+    import DecemberSpending from '$lib/components/AmountSpent.svelte';
+
     import { MoveLeft } from 'lucide-svelte';
     import { MoveRight } from 'lucide-svelte';
     import { ChevronLeft } from 'lucide-svelte';
@@ -96,19 +98,22 @@
                     <MetricData label={metric.title} amount={metric.amount} count={metric.count} date={metric.date} />
                 {/each}
             </div>
+
+            
             <!-- <img src={MonthlyChart} alt="Bar Graph Showing {MonthlyChart} Metrics" /> -->
         </section>
 
         <section class="budget-history">
             <span class="title-md">Amount Spent Per Day</span>
-            <img
+            <!-- <img
                 src={AmountSpentPerDay}
                 alt="Amount spent per day graph"
                 class="chart-image"
                 width="100%"
                 loading="lazy"
                 decoding="async"
-            />
+            /> -->
+            <DecemberSpending />
         </section>
     
         <section class="budget-history">
