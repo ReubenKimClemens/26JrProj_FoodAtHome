@@ -11,7 +11,7 @@
     import BarGraphYearly from '$lib/assets/alpha_metrics_yearly.webp';
     import MonthlyChart from '$lib/assets/metrics_monthly_budget.svg';
     import BudgetHistory from '$lib/assets/metrics_budget_history.svg';
-    import AmountSpentPerDay from '$lib/assets/amount_spent_per_day_graph.svg'
+    import AmountSpentPerDay from '$lib/assets/amount_spent_per_day_graph_w1.svg'
     import { MoveLeft } from 'lucide-svelte';
     import { MoveRight } from 'lucide-svelte';
     import { ChevronLeft } from 'lucide-svelte';
