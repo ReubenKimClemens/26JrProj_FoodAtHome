@@ -1,39 +1,13 @@
 <script>
   const spendingData = [
-    { day: 1, amount: 56.80 },
-    { day: 2, amount: 0 },
-    { day: 3, amount: 0 },
-    { day: 4, amount: 32.24 },
-    { day: 5, amount: 27.40 },
-    { day: 6, amount: 0 },
-    { day: 7, amount: 42.18 },
-    { day: 8, amount: 0 },
-    { day: 9, amount: 81.67 },
-    { day: 10, amount: 0 },
-    { day: 11, amount: 0 },
-    { day: 12, amount: 0 },
-    { day: 13, amount: 0 },
-    { day: 14, amount: 55.60 },
-    { day: 15, amount: 0 },
-    { day: 16, amount: 0 },
-    { day: 17, amount: 60.00 },
-    { day: 18, amount: 64.82 },
-    { day: 19, amount: 29.0 },
-    { day: 20, amount: 0 },
-    { day: 21, amount: 0 },
-    { day: 22, amount: 80.90 },
-    { day: 23, amount: 0 },
-    { day: 24, amount: 0 },
-    { day: 25, amount: 45.7 },
-    { day: 26, amount: 10.27 },
-    { day: 27, amount: 0 },
-    { day: 28, amount: 61.78 },
-    { day: 29, amount: 27.45 },
-    { day: 30, amount: 0 },
-    { day: 31, amount: 0 },
+    { month: 'Aug', amount: 169.50},
+    { month: 'Sep', amount: 220.73 },
+    { month: 'Oct', amount: 550 },
+    { month: 'Nov', amount: 250 },
+    { month: 'Dec', amount: 300 },
   ];
 
-  const maxAmount = 90;
+  const maxAmount = 550;
   const chartHeight = 200;
 
   function getBarHeight(amount) {
@@ -46,11 +20,12 @@
 
   <div class="chart-shell">
     <div class="y-axis">
+      <span>$600</span>
+      <span>$500</span>
+      <span>$400</span>
+      <span>$300</span>
+      <span>$200</span>
       <span>$100</span>
-      <span>$80</span>
-      <span>$60</span>
-      <span>$40</span>
-      <span>$20</span>
       <span>$0</span>
     </div>
 
@@ -61,7 +36,7 @@
           {#each spendingData as item}
               <div class="bar-group">
               {#if item.amount > 0}
-                  <div class="amount-label">${item.amount}</div>
+                  <div class="amount-label">${item.amount.toFixed(2)}</div>
               {/if}
               <div
                   class:empty={item.amount === null}
@@ -74,7 +49,7 @@
 
           <div class="x-labels">
           {#each spendingData as item}
-              <div class="x-label">{item.day}</div>
+              <div class="x-label">{item.month}</div>
           {/each}
           </div>
         </div>
@@ -138,6 +113,7 @@
         text-align: right;
         font-size: 12px;
         color: var(--text-default);
+        transform: translateY(10px);
  
   }
 
