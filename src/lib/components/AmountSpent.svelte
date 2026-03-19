@@ -1,223 +1,213 @@
 <script>
-  const spendingData = [
-    { day: 1, amount: 56.80 },
-    { day: 2, amount: 0 },
-    { day: 3, amount: 0 },
-    { day: 4, amount: 32.24 },
-    { day: 5, amount: 27.40 },
-    { day: 6, amount: 0 },
-    { day: 7, amount: 42.18 },
-    { day: 8, amount: 0 },
-    { day: 9, amount: 81.67 },
-    { day: 10, amount: 0 },
-    { day: 11, amount: 0 },
-    { day: 12, amount: 0 },
-    { day: 13, amount: 0 },
-    { day: 14, amount: 55.60 },
-    { day: 15, amount: 0 },
-    { day: 16, amount: 0 },
-    { day: 17, amount: 60.00 },
-    { day: 18, amount: 64.82 },
-    { day: 19, amount: 29.0 },
-    { day: 20, amount: 0 },
-    { day: 21, amount: 0 },
-    { day: 22, amount: 80.90 },
-    { day: 23, amount: 0 },
-    { day: 24, amount: 0 },
-    { day: 25, amount: 45.7 },
-    { day: 26, amount: 10.27 },
-    { day: 27, amount: 0 },
-    { day: 28, amount: 61.78 },
-    { day: 29, amount: 27.45 },
-    { day: 30, amount: 0 },
-    { day: 31, amount: 0 },
-  ];
+	import { onMount } from 'svelte';
 
-  const maxAmount = 90;
-  const chartHeight = 200;
+	const spendingData = [
+		{ day: 1, amount: 56.8 },
+		{ day: 2, amount: 0 },
+		{ day: 3, amount: 0 },
+		{ day: 4, amount: 32.24 },
+		{ day: 5, amount: 27.4 },
+		{ day: 6, amount: 0 },
+		{ day: 7, amount: 42.18 },
+		{ day: 8, amount: 0 },
+		{ day: 9, amount: 81.67 },
+		{ day: 10, amount: 0 },
+		{ day: 11, amount: 0 },
+		{ day: 12, amount: 0 },
+		{ day: 13, amount: 0 },
+		{ day: 14, amount: 55.6 },
+		{ day: 15, amount: 0 },
+		{ day: 16, amount: 0 },
+		{ day: 17, amount: 60.0 },
+		{ day: 18, amount: 64.82 },
+		{ day: 19, amount: 29.0 },
+		{ day: 20, amount: 0 },
+		{ day: 21, amount: 0 },
+		{ day: 22, amount: 80.9 },
+		{ day: 23, amount: 0 },
+		{ day: 24, amount: 0 },
+		{ day: 25, amount: 45.7 },
+		{ day: 26, amount: 10.27 },
+		{ day: 27, amount: 0 },
+		{ day: 28, amount: 61.78 },
+		{ day: 29, amount: 27.45 },
+		{ day: 30, amount: 0 },
+		{ day: 31, amount: 0 }
+	];
 
-  function getBarHeight(amount) {
-    if (amount === null) return 0;
-    return (amount / maxAmount) * chartHeight;
-  }
+	const BarColor = '#0FA376';
+	const LabelColor = '#737780';
+	const MinChartWidth = 430;
+	const DayWidth = 44;
+	const ChartHeight = 260;
+	const StepSize = 20;
+
+	const labels = spendingData.map((item) => item.day.toString());
+	const amounts = spendingData.map((item) => item.amount);
+
+	const maxAmount = Math.max(...amounts);
+	const yMax = Math.ceil((maxAmount + 0.0001) / StepSize) * StepSize;
+	const chartWidth = Math.max(spendingData.length * DayWidth, MinChartWidth);
+
+	let canvas;
+	let chart;
+
+	onMount(async () => {
+		const { default: Chart } = await import('chart.js/auto');
+		const { default: ChartDataLabels } = await import('chartjs-plugin-datalabels');
+
+		Chart.register(ChartDataLabels);
+
+		chart = new Chart(canvas, {
+			type: 'bar',
+			data: {
+				labels,
+				datasets: [
+					{
+						label: 'Amount Spent',
+						data: amounts,
+						backgroundColor: BarColor,
+						hoverBackgroundColor: BarColor,
+						borderRadius: 4,
+						barThickness: 30,
+						datalabels: {
+							anchor: 'end',
+							align: 'top',
+							offset: 2,
+							color: LabelColor,
+							font: {
+								size: 10,
+								weight: '400'
+							},
+							formatter: (value) => (value > 0 ? `$${Number(value).toFixed(2)}` : '')
+						}
+					}
+				]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				events: [],
+				plugins: {
+					tooltip: {
+						enabled: false
+					},
+					legend: {
+						display: false
+					}
+				},
+				scales: {
+					x: {
+						grid: {
+							display: false
+						},
+						border: {
+							display: true,
+							color: '#111215',
+							z: 1
+						},
+						ticks: {
+							color: LabelColor
+						}
+					},
+					y: {
+						beginAtZero: true,
+						max: yMax,
+						ticks: {
+							stepSize: StepSize,
+							callback: (value) => `$${value}`,
+							color: LabelColor
+						},
+						grid: {
+							color: '#E5E7EB'
+						},
+						border: {
+							display: true,
+							color: '#111215'
+						}
+					}
+				}
+			}
+		});
+
+		return () => {
+			chart?.destroy();
+		};
+	});
 </script>
 
 <div class="spending-card">
+	<div class="chart-scroll">
+		<div class="chart-inner" style={`width: ${chartWidth}px;`}>
+			<canvas bind:this={canvas}></canvas>
+		</div>
+	</div>
 
-  <div class="chart-shell">
-    <div class="y-axis">
-      <span>$100</span>
-      <span>$80</span>
-      <span>$60</span>
-      <span>$40</span>
-      <span>$20</span>
-      <span>$0</span>
-    </div>
-
-    <div class="plot-wrapper">
-      <div class="plot-scroll">
-        <div class="plot-content">
-          <div class="bars">
-          {#each spendingData as item}
-              <div class="bar-group">
-              {#if item.amount > 0}
-                  <div class="amount-label">${item.amount}</div>
-              {/if}
-              <div
-                  class:empty={item.amount === null}
-                  class="bar"
-                  style={`height: ${getBarHeight(item.amount)}px;`}
-              ></div>
-              </div>
-          {/each}
-          </div>
-
-          <div class="x-labels">
-          {#each spendingData as item}
-              <div class="x-label">{item.day}</div>
-          {/each}
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-
-    <div class="legend">
-        <div class="spent"></div>
-        <span class="body-sm">Amount Spent</span>
-    </div>
-
-    </div>
-
-    
+	<div class="legend">
+		<div class="legend-item">
+			<span class="legend-box spent"></span>
+			<span>Amount Spent</span>
+		</div>
+	</div>
+</div>
 
 <style>
+	.spending-card {
+		max-width: 430px;
+		width: 100%;
+		height: 350px;
+		margin: 0 auto;
+		box-sizing: border-box;
+		background: var(--bg-page-secondary);
+		border-radius: var(--radius-rounded);
+		padding: 2rem 1rem 4rem;
+		box-shadow: var(--box-shadow);
+		font-family: 'Nunito';
+	}
 
-    .legend {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-top: 1rem;
-        align-items: center;
-        gap: 0.6rem;
-    }
+	.chart-scroll {
+		width: 100%;
+		overflow-x: auto;
+		overflow-y: hidden;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none;
+	}
 
-    .spent {
-        height: 15px;
-        width: 14px;
-        border-radius: 3px;
-        background: var(--bg-brand-primary);
-    }
-    .spending-card {
-        max-width: 430px;
-        width: 100%;
-        margin: 0 auto;
-        border-radius: 16px;
-        box-sizing: border-box;
-        background: var(--bg-page-secondary);
-        border-radius: var(--radius-rounded);
-        padding: 2rem 16px;
-        box-shadow: var(--box-shadow);
-        font-family: 'Nunito';
-    }
+	.chart-scroll::-webkit-scrollbar {
+		display: none;
+	}
 
-    .chart-shell {
-        display: grid;
-        grid-template-columns: 36px minmax(0, 1fr);
-        gap: 8px;
-        align-items: start;
-    }
+	.chart-inner {
+		height: 260px;
+		min-width: 430px;
+		position: relative;
+	}
 
-    .y-axis {
-        width: 36px;
-        height: 220px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        flex-shrink: 0;
-        text-align: right;
-        font-size: 12px;
-        color: var(--text-default);
- 
-  }
+	.legend {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 20px;
+		margin-top: 12px;
+		padding-bottom: 1rem;
+	}
 
-    .plot-wrapper {
-        min-width: 0;
-        overflow: hidden;
-    }
+	.legend-item {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 12px;
+		color: #444;
+	}
 
-    .plot-scroll {
-        position: relative;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        padding-top: 4px;
-    }
+	.legend-box {
+		width: 14px;
+		height: 14px;
+		border-radius: 4px;
+		display: inline-block;
+	}
 
-    .plot-scroll::-webkit-scrollbar {
-        display: none;
-    }
-
-    .plot-content {
-        min-width: max-content;
-    }
-
-    .bars {
-        height: 220px;
-        display: flex;
-        align-items: flex-end;
-        gap: 8px;
-        padding: 8px 0 0;
-        border-left: 1px solid var(--border-primary);
-        border-bottom: 1px solid var(--border-primary);
-        padding-left: 1rem;
-
-    }
-
-    .bar-group {
-        width: 36px;
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-        flex-shrink: 0;
-        position: relative;
-    }
-
-    .amount-label {
-        position: absolute;
-        top: -20px;  
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 10px;
-        color: var(--text-default);
-        white-space: nowrap;
-    }
-
-    .bar {
-        width: 100%;
-        border-radius: 6px 6px 0 0;
-        background: var(--bg-brand-primary);
-    }
-
-    .bar.empty {
-        background: transparent;
-    }
-
-    .x-labels {
-        display: flex;
-        gap: 8px;
-        padding-top: 8px;
-        margin-left: 1px;
-        padding-left: 1rem;
-    }
-
-    .x-label {
-        width: 36px;
-        flex-shrink: 0;
-        text-align: center;
-        font-size: 12px;
-        color: var(--text-default);
-    }
-
+	.spent {
+		background: var(--text-brand-primary);
+	}
 </style>

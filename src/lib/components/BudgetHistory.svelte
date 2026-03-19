@@ -1,199 +1,215 @@
 <script>
-  const spendingData = [
-    { month: 'Aug', amount: 169.50},
-    { month: 'Sep', amount: 220.73 },
-    { month: 'Oct', amount: 550 },
-    { month: 'Nov', amount: 250 },
-    { month: 'Dec', amount: 300 },
-  ];
+	import { onMount } from 'svelte';
 
-  const maxAmount = 550;
-  const chartHeight = 200;
+	const spendingData = [
+		{ month: 'Aug', amount: 169.5 },
+		{ month: 'Sep', amount: 220.73 },
+		{ month: 'Oct', amount: 549.0 },
+		{ month: 'Nov', amount: 326 },
+		{ month: 'Dec', amount: 295 },
+		{ month: 'Jan', amount: 0 }
+	];
 
-  function getBarHeight(amount) {
-    if (amount === null) return 0;
-    return (amount / maxAmount) * chartHeight;
-  }
+	const goalData = [300, 300, 300, 300, 400];
+
+	const BarColor = '#B5E2D5';
+	const LineColor = '#A07AD9';
+	const LabelColor = '#737780';
+	const MinChartWidth = 430;
+	const BarWidth = 64;
+	const ChartHeight = 260;
+
+	const labels = spendingData.map((item) => item.month);
+	const amounts = spendingData.map((item) => item.amount);
+
+	const spentMax = Math.max(...amounts);
+	const goalMax = Math.max(...goalData);
+	const overallMax = Math.max(spentMax, goalMax);
+	const yMax = Math.ceil((overallMax + 0.0001) / 100) * 100;
+
+	const chartWidth = Math.max(spendingData.length * BarWidth, MinChartWidth);
+
+	let canvas;
+	let chart;
+
+	onMount(async () => {
+		const { default: Chart } = await import('chart.js/auto');
+		const { default: ChartDataLabels } = await import('chartjs-plugin-datalabels');
+
+		Chart.register(ChartDataLabels);
+
+		chart = new Chart(canvas, {
+			type: 'bar',
+			data: {
+				labels,
+				datasets: [
+					{
+						type: 'line',
+						label: 'Budget Goal',
+						data: goalData,
+						borderColor: LineColor,
+						backgroundColor: LineColor,
+						pointBackgroundColor: LineColor,
+						pointBorderColor: LineColor,
+						pointRadius: 2,
+						pointHoverRadius: 2,
+						borderWidth: 3,
+						tension: 0.35,
+						fill: false,
+						datalabels: {
+							display: false
+						}
+					},
+					{
+						type: 'bar',
+						label: 'Amount Spent',
+						data: amounts,
+						backgroundColor: BarColor,
+						hoverBackgroundColor: BarColor,
+						borderRadius: 6,
+						barThickness: 36,
+						order: 2,
+						datalabels: {
+							anchor: 'end',
+							align: 'top',
+							color: LabelColor,
+							font: {
+								size: 10,
+								weight: '400'
+							},
+							formatter: (value) => `$${Number(value).toFixed(2)}`
+						}
+					}
+				]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				events: [],
+				plugins: {
+					tooltip: {
+						enabled: false
+					},
+					legend: {
+						display: false
+					}
+				},
+				scales: {
+					x: {
+						grid: {
+							display: false
+						},
+						border: {
+							display: true,
+                            color: '#111215',
+                            z: 1
+						}
+					},
+					y: {
+						beginAtZero: true,
+						max: yMax,
+						ticks: {
+							stepSize: 100,
+							callback: (value) => `$${value}`
+						},
+						border: {
+							display: true,
+                            color: '#111215'
+						}
+					}
+				}
+			}
+		});
+
+		return () => {
+			chart?.destroy();
+		};
+	});
 </script>
 
 <div class="spending-card">
+	<div class="chart-scroll">
+		<div class="chart-inner" style={`width: ${chartWidth}px;`}>
+			<canvas bind:this={canvas}></canvas>
+		</div>
+	</div>
 
-  <div class="chart-shell">
-    <div class="y-axis">
-      <span>$600</span>
-      <span>$500</span>
-      <span>$400</span>
-      <span>$300</span>
-      <span>$200</span>
-      <span>$100</span>
-      <span>$0</span>
-    </div>
+	<div class="legend">
+		<div class="legend-item">
+			<span class="legend-box spent"></span>
+			<span>Amount Spent</span>
+		</div>
 
-    <div class="plot-wrapper">
-      <div class="plot-scroll">
-        <div class="plot-content">
-          <div class="bars">
-          {#each spendingData as item}
-              <div class="bar-group">
-              {#if item.amount > 0}
-                  <div class="amount-label">${item.amount.toFixed(2)}</div>
-              {/if}
-              <div
-                  class:empty={item.amount === null}
-                  class="bar"
-                  style={`height: ${getBarHeight(item.amount)}px;`}
-              ></div>
-              </div>
-          {/each}
-          </div>
-
-          <div class="x-labels">
-          {#each spendingData as item}
-              <div class="x-label">{item.month}</div>
-          {/each}
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-
-    <div class="legend">
-        <div class="spent"></div>
-        <span class="body-sm">Amount Spent</span>
-    </div>
-
-    </div>
-
-    
+		<div class="legend-item">
+			<span class="legend-line"></span>
+			<span>Budget Goal</span>
+		</div>
+	</div>
+</div>
 
 <style>
+	.spending-card {
+		max-width: 430px;
+		width: 100%;
+		height: 350px;
+		margin: 0 auto;
+		box-sizing: border-box;
+		background: var(--bg-page-secondary);
+		border-radius: var(--radius-rounded);
+		padding: 2rem 1rem 4rem;
+		box-shadow: var(--box-shadow);
+		font-family: 'Nunito';
+	}
 
-    .legend {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-top: 1rem;
-        align-items: center;
-        gap: 0.6rem;
-    }
+	.chart-scroll {
+		width: 100%;
+		overflow-x: auto;
+		overflow-y: hidden;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none;
+	}
 
-    .spent {
-        height: 15px;
-        width: 14px;
-        border-radius: 3px;
-        background: var(--bg-brand-primary);
-    }
-    .spending-card {
-        max-width: 430px;
-        width: 100%;
-        margin: 0 auto;
-        border-radius: 16px;
-        box-sizing: border-box;
-        background: var(--bg-page-secondary);
-        border-radius: var(--radius-rounded);
-        padding: 2rem 16px;
-        box-shadow: var(--box-shadow);
-        font-family: 'Nunito';
-    }
+	.chart-scroll::-webkit-scrollbar {
+		display: none;
+	}
 
-    .chart-shell {
-        display: grid;
-        grid-template-columns: 36px minmax(0, 1fr);
-        gap: 8px;
-        align-items: start;
-    }
+	.chart-inner {
+		height: 260px;
+		min-width: 430px;
+		position: relative;
+	}
 
-    .y-axis {
-        width: 36px;
-        height: 220px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        flex-shrink: 0;
-        text-align: right;
-        font-size: 12px;
-        color: var(--text-default);
-        transform: translateY(10px);
- 
-  }
+	.legend {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 20px;
+		margin-top: 12px;
+		padding-bottom: 1rem;
+	}
 
-    .plot-wrapper {
-        min-width: 0;
-        overflow: hidden;
-    }
+	.legend-item {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 12px;
+		color: var(--text-default);
+	}
 
-    .plot-scroll {
-        position: relative;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        padding-top: 4px;
-    }
+	.legend-box {
+		width: 14px;
+		height: 14px;
+		border-radius: 4px;
+		display: inline-block;
+	}
 
-    .plot-scroll::-webkit-scrollbar {
-        display: none;
-    }
+	.spent {
+		background: #B5E2D5;
+	}
 
-    .plot-content {
-        min-width: max-content;
-    }
-
-    .bars {
-        height: 220px;
-        display: flex;
-        align-items: flex-end;
-        gap: 8px;
-        padding: 8px 0 0;
-        border-left: 1px solid var(--border-primary);
-        border-bottom: 1px solid var(--border-primary);
-        padding-left: 1rem;
-
-    }
-
-    .bar-group {
-        width: 36px;
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-        flex-shrink: 0;
-        position: relative;
-    }
-
-    .amount-label {
-        position: absolute;
-        top: -20px;  
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 10px;
-        color: var(--text-default);
-        white-space: nowrap;
-    }
-
-    .bar {
-        width: 100%;
-        border-radius: 6px 6px 0 0;
-        background: var(--bg-brand-primary);
-    }
-
-    .bar.empty {
-        background: transparent;
-    }
-
-    .x-labels {
-        display: flex;
-        gap: 8px;
-        padding-top: 8px;
-        margin-left: 1px;
-        padding-left: 1rem;
-    }
-
-    .x-label {
-        width: 36px;
-        flex-shrink: 0;
-        text-align: center;
-        font-size: 12px;
-        color: var(--text-default);
-    }
-
+	.legend-line {
+		width: 18px;
+		border-top: 3px solid var(--bg-brand-secondary);
+		display: inline-block;
+	}
 </style>

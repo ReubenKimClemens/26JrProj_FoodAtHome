@@ -111,14 +111,14 @@
     
         <section class="budget-history">
             <span class="title-md">Budget History</span>
-            <img
+            <!-- <img
                 src={BudgetHistory}
                 alt="Budget history chart"
                 class="chart-image"
                 width="100%"
                 loading="lazy"
                 decoding="async"
-            />
+            /> -->
             <BudgetChart />
         </section>
     
