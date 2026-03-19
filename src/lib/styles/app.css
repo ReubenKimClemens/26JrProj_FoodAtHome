@@ -6,7 +6,7 @@
 
 html {
   color: var(--text-default);
-  background-color: #dddddd;
+  background-color: var(--bg-page-primary);
   scrollbar-gutter: stable;
 }
 
