@@ -13,6 +13,7 @@
     import BudgetHistory from '$lib/assets/metrics_budget_history.svg';
     import AmountSpentPerDay from '$lib/assets/amount_spent_per_day_graph_w1.svg';
     import DecemberSpending from '$lib/components/AmountSpent.svelte';
+    import BudgetChart from '$lib/components/BudgetHistory.svelte'
 
     import { MoveLeft } from 'lucide-svelte';
     import { MoveRight } from 'lucide-svelte';
@@ -105,27 +106,20 @@
 
         <section class="budget-history">
             <span class="title-md">Amount Spent Per Day</span>
-            <!-- <img
-                src={AmountSpentPerDay}
-                alt="Amount spent per day graph"
-                class="chart-image"
-                width="100%"
-                loading="lazy"
-                decoding="async"
-            /> -->
             <DecemberSpending />
         </section>
     
         <section class="budget-history">
             <span class="title-md">Budget History</span>
-            <img
+            <!-- <img
                 src={BudgetHistory}
                 alt="Budget history chart"
                 class="chart-image"
                 width="100%"
                 loading="lazy"
                 decoding="async"
-            />
+            /> -->
+            <BudgetChart />
         </section>
     
         <section class="store-visit">

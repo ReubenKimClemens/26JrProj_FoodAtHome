@@ -2,52 +2,32 @@
 	import { onMount } from 'svelte';
 
 	const spendingData = [
-		{ day: 1, amount: 56.8 },
-		{ day: 2, amount: 0 },
-		{ day: 3, amount: 0 },
-		{ day: 4, amount: 32.24 },
-		{ day: 5, amount: 27.4 },
-		{ day: 6, amount: 0 },
-		{ day: 7, amount: 42.18 },
-		{ day: 8, amount: 0 },
-		{ day: 9, amount: 81.67 },
-		{ day: 10, amount: 0 },
-		{ day: 11, amount: 0 },
-		{ day: 12, amount: 0 },
-		{ day: 13, amount: 0 },
-		{ day: 14, amount: 55.6 },
-		{ day: 15, amount: 0 },
-		{ day: 16, amount: 0 },
-		{ day: 17, amount: 60.0 },
-		{ day: 18, amount: 64.82 },
-		{ day: 19, amount: 29.0 },
-		{ day: 20, amount: 0 },
-		{ day: 21, amount: 0 },
-		{ day: 22, amount: 80.9 },
-		{ day: 23, amount: 0 },
-		{ day: 24, amount: 0 },
-		{ day: 25, amount: 45.7 },
-		{ day: 26, amount: 10.27 },
-		{ day: 27, amount: 0 },
-		{ day: 28, amount: 61.78 },
-		{ day: 29, amount: 27.45 },
-		{ day: 30, amount: 0 },
-		{ day: 31, amount: 0 }
+		{ month: 'Aug', amount: 169.5 },
+		{ month: 'Sep', amount: 220.73 },
+		{ month: 'Oct', amount: 549.0 },
+		{ month: 'Nov', amount: 326 },
+		{ month: 'Dec', amount: 295 },
+		{ month: 'Jan', amount: 0 }
 	];
 
-	const BarColor = '#0FA376';
+	const goalData = [300, 300, 300, 300, 400];
+
+	const BarColor = '#B5E2D5';
+	const LineColor = '#A07AD9';
 	const LabelColor = '#737780';
 	const MinChartWidth = 430;
-	const DayWidth = 44;
+	const BarWidth = 64;
 	const ChartHeight = 260;
-	const StepSize = 20;
 
-	const labels = spendingData.map((item) => item.day.toString());
+	const labels = spendingData.map((item) => item.month);
 	const amounts = spendingData.map((item) => item.amount);
 
-	const maxAmount = Math.max(...amounts);
-	const yMax = Math.ceil((maxAmount + 0.0001) / StepSize) * StepSize;
-	const chartWidth = Math.max(spendingData.length * DayWidth, MinChartWidth);
+	const spentMax = Math.max(...amounts);
+	const goalMax = Math.max(...goalData);
+	const overallMax = Math.max(spentMax, goalMax);
+	const yMax = Math.ceil((overallMax + 0.0001) / 100) * 100;
+
+	const chartWidth = Math.max(spendingData.length * BarWidth, MinChartWidth);
 
 	let canvas;
 	let chart;
@@ -64,22 +44,40 @@
 				labels,
 				datasets: [
 					{
+						type: 'line',
+						label: 'Budget Goal',
+						data: goalData,
+						borderColor: LineColor,
+						backgroundColor: LineColor,
+						pointBackgroundColor: LineColor,
+						pointBorderColor: LineColor,
+						pointRadius: 2,
+						pointHoverRadius: 2,
+						borderWidth: 3,
+						tension: 0.35,
+						fill: false,
+						datalabels: {
+							display: false
+						}
+					},
+					{
+						type: 'bar',
 						label: 'Amount Spent',
 						data: amounts,
 						backgroundColor: BarColor,
 						hoverBackgroundColor: BarColor,
-						borderRadius: 4,
-						barThickness: 30,
+						borderRadius: 6,
+						barThickness: 36,
+						order: 2,
 						datalabels: {
 							anchor: 'end',
 							align: 'top',
-							offset: 2,
 							color: LabelColor,
 							font: {
 								size: 10,
 								weight: '400'
 							},
-							formatter: (value) => (value > 0 ? `$${Number(value).toFixed(2)}` : '')
+							formatter: (value) => `$${Number(value).toFixed(2)}`
 						}
 					}
 				]
@@ -103,27 +101,20 @@
 						},
 						border: {
 							display: true,
-							color: '#111215',
-							z: 1
-						},
-						ticks: {
-							color: LabelColor
+                            color: '#111215',
+                            z: 1
 						}
 					},
 					y: {
 						beginAtZero: true,
 						max: yMax,
 						ticks: {
-							stepSize: StepSize,
-							callback: (value) => `$${value}`,
-							color: LabelColor
-						},
-						grid: {
-							color: '#E5E7EB'
+							stepSize: 100,
+							callback: (value) => `$${value}`
 						},
 						border: {
 							display: true,
-							color: '#111215'
+                            color: '#111215'
 						}
 					}
 				}
@@ -147,6 +138,11 @@
 		<div class="legend-item">
 			<span class="legend-box spent"></span>
 			<span>Amount Spent</span>
+		</div>
+
+		<div class="legend-item">
+			<span class="legend-line"></span>
+			<span>Budget Goal</span>
 		</div>
 	</div>
 </div>
@@ -197,7 +193,7 @@
 		align-items: center;
 		gap: 8px;
 		font-size: 12px;
-		color: #444;
+		color: var(--text-default);
 	}
 
 	.legend-box {
@@ -208,6 +204,12 @@
 	}
 
 	.spent {
-		background: var(--text-brand-primary);
+		background: #B5E2D5;
+	}
+
+	.legend-line {
+		width: 18px;
+		border-top: 3px solid var(--bg-brand-secondary);
+		display: inline-block;
 	}
 </style>
